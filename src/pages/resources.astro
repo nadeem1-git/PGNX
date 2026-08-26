@@ -1,11 +1,12 @@
 ---
 import '../styles/global.css';
+const base = import.meta.env.BASE_URL;
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Resources | PGNX</title>
@@ -18,17 +19,17 @@ import '../styles/global.css';
 		></div>
 
 		<img
-			src="/logo.jpg"
+			src={`${base}logo.jpg`}
 			alt=""
-			class="pointer-events-none fixed left-1/2 top-1/2 -z-10 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full object-cover opacity-[0.04] blur-sm grayscale"
+			class="pointer-events-none fixed left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full object-cover opacity-40"
 		/>
 
 		<div class="pointer-events-none fixed left-1/2 top-40 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-green-300 opacity-20 blur-3xl"></div>
 
 		<!-- Top bar -->
 		<header class="w-full py-4 px-6 flex items-center justify-between">
-			<a href="/" class="flex flex-col items-center gap-1">
-				<img src="/logo.jpg" alt="PGNX logo" class="h-16 w-16 rounded-full object-cover border border-green-100" />
+			<a href={base} class="flex flex-col items-center gap-1">
+				<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-16 w-16 rounded-full object-cover border border-green-100" />
 				<span class="text-sm font-bold text-green-800">PGNX</span>
 			</a>
 		</header>
@@ -52,18 +53,18 @@ import '../styles/global.css';
 		>
 			<button id="menu-close" class="mb-6 text-sm text-green-200">&#10005; Close</button>
 			<ul class="space-y-4 font-medium">
-				<li><a href="/" class="hover:text-green-300">Home</a></li>
-				<li><a href="/admission" class="hover:text-green-300">Admission</a></li>
-				<li><a href="/visa" class="hover:text-green-300">Visa</a></li>
-				<li><a href="/resources" class="hover:text-green-300">Resources</a></li>
-				<li><a href="/about" class="hover:text-green-300">About Us</a></li>
-				<li><a href="/contact" class="hover:text-green-300">Contact</a></li>
+				<li><a href={base} class="hover:text-green-300">Home</a></li>
+				<li><a href={`${base}admission`} class="hover:text-green-300">Admission</a></li>
+				<li><a href={`${base}visa`} class="hover:text-green-300">Visa</a></li>
+				<li><a href={`${base}resources`} class="hover:text-green-300">Resources</a></li>
+				<li><a href={`${base}about`} class="hover:text-green-300">About Us</a></li>
+				<li><a href={`${base}contact`} class="hover:text-green-300">Contact</a></li>
 			</ul>
 		</nav>
 
 		<!-- Main content -->
 		<main class="px-6 py-12 max-w-3xl mx-auto">
-			<a href="/" class="text-sm text-green-700 hover:text-green-900">&larr; Back to Home</a>
+			<a href={base} class="text-sm text-green-700 hover:text-green-900">&larr; Back to Home</a>
 
 			<h1 class="mt-4 text-4xl font-extrabold text-green-800">Resources</h1>
 			<p class="mt-2 text-gray-600">Useful links and materials for your admission and visa journey.</p>
