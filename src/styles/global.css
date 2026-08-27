@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+/* Hover lift + glow effect for cards and buttons */
+.rounded-2xl,
+.rounded-xl {
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.rounded-2xl:hover,
+.rounded-xl:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 12px 28px -8px rgba(22, 101, 52, 0.3);
+}
+
+.bg-green-800 {
+	transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+.bg-green-800:hover {
+	box-shadow: 0 0 18px rgba(22, 101, 52, 0.45);
+}

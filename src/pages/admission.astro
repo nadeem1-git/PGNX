@@ -28,16 +28,16 @@ const base = import.meta.env.BASE_URL;
 
 		<!-- Top bar -->
 		<header class="w-full py-4 px-6 flex items-center justify-between">
-			<a href={base} class="flex flex-col items-center gap-1">
-				<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-16 w-16 rounded-full object-cover border border-green-100" />
+			<div class="flex flex-col items-center gap-1">
+				<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-20 w-20 rounded-full object-cover border border-green-100" />
 				<span class="text-sm font-bold text-green-800">PGNX</span>
-			</a>
+			</div>
 		</header>
 
 		<!-- Side menu toggle tab -->
 		<button
 			id="menu-toggle"
-			class="fixed left-0 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 rounded-r-xl bg-green-800 text-white px-2 py-5 [writing-mode:vertical-rl]"
+			class="fixed left-0 top-36 z-40 flex flex-col items-center gap-2 rounded-r-xl bg-green-800 text-white px-2 py-5 [writing-mode:vertical-rl]"
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="[writing-mode:horizontal-tb] rotate-90">
 				<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -71,7 +71,7 @@ const base = import.meta.env.BASE_URL;
 			<p class="mt-2 text-gray-600">Everything you need to know before you apply — general requirements, Bachelor's eligibility, and Master's eligibility.</p>
 
 			<!-- General overview -->
-			<section class="mt-10 rounded-2xl bg-white border border-green-100 shadow-sm p-8">
+			<section class="mt-10 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
 				<h2 class="text-2xl font-bold text-green-800">General Overview</h2>
 				<p class="mt-4 text-gray-700 leading-relaxed">
 					Germany is one of the most popular study destinations in the world, and every year thousands
@@ -81,18 +81,18 @@ const base = import.meta.env.BASE_URL;
 				</p>
 				<p class="mt-4 text-gray-700 leading-relaxed">
 					Whichever path fits you, German universities are known for extremely low or even
-					<strong>zero tuition fees</strong> at public institutions, strong ties to industry, and
+					<strong> zero tuition fees</strong> at public institutions, strong ties to industry, and
 					degrees that are respected internationally — which is exactly why it's become such a
 					practical, sought-after choice for building both an education and a career.
 				</p>
 			</section>
 
 			<!-- Bachelors -->
-			<section class="mt-6 rounded-2xl bg-white border border-green-100 shadow-sm p-8">
+			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
 				<h2 class="text-2xl font-bold text-green-800">Bachelor's Admission</h2>
 				<p class="mt-4 text-gray-700 leading-relaxed">
 					To be eligible for a Bachelor's program in Germany, you need <strong>13 years of prior
-					education</strong>. In Pakistan, students typically complete only <strong>12 years</strong>
+					education</strong>. In Pakistan, students typically complete only <strong>12 years </strong>
 					by the time they finish HSSC or A-Levels — which means most Pakistani students are one year
 					short of the German requirement.
 				</p>
@@ -110,7 +110,7 @@ const base = import.meta.env.BASE_URL;
 			</section>
 
 			<!-- Masters -->
-			<section class="mt-6 rounded-2xl bg-white border border-green-100 shadow-sm p-8">
+			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
 				<h2 class="text-2xl font-bold text-green-800">Master's Admission</h2>
 				<p class="mt-4 text-gray-700 leading-relaxed">
 					For a Master's program in Germany, the requirement steps up to <strong>16 years of
