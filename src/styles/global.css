@@ -17,3 +17,12 @@
 .bg-green-800:hover {
 	box-shadow: 0 0 18px rgba(22, 101, 52, 0.45);
 }
+
+/* HOME tab: mostly hidden off-screen, slides fully into view on hover */
+#menu-toggle {
+	transform: translateX(-3rem);
+	transition: transform 0.3s ease;
+}
+#menu-toggle:hover {
+	transform: translateX(0);
+}
