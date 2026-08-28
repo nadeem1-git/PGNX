@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL;
 		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Resources | PGNX</title>
+		<title>Document Preparation | PGNX</title>
 	</head>
 	<body class="min-h-screen bg-gradient-to-b from-white via-green-50 to-white text-gray-900 relative">
 
@@ -60,8 +60,8 @@ const base = import.meta.env.BASE_URL;
 		<main class="px-6 py-12 max-w-3xl mx-auto">
 			<a href={base} class="text-sm text-green-700 hover:text-green-900">&larr; Back to Home</a>
 
-			<h1 class="mt-4 text-4xl font-extrabold text-green-800">Resources</h1>
-			<p class="mt-2 text-gray-600">Useful links and materials for your admission and visa journey.</p>
+			<h1 class="mt-4 text-4xl font-extrabold text-green-800">Document Preparation</h1>
+			<p class="mt-2 text-gray-600">Checklists and guidance for your required documents.</p>
 
 			<section class="mt-10 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8 text-center">
 				<p class="text-gray-600">Content coming soon.</p>
@@ -82,13 +82,8 @@ const base = import.meta.env.BASE_URL;
 			const toggle = document.getElementById("menu-toggle");
 			const menu = document.getElementById("side-menu");
 			const close = document.getElementById("menu-close");
-
-			toggle?.addEventListener("click", () => {
-				menu?.classList.remove("-translate-x-full");
-			});
-			close?.addEventListener("click", () => {
-				menu?.classList.add("-translate-x-full");
-			});
+			toggle?.addEventListener("click", () => menu?.classList.remove("-translate-x-full"));
+			close?.addEventListener("click", () => menu?.classList.add("-translate-x-full"));
 		</script>
 	</body>
 </html>

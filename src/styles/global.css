@@ -26,3 +26,23 @@
 #menu-toggle:hover {
 	transform: translateX(0);
 }
+
+/* Subtle shimmering glow on the hero divider line */
+.shimmer-line {
+	position: relative;
+	overflow: hidden;
+}
+.shimmer-line::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 60%;
+	height: 100%;
+	background: linear-gradient(to right, transparent, #86efac, #ffffff, #86efac, transparent);
+	animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer {
+	0% { left: -100%; }
+	100% { left: 150%; }
+}
