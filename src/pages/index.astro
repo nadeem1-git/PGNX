@@ -96,7 +96,7 @@ const base = import.meta.env.BASE_URL;
 			<!-- Hero card -->
 			<section class="min-h-[65vh] flex flex-col justify-center rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm px-8 py-8 text-center">
 				<div class="shimmer-line mx-auto mb-8 h-[2px] w-40" style="background: linear-gradient(to right, transparent, #16a34a, transparent);"></div>
-				<h1 class="text-7xl sm:text-8xl font-extrabold text-green-800">PGNX</h1>
+				<h1 class="text-7xl sm:text-8xl font-extrabold text-green-800"><span class="flag-pk">P</span><span class="flag-de">G</span>NX</h1>
 				<p class="mt-4 text-2xl font-semibold text-gray-800">Pakistan Germany Nexus</p>
 				<p class="text-xl text-green-700">A community for help</p>
 
@@ -355,5 +355,20 @@ const base = import.meta.env.BASE_URL;
 				menu?.classList.add("-translate-x-full");
 			});
 		</script>
+	<style>
+		.flag-pk {
+			background: linear-gradient(90deg, #ffffff 0%, #ffffff 34%, #01411c 34%, #01411c 100%);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			-webkit-text-stroke: 1px #01411c;
+		}
+		.flag-de {
+			background: linear-gradient(180deg, #000000 0%, #000000 42%, #dd0000 42%, #dd0000 64%, #ffce00 64%, #ffce00 100%);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+		}
+	</style>
 	</body>
 </html>
