@@ -43,17 +43,51 @@ const base = import.meta.env.BASE_URL;
 		<!-- Slide-out side menu -->
 		<nav
 			id="side-menu"
-			class="fixed left-0 top-0 h-full w-64 -translate-x-full bg-green-900 text-white p-6 transition-transform duration-300 z-50"
+			class="fixed left-0 top-0 h-full w-72 -translate-x-full bg-green-900 text-white transition-transform duration-300 z-50 flex flex-col"
 		>
-			<button id="menu-close" class="mb-6 text-sm text-green-200">&#10005; Close</button>
-			<ul class="space-y-4 font-medium">
-				<li><a href={base} class="hover:text-green-300">Home</a></li>
-				<li><a href={`${base}admission`} class="hover:text-green-300">Admission</a></li>
-				<li><a href={`${base}visa`} class="hover:text-green-300">Visa</a></li>
-				<li><a href={`${base}resources`} class="hover:text-green-300">Resources</a></li>
-				<li><a href={`${base}about`} class="hover:text-green-300">About Us</a></li>
-				<li><a href={`${base}contact`} class="hover:text-green-300">Contact</a></li>
+			<div class="flex items-center justify-end px-5 py-5">
+				<button id="menu-close" class="text-2xl leading-none text-white/80 hover:text-white">&#10005;</button>
+			</div>
+
+			<ul class="flex-1 px-2 border-b border-white/15">
+				<li class="border-b border-white/15">
+					<a href={base} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Home <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li class="border-b border-white/15">
+					<a href={`${base}admission`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Admission <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li class="border-b border-white/15">
+					<a href={`${base}visa`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Visa <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li class="border-b border-white/15">
+					<a href={`${base}resources`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Resources <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li class="border-b border-white/15">
+					<a href={`${base}about`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						About Us <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li>
+					<a href={`${base}contact`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Contact <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
 			</ul>
+
+			<a href={base} class="px-5 py-5 text-white/70 hover:text-white" aria-label="Home">
+				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+					<path d="M9 22V12h6v10"/>
+				</svg>
+			</a>
 		</nav>
 
 		<!-- Main content -->
@@ -61,11 +95,416 @@ const base = import.meta.env.BASE_URL;
 			<a href={base} class="text-sm text-green-700 hover:text-green-900">&larr; Back to Home</a>
 
 			<h1 class="mt-4 text-4xl font-extrabold text-green-800">Resources</h1>
-			<p class="mt-2 text-gray-600">Useful links and materials for your admission and visa journey.</p>
+			<p class="mt-2 text-gray-600">Practical guides for your visa application &mdash; from photo requirements to what to bring on the day.</p>
 
-			<section class="mt-10 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8 text-center">
-				<p class="text-gray-600">Content coming soon.</p>
+			<!-- Avoid Corrections Notice -->
+			<section class="mt-10 rounded-2xl bg-white/60 backdrop-blur-sm border border-amber-300 shadow-sm p-8">
+				<h2 class="text-xl font-bold text-green-800">Avoid Corrections &mdash; Reduce Visa Delays</h2>
+				<p class="mt-4 text-gray-700 leading-relaxed">
+					A very high number of corrections is being issued on visa applications these days, and
+					it's one of the main causes of appointment delays. When documents are incomplete,
+					outdated, or improperly uploaded, the embassy has to issue corrections and re-review
+					those cases &mdash; slowing the process down not just for one applicant, but for everyone
+					in the queue.
+				</p>
+				<p class="mt-4 font-semibold text-gray-800">Most corrections come from:</p>
+				<ul class="mt-2 space-y-1.5 text-gray-700 list-disc list-inside">
+					<li>Blocked account issues (old confirmation, or inactive account)</li>
+					<li>Incomplete or unclear admission letters (not full/updated admission)</li>
+					<li>Missing IBCC attestation (for Bachelor's students)</li>
+					<li>School leaving certificate / Anabin recognition issues</li>
+					<li>Incomplete CV &mdash; provide an updated one</li>
+					<li>Health insurance not valid or not uploaded properly</li>
+					<li>Old travel insurance &mdash; provide one with updated dates</li>
+					<li>Resident permit section &mdash; upload your CNIC here</li>
+					<li>Passport &mdash; upload all 4 pages, including your signature on page 3</li>
+				</ul>
+				<p class="mt-4 font-semibold text-gray-800">Before you submit:</p>
+				<ul class="mt-2 space-y-1.5 text-gray-700 list-disc list-inside">
+					<li>Submit complete and correct documents</li>
+					<li>Keep your blocked account updated and valid</li>
+					<li>Ensure your admission letter clearly shows full-time enrollment</li>
+					<li>Get all academic documents attested (IBCC where required, HEC mandatory)</li>
+					<li>Provide valid and clear language proof</li>
+					<li>Double-check everything before submission</li>
+				</ul>
+				<p class="mt-4 text-sm text-gray-600 italic">&mdash; PGNX Team</p>
 			</section>
+
+			<!-- Biometric Photo Requirements -->
+			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
+				<h2 class="text-xl font-bold text-green-800">Biometric Photo Requirements</h2>
+				<p class="mt-4 text-gray-700 leading-relaxed">
+					High-quality photos are essential for facial biometrics in ID documents. If requirements
+					aren't met, biometric recognition may not function and the image may not be accepted.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Format</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					The photo must clearly show facial features from the bottom of the chin to the crown
+					(top of the head, not the hair), plus both sides of the face. The face must take up
+					70&ndash;80% of the photo (32&ndash;36mm in height; rejected only if under 27mm or over 40mm).
+					With voluminous hairstyles, the whole head should stay visible without shrinking the
+					face. The face must be centred.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Focus, Lighting &amp; Background</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					Sharp focus with proper contrast; even lighting with no shadows, reflections, or red
+					eyes. Background must be one bright, plain colour (ideally neutral grey) contrasting
+					with face and hair &mdash; no patterns, no other people or objects, no shadows on the
+					background.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Photo Quality</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					Printed on high-quality paper at 600 dpi minimum. Colour photos need accurate skin
+					tones. No creases, damage, or staining. Black &amp; white or colour are both acceptable.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Head Position, Eyes &amp; Expression</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					Head neither tilted nor turned (portrait style). Neutral expression, mouth closed,
+					looking directly at the camera. Eyes open and clearly visible, not covered by hair or
+					eyeglass frames.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Glasses &amp; Head Coverings</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					Eyes must be clearly visible &mdash; no tinted lenses, no flash reflection off glasses,
+					and frames must not cover the eyes. Head coverings are generally not permitted, with
+					exceptions for religious reasons &mdash; in that case, the face must remain fully visible
+					from chin to forehead with no shadows.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Children &amp; Babies</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					For children aged 9 and under, the face should take up 50&ndash;80% of the photo
+					(22&ndash;36mm; rejected only if under 17mm or over 40mm). Children aged 5 and under
+					don't need a neutral expression or direct gaze, and don't need to be centred. Babies
+					under one year don't need their eyes open.
+				</p>
+
+				<div class="mt-6 rounded-lg bg-amber-50 border border-amber-200 p-4 text-sm text-amber-900">
+					<strong>Common rejections to avoid:</strong> too close/far, not centred, blurred, too
+					dark/light, shadow across face or behind head, busy background, unnatural colour,
+					creases, mouth open, head tilted, eyes closed, hair across eyes, looking away, wearing
+					a hat, frames covering eyes, dark tinted glasses, flash reflection on glasses.
+				</div>
+			</section>
+
+			<!-- Karachi Embassy Checklist -->
+			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
+				<h2 class="text-xl font-bold text-green-800">Appointment Checklist &mdash; Karachi Embassy</h2>
+				<p class="mt-3 text-sm text-gray-700">
+					<strong>Embassy of the Federal Republic of Germany in Karachi</strong><br />
+					92-A/7, Block 5, Clifton, Karachi, Pakistan<br />
+					Phone: +92 21 3582 1596 &middot; Email: visa@kara.diplo.de<br />
+					<a href="https://pakistan.diplo.de/pk-en/vertretungen/generalkonsulat1" target="_blank" rel="noopener noreferrer" class="text-green-700 underline">Official website</a>
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Bring with you</h3>
+				<ul class="mt-2 space-y-1.5 text-sm text-gray-700 list-disc list-inside">
+					<li>Biometric photo (see requirements above)</li>
+					<li>Visa fee &mdash; EUR 75 for applicants 18+, paid in cash (local currency)</li>
+					<li>Appointment confirmation copy</li>
+					<li>Proof of sufficient health insurance for Germany (if not already submitted via the Consular Services Portal)</li>
+					<li>Passport (original)</li>
+					<li>School-leaving certificate (original)</li>
+					<li>Proof of admission to a full-time degree programme (original)</li>
+					<li>Proof of secure livelihood (original)</li>
+				</ul>
+				<p class="mt-3 text-sm text-gray-600 italic">You don't need to bring documents already uploaded to the Consular Services Portal.</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Please note</h3>
+				<ul class="mt-2 space-y-1.5 text-sm text-gray-700 list-disc list-inside">
+					<li>Arrive 15 minutes before your appointment</li>
+					<li>No electronic devices or sharp objects allowed</li>
+					<li>A small bag with your application documents is fine</li>
+					<li>Arriving late means an automatic cancellation &mdash; you'll need to rebook</li>
+				</ul>
+			</section>
+
+			<!-- Islamabad Embassy Checklist -->
+			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
+				<h2 class="text-xl font-bold text-green-800">Appointment Checklist &mdash; Islamabad Embassy</h2>
+				<p class="mt-3 text-sm text-gray-700">
+					<strong>Embassy of the Federal Republic of Germany in Islamabad</strong><br />
+					Ramna 5, Diplomatic Enclave, Islamabad, Pakistan<br />
+					Phone: +92 51 2007 200
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Bring with you</h3>
+				<ul class="mt-2 space-y-1.5 text-sm text-gray-700 list-disc list-inside">
+					<li>Biometric photo (see requirements above)</li>
+					<li>Visa fee &mdash; EUR 75 for applicants 18+, paid in cash at the HBL Bank branch at Ramna 5, Diplomatic Enclave (about a 15-minute walk from the embassy) immediately after your application</li>
+					<li>Appointment confirmation copy</li>
+					<li>Proof of sufficient health insurance for Germany (if not already submitted via the Consular Services Portal)</li>
+					<li>Passport (original)</li>
+					<li>Proof of admission to a full-time degree programme (original)</li>
+					<li>Proof of language skills &mdash; language certificate (original)</li>
+					<li>Proof of secure livelihood (original)</li>
+					<li>Residence permit in the country of application (original)</li>
+				</ul>
+				<p class="mt-3 text-sm text-gray-600 italic">You don't need to bring documents already uploaded to the Consular Services Portal.</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Please note</h3>
+				<ul class="mt-2 space-y-1.5 text-sm text-gray-700 list-disc list-inside">
+					<li>Arrive 15 minutes before your appointment</li>
+					<li>No electronic devices or sharp objects allowed</li>
+					<li>A small bag with your application documents is fine</li>
+					<li>Access to the Diplomatic Enclave is only possible via the Diplomatic Shuttle from 3rd Avenue, Quaid-e-Azam University Road. This is a private company and prices may change &mdash; contact them beforehand (phone: +92 333 520 5334, email: waqasdss@gmail.com)</li>
+				</ul>
+			</section>
+
+
+
+						<!-- Expense Breakdown -->
+			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
+				<h2 class="text-xl font-bold text-green-800">Expense Breakdown Sheet</h2>
+				<p class="mt-4 text-gray-700 leading-relaxed">
+					Germany isn't especially expensive by European standards &mdash; food, accommodation,
+					clothing, and cultural activities sit just slightly above the EU average. The main costs
+					of studying abroad are living costs, tuition fees, semester fees, and health insurance.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">A Month in Germany (~992 EUR)</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					Based on a 2023 Deutsche Studentenwerk survey, a typical student's monthly budget breaks
+					down roughly as follows:
+				</p>
+				<div class="mt-4 overflow-x-auto rounded-lg border border-green-100">
+					<table class="w-full text-sm text-left">
+						<tbody>
+							<tr class="border-b border-green-100 bg-white"><td class="px-4 py-2 font-medium">Rent</td><td class="px-4 py-2">425 EUR</td></tr>
+							<tr class="border-b border-green-100 bg-green-50/50"><td class="px-4 py-2 font-medium">Food</td><td class="px-4 py-2">250 EUR</td></tr>
+							<tr class="border-b border-green-100 bg-white"><td class="px-4 py-2 font-medium">Clothing</td><td class="px-4 py-2">48 EUR</td></tr>
+							<tr class="border-b border-green-100 bg-green-50/50"><td class="px-4 py-2 font-medium">Transport (car/public transport)</td><td class="px-4 py-2">49 EUR</td></tr>
+							<tr class="border-b border-green-100 bg-white"><td class="px-4 py-2 font-medium">Health insurance</td><td class="px-4 py-2">131 EUR</td></tr>
+							<tr class="border-b border-green-100 bg-green-50/50"><td class="px-4 py-2 font-medium">Telephone / internet / TV-radio fees / postage</td><td class="px-4 py-2">32 EUR</td></tr>
+							<tr class="border-b border-green-100 bg-white"><td class="px-4 py-2 font-medium">Study materials / equipment</td><td class="px-4 py-2">24 EUR</td></tr>
+							<tr class="border-b border-green-100 bg-green-50/50"><td class="px-4 py-2 font-medium">Leisure, culture &amp; sport</td><td class="px-4 py-2">33 EUR</td></tr>
+							<tr class="bg-green-100"><td class="px-4 py-2 font-bold text-green-800">Total</td><td class="px-4 py-2 font-bold text-green-800">992 EUR</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<p class="mt-3 text-sm text-gray-600 italic">
+					This is a ballpark figure &mdash; costs can be lower or higher depending on the city and
+					lifestyle. Rent typically ranges 290&ndash;560 EUR and is above average in cities like
+					Cologne, Munich, Hamburg, Düsseldorf, and Frankfurt.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Proof of Sufficient Funds</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					Since 2019, you must prove sufficient financial resources when applying for your visa.
+					As of 1 September 2024, this is set at <strong>992 EUR/month or 11,904 EUR/year</strong>.
+					This is usually shown via a deposit in a blocked account, or proof of parental income.
+					Confirm exact terms with your German embassy or consulate.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Semester Fee</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					All students pay a semester contribution (covering Studentenwerk support services and
+					the AStA student body), typically <strong>100&ndash;350 EUR</strong>, paid at registration
+					and before each new semester. Some universities bundle in a "semester ticket" for free
+					local public transport; others charge it separately (25&ndash;200 EUR).
+				</p>
+				<div class="mt-4 rounded-lg bg-green-50 border border-green-100 p-4 text-sm text-green-800">
+					<strong>Example &mdash; University of Cologne, Winter 2022/23:</strong> Semester ticket
+					201.40 EUR + Studentenwerk contribution 90 EUR + AStA 10 EUR + student sport 1.75 EUR +
+					faculty councils 2.50 EUR + admin/hardship fund 3.50 EUR = <strong>309.15 EUR total</strong>.
+				</div>
+
+				<h3 class="mt-6 font-semibold text-green-800">Tuition Fees</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					Public universities generally don't charge tuition for Bachelor's or most Master's
+					programs. <strong>Exception:</strong> Baden-Württemberg charges non-EU students 1,500
+					EUR/semester (since winter 2017/18) &mdash; doesn't apply to doctoral students, and
+					students already enrolled before the fee was introduced are exempt. Certain specialized
+					Master's programs and private/online institutions can charge significantly more,
+					sometimes over 10,000 EUR/semester. Fee amount does not reflect program quality.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Health Insurance</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					Mandatory for all students, including EU citizens (unless their home country's public
+					insurance is valid in Germany). Public health insurance costs roughly
+					<strong>110 EUR/month</strong> if you're 30 or under and haven't exceeded 14 semesters
+					of study; it rises to at least <strong>166 EUR/month</strong> after that.
+				</p>
+
+				<h3 class="mt-6 font-semibold text-green-800">Scholarships</h3>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					<strong>DAAD</strong> offers scholarships for German and international students at
+					every level, and other political, business-linked, or religious foundations offer
+					funding too. Scholarships are rarely awarded for an entire program duration or to
+					students just starting out &mdash; selection criteria are strict, with no general
+					entitlement.
+				</p>
+				<p class="mt-2 text-sm text-gray-700 leading-relaxed">
+					<strong>Erasmus+</strong> supports study or internships abroad for students from EU
+					states plus Iceland, Liechtenstein, Norway, Turkey, and Macedonia. Internships run
+					2 months to a year; study placements run 3&ndash;12 months, with up to 12 months of
+					funding per academic stage (Bachelor's, Master's, doctorate). Erasmus+ students are
+					exempt from tuition at their host institution. Ask your university's international
+					office for details.
+				</p>
+			</section>
+
+
+			---
+import '../styles/global.css';
+const base = import.meta.env.BASE_URL;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Document Preparation | PGNX</title>
+	</head>
+	<body class="min-h-screen bg-gradient-to-b from-white via-green-50 to-white text-gray-900 relative">
+
+		<div
+			class="pointer-events-none fixed inset-0 -z-10"
+			style="background-image: radial-gradient(circle, #16653480 1px, transparent 1px); background-size: 24px 24px;"
+		></div>
+
+		<div class="pointer-events-none fixed left-1/2 top-40 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-green-300 opacity-20 blur-3xl"></div>
+
+		<!-- Top bar -->
+		<header class="relative w-full py-6 px-6 flex items-center justify-end">
+			<div class="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 bg-green-800"></div>
+			<a href={base} class="relative z-10 flex flex-col items-center gap-1 bg-white rounded-full p-1">
+				<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-20 w-20 rounded-full object-cover border border-green-100" />
+			</a>
+		</header>
+
+		<!-- Side menu toggle tab -->
+		<button
+			id="menu-toggle"
+			class="fixed left-0 top-28 z-40 flex flex-col items-center gap-2 rounded-r-xl bg-green-800 text-white px-2 py-5 [writing-mode:vertical-rl]"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="[writing-mode:horizontal-tb] rotate-90">
+				<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+				<path d="M9 22V12h6v10"/>
+			</svg>
+			HOME
+		</button>
+
+		<!-- Slide-out side menu -->
+		<nav
+			id="side-menu"
+			class="fixed left-0 top-0 h-full w-72 -translate-x-full bg-green-900 text-white transition-transform duration-300 z-50 flex flex-col"
+		>
+			<div class="flex items-center justify-end px-5 py-5">
+				<button id="menu-close" class="text-2xl leading-none text-white/80 hover:text-white">&#10005;</button>
+			</div>
+
+			<ul class="flex-1 px-2 border-b border-white/15">
+				<li class="border-b border-white/15">
+					<a href={base} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Home <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li class="border-b border-white/15">
+					<a href={`${base}admission`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Admission <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li class="border-b border-white/15">
+					<a href={`${base}visa`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Visa <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li class="border-b border-white/15">
+					<a href={`${base}resources`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Resources <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li class="border-b border-white/15">
+					<a href={`${base}about`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						About Us <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+				<li>
+					<a href={`${base}contact`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
+						Contact <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
+					</a>
+				</li>
+			</ul>
+
+			<a href={base} class="px-5 py-5 text-white/70 hover:text-white" aria-label="Home">
+				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+					<path d="M9 22V12h6v10"/>
+				</svg>
+			</a>
+		</nav>
+
+		<!-- Main content -->
+		<main class="px-6 py-12 max-w-3xl mx-auto">
+			<a href={base} class="text-sm text-green-700 hover:text-green-900">&larr; Back to Home</a>
+
+			<h1 class="mt-4 text-4xl font-extrabold text-green-800">Document Preparation</h1>
+			<p class="mt-2 text-gray-600">Checklists and real example documents to help you prepare your application.</p>
+
+			<!-- LOM intro -->
+			<section class="mt-10 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
+				<h2 class="text-xl font-bold text-green-800">Letter of Motivation (LOM)</h2>
+				<p class="mt-4 text-gray-700 leading-relaxed">
+					Your Letter of Motivation (sometimes called a Statement of Purpose) is where you explain
+					why you've chosen your program, your university, and Germany itself &mdash; and what you
+					plan to do afterward. Embassies and universities look for a clear, honest connection
+					between your background, the specific program, and your future goals.
+				</p>
+				<p class="mt-4 text-gray-700 leading-relaxed">
+					Below are two real examples shared by community members, kept as they were written, to
+					give you a sense of structure and tone. Use them as inspiration &mdash; not a template to
+					copy &mdash; your own letter should reflect your own background and reasoning.
+				</p>
+			</section>
+
+			<!-- Sample 1 -->
+			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
+				<h2 class="text-lg font-bold text-green-800">Sample &mdash; International Corporate Communication &amp; Media Management (HNU)</h2>
+				<p class="mt-1 text-xs uppercase tracking-wide text-gray-500">By Ali Hamza</p>
+				<div class="mt-4 text-sm text-gray-700 leading-relaxed space-y-4">
+					<p>To,<br />The Visa Officer, German Embassy, Islamabad</p>
+					<p>Dear Sir/Madam,</p>
+					<p>I am writing to share my motivation for applying for a student visa to pursue the master's degree program in "International Corporate Communication and Media Management (ICM)" at the Neu-Ulm University of Applied Sciences (HNU). This program connects well with my academic background, work experience, and career goals.</p>
+					<p>I completed my four-year bachelor's degree in "Media Studies" at Bahria University, Karachi. During my studies, I learned about digital media, advertisement and public relations, development support communication, and media management. These subjects helped me understand how to manage digital media and utilize it for communication with the public in a corporate environment. My work experience in digital media also gave me the skills to handle corporate communication.</p>
+					<p>The reason for choosing Germany as a study destination is that it is one of the most advanced countries in sustainability, economics, and research. I am also interested in studying in Germany due to no tuition fees and high-quality education. It will also offer me great opportunities for practical learning, and the multicultural environment makes it an even better place to study.</p>
+					<p>The Master in "International Corporate Communication and Media Management (ICM)" is the next step for me to grow academically and professionally. This program focuses on providing the skills to utilize media for marketing and communication in this digital age. With courses like strategic brand management, content production, sustainability, and CSR communication, this program will help me to achieve my career goals and use my media management skills to bring positive change to society.</p>
+					<p>After completing my master's degree, I plan to work in Germany to gain experience in corporate communication and media management. I want to work in a diverse environment and learn from global companies. After gaining experience, I aim to start my own media agency in Pakistan. I aim to help businesses improve their communication strategies and adopt sustainable practices.</p>
+					<p>In conclusion, I am excited to join the "International Corporate Communication and Media Management (ICM)" program at HNU. My educational and professional career aligns perfectly with the objective of this course. I am determined to make the most of this educational opportunity and contribute to this university.</p>
+					<p>I am looking forward to a positive response. Thank you for your time and consideration.</p>
+					<p>Sincerely,<br />Ali Hamza</p>
+				</div>
+			</section>
+
+			<!-- Sample 2 -->
+			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
+				<h2 class="text-lg font-bold text-green-800">Sample &mdash; MSc Autonomous Systems (Hochschule Bonn-Rhein-Sieg)</h2>
+				<p class="mt-1 text-xs uppercase tracking-wide text-gray-500">By Aashir Muzaffar</p>
+				<div class="mt-4 text-sm text-gray-700 leading-relaxed space-y-4">
+					<p>To,<br />The Visa Officer, German Embassy, Islamabad</p>
+					<p>Respected Sir/Madam,</p>
+					<p>I am Aashir Muzaffar, and I am writing to express my motivation for pursuing a Master of Science in "Autonomous Systems" at Hochschule Bonn Rhein Sieg (HBRS). This program perfectly aligns with my academic background, technical experience, and long-term career aspirations in the fields of computer systems, and automation.</p>
+					<p>I have completed my Bachelor of Science in Software Engineering from the University of Gujrat, Pakistan, where I gained a strong foundation in programming, computer architecture, and systems design. My coursework covered subjects such as Software Engineering, Computer Networks, Data Science, Artificial Intelligence, and Data Structures and Algorithms, which allowed me to develop a solid understanding of both theoretical and practical aspects of computer science. Also, my final year project, "UD-Knives", was an e-commerce platform developed using the MERN stack, integrating user authentication, payment systems, and responsive design.</p>
+					<p>Additionally, I gained practical experience through internships in web development. During my internship at Adan I.T Center, I developed responsive and user-friendly web interfaces using HTML, CSS, and JavaScript, and worked on designing RESTful APIs using Node.js to ensure smooth communication between front-end and back-end systems. I also optimized website performance by debugging code and improving responsiveness. However, during my internship at CODSOFT, I enhanced my development skills by building responsive web pages, troubleshooting and optimizing code, and improving overall site performance.</p>
+					<p>I chose this course because it offers a strong combination of software, artificial intelligence, and robotics, which directly aligns with my academic background and career goals. Modules such as Advanced Software Technology and Artificial Intelligence will strengthen my ability to design intelligent and scalable systems, while Autonomous Mobile Robots and Mathematics for Robotics and Control will help me understand how these systems operate in real-world environments. The structure of Scientific Experimentation and Evaluation will definitely enhance my practical and research skills. Overall, this course offers the exact blend of theory and hands-on experience I need to specialize in autonomous systems.</p>
+					<p>I chose HBRS specifically because of its strong focus on practical oriented learning, directly matching my goal of gaining skills in Autonomous Systems. As a University of Applied Sciences, HBRS provides hands-on experience through labs, projects, and industry collaboration, that would allow me to work on real-world problems rather than theoretical concepts. Also, the curriculum's mix-up between software, AI, and robotics, along with project-based modules like the Research and Development Project, will provide me with the practical exposure for sure.</p>
+					<p>The reason why I chose Germany because of its strong leadership in engineering, automation, and intelligent systems, especially in the automotive and robotics sectors. With my interest in Autonomous Systems, studying in Germany offers me direct exposure to real-world applications such as self-driving technologies, smart manufacturing, and advanced control systems. The close collaboration between universities and industry aligns with my goal of gaining practical, hands-on experience alongside theoretical knowledge. This environment will allow me to develop skills in advance automotive technologies that are not easily accessible in Pakistan.</p>
+					<p>After completing my master's degree, I plan to gain professional experience for a short period in Germany's advanced technology and automotive sector, particularly in companies such as Bosch, BMW, or Continental that work with automation, robotics, and autonomous systems. This experience will help me strengthen my practical knowledge and understand real-world industrial applications of AI-driven technologies. In the long run, I intend to return to Pakistan and apply the technical expertise and industrial exposure gained in Germany to contribute to the development of intelligent automation and robotics solutions. I aim to work in responsible technical roles and support industries in adopting modern autonomous and AI-based systems to improve efficiency, innovation, and technological growth.</p>
+					<p>In conclusion, I fully understand the responsibilities that come with studying abroad, and I am committed to complying with all visa regulations and academic requirements. My sole purpose in applying for this visa is to complete my master's degree and return to Pakistan with the skills to contribute to my country's technological advancement.</p>
+					<p>Thank you for your time and consideration.</p>
+					<p>Sincerely,<br />Aashir Muzaffar</p>
+				</div>
+			</section>
+
 		</main>
 
 		<!-- Footer -->
@@ -82,13 +521,30 @@ const base = import.meta.env.BASE_URL;
 			const toggle = document.getElementById("menu-toggle");
 			const menu = document.getElementById("side-menu");
 			const close = document.getElementById("menu-close");
+			toggle?.addEventListener("click", () => menu?.classList.remove("-translate-x-full"));
+			close?.addEventListener("click", () => menu?.classList.add("-translate-x-full"));
+		</script>
+	</body>
+</html>
 
-			toggle?.addEventListener("click", () => {
-				menu?.classList.remove("-translate-x-full");
-			});
-			close?.addEventListener("click", () => {
-				menu?.classList.add("-translate-x-full");
-			});
+		</main>
+
+		<!-- Footer -->
+		<footer class="mt-12 border-t border-green-100 py-6 px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500 max-w-3xl mx-auto">
+			<p>&copy; 2025 PGNX &mdash; Pakistan Germany Nexus. All rights reserved.</p>
+			<div class="flex gap-4">
+				<a href="#" aria-label="Facebook" class="hover:text-green-700">FB</a>
+				<a href="#" aria-label="Instagram" class="hover:text-green-700">IG</a>
+				<a href="#" aria-label="WhatsApp" class="hover:text-green-700">WA</a>
+			</div>
+		</footer>
+
+		<script>
+			const toggle = document.getElementById("menu-toggle");
+			const menu = document.getElementById("side-menu");
+			const close = document.getElementById("menu-close");
+			toggle?.addEventListener("click", () => menu?.classList.remove("-translate-x-full"));
+			close?.addEventListener("click", () => menu?.classList.add("-translate-x-full"));
 		</script>
 	</body>
 </html>

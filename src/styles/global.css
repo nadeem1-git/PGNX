@@ -46,3 +46,15 @@
 	0% { left: -100%; }
 	100% { left: 150%; }
 }
+
+/* Running headline ticker */
+.ticker-track {
+	animation: ticker-scroll 20s linear infinite;
+}
+.ticker-content {
+	flex-shrink: 0;
+}
+@keyframes ticker-scroll {
+	from { transform: translateX(0); }
+	to { transform: translateX(-100%); }
+}

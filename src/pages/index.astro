@@ -183,6 +183,33 @@ const base = import.meta.env.BASE_URL;
 				</div>
 			</section>
 
+
+						<!-- Running headline ticker -->
+			<section class="relative left-1/2 -ml-[50vw] w-screen mt-8 overflow-hidden bg-green-800 py-4">
+				<div class="ticker-track flex whitespace-nowrap">
+					<div class="ticker-content flex items-center gap-12 pr-12 text-white text-sm font-medium">
+						<span>📌 Always verify tuition and deadline details on the official university website before applying.</span>
+						<span>📌 Bachelor's applicants need 13 years of education &mdash; complete 2 semesters in Pakistan first if you're one year short.</span>
+						<span>📌 Master's applicants need 16 years of education total, including 2+2 year Bachelor's structures.</span>
+						<span>📌 Start your blocked account and health insurance early &mdash; both are required before your visa appointment.</span>
+						<span>📌 Visa appointment waiting times can be long &mdash; apply as early as possible.</span>
+						<span>📌 As of 1 Sept 2024, proof of funds is set at 992 EUR/month (11,904 EUR/year).</span>
+						<span>📌 Karachi consulate covers Sindh &amp; Balochistan; Islamabad covers Punjab, KP, Gilgit-Baltistan &amp; AJK.</span>
+						<span>📌 Double-check every document before submission &mdash; incomplete files are the #1 cause of visa delays.</span>
+					</div>
+					<div class="ticker-content flex items-center gap-12 pr-12 text-white text-sm font-medium" aria-hidden="true">
+						<span>📌 Always verify tuition and deadline details on the official university website before applying.</span>
+						<span>📌 Bachelor's applicants need 13 years of education &mdash; complete 2 semesters in Pakistan first if you're one year short.</span>
+						<span>📌 Master's applicants need 16 years of education total, including 2+2 year Bachelor's structures.</span>
+						<span>📌 Start your blocked account and health insurance early &mdash; both are required before your visa appointment.</span>
+						<span>📌 Visa appointment waiting times can be long &mdash; apply as early as possible.</span>
+						<span>📌 As of 1 Sept 2024, proof of funds is set at 992 EUR/month (11,904 EUR/year).</span>
+						<span>📌 Karachi consulate covers Sindh &amp; Balochistan; Islamabad covers Punjab, KP, Gilgit-Baltistan &amp; AJK.</span>
+						<span>📌 Double-check every document before submission &mdash; incomplete files are the #1 cause of visa delays.</span>
+					</div>
+				</div>
+			</section>
+
 			<!-- Service cards -->
 			<section class="mt-8">
 				<div class="grid gap-6 sm:grid-cols-3">
@@ -222,8 +249,8 @@ const base = import.meta.env.BASE_URL;
 					</div>
 				</div>
 
-				<div class="mt-6 flex flex-col sm:flex-row justify-center gap-6">
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center sm:w-[calc(33.333%-1rem)]">
+				<div class="mt-6 grid gap-6 sm:grid-cols-3">
+					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
 						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
 							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
@@ -235,7 +262,7 @@ const base = import.meta.env.BASE_URL;
 						<a href={`${base}german-language`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
 					</div>
 
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center sm:w-[calc(33.333%-1rem)]">
+					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
 						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
 							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -248,9 +275,20 @@ const base = import.meta.env.BASE_URL;
 						<p class="mt-1 text-sm text-gray-600">Checklists and guidance for your required documents.</p>
 						<a href={`${base}document-preparation`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
 					</div>
+
+					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
+						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
+							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+								<path d="M12 6.5v10M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+							</svg>
+						</div>
+						<h2 class="mt-4 text-lg font-bold">Resources</h2>
+						<p class="mt-1 text-sm text-gray-600">Photo requirements, embassy checklists, and cost breakdowns.</p>
+						<a href={`${base}resources`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
+					</div>
 				</div>
 			</section>
-
 			<!-- Start section -->
 			<section class="mt-8 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm px-8 py-10 text-center">
 				<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
