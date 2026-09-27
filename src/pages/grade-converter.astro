@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL;
 		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>German Language | PGNX</title>
+		<title>Grade Converter | PGNX</title>
 	</head>
 	<body class="min-h-screen bg-gradient-to-b from-white via-green-50 to-white text-gray-900 relative">
 
@@ -58,45 +58,28 @@ const base = import.meta.env.BASE_URL;
 		<main class="px-6 py-12 max-w-3xl mx-auto">
 			<a href={base} class="text-sm text-green-700 hover:text-green-900">&larr; Back to Home</a>
 
-			<h1 class="mt-4 text-4xl font-extrabold text-green-800">German Language</h1>
-			<p class="mt-2 text-gray-600">Resources and guidance for learning German.</p>
+			<span class="mt-4 inline-block rounded-full bg-green-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-green-800">Now Live</span>
+			<h1 class="mt-3 text-4xl font-extrabold text-green-800">German Grade Converter</h1>
+			<p class="mt-2 text-gray-600">Convert your CGPA or percentage into the German grading system in seconds &mdash; free and online.</p>
 
-			<!-- YouTube channel -->
-			<section class="mt-10 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8 text-center">
-				<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
-						<polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
-					</svg>
-				</div>
-				<h2 class="mt-4 text-xl font-bold text-green-800">PAK GERMAN NEXUS on YouTube</h2>
-				<p class="mt-2 text-gray-600">Video lessons and guidance to help you learn German for your journey.</p>
-				<a href="https://www.youtube.com/@PAKGERMANNEXUS" target="_blank" rel="noopener noreferrer"
-					class="mt-6 inline-flex items-center gap-2 rounded-md bg-green-800 text-white text-sm font-semibold px-5 py-2.5 hover:bg-green-900">
-					Visit Our Channel &rarr;
-				</a>
-			</section>
+			<section class="mt-8 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
+				<p class="text-gray-700 leading-relaxed">
+					PGNX now has its own German Grade Converter, built for Pakistani and international students.
+					Whether you're preparing university applications or just want to know where your grades stand
+					in the German system, this tool gets you an instant conversion &mdash; no sign-up required.
+				</p>
 
-			<!-- Free German Materials -->
-			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<div class="text-center">
-					<span class="inline-block rounded-full bg-green-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-green-800">A1 &bull; A2 &bull; B1</span>
-					<h2 class="mt-3 text-xl font-bold text-green-800">Free German Materials</h2>
-					<p class="mt-1 text-sm text-gray-600">Everything you need to prepare &mdash; free to access.</p>
-				</div>
-
-				<ul class="mt-6 grid gap-3 sm:grid-cols-2 text-gray-700">
-					<li class="flex items-center gap-2"><span>📚</span> Course Books</li>
-					<li class="flex items-center gap-2"><span>📝</span> Workbooks &amp; Practice Resources</li>
-					<li class="flex items-center gap-2"><span>📄</span> Past Papers &amp; Exam Preparation</li>
-					<li class="flex items-center gap-2"><span>🧠</span> Grammar + Vocabulary</li>
-					<li class="flex items-center gap-2"><span>🎧</span> Listening Practice</li>
+				<ul class="mt-6 space-y-2 text-gray-700">
+					<li>✅ Free to use</li>
+					<li>✅ Fast &amp; simple interface</li>
+					<li>✅ Helpful for German university applications</li>
+					<li>✅ Designed specially for students</li>
 				</ul>
 
-				<div class="mt-6 text-center">
-					<a href="https://drive.google.com/drive/folders/1XNXwkeErdqkk_nD32DlfA8zgv6ZEEGvk" target="_blank" rel="noopener noreferrer"
-						class="inline-flex items-center gap-2 rounded-md bg-green-800 text-white text-sm font-semibold px-5 py-2.5 hover:bg-green-900">
-						📌 Open Materials Drive &rarr;
+				<div class="mt-8 text-center">
+					<a href="https://grade-converter-pgnx.vercel.app/" target="_blank" rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 rounded-md bg-green-800 text-white text-sm font-semibold px-6 py-3 hover:bg-green-900">
+						Try the Grade Converter &rarr;
 					</a>
 				</div>
 			</section>
