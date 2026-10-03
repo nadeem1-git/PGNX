@@ -1,449 +1,221 @@
 ---
-import '../styles/global.css';
+import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>PGNX</title>
-	</head>
-	<body class="min-h-screen bg-gradient-to-b from-white via-green-50 to-white text-gray-900 relative">
+<Layout title="Home">
+	<!-- Hero -->
+	<section class="overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-700 via-indigo-800 to-indigo-950 px-8 py-20 text-center text-white shadow-xl">
+		<span class="inline-block rounded-full bg-white/15 px-4 py-1 text-xs font-semibold uppercase tracking-wide">Pakistan &rarr; Germany</span>
+		<h1 class="mt-6 text-5xl font-extrabold tracking-tight sm:text-6xl">PGNX</h1>
+		<p class="mt-3 text-xl font-medium text-indigo-100">Pakistan Germany Nexus</p>
+		<p class="mt-1 text-indigo-200">A community for help, every step of the way.</p>
+		<div class="mt-8 flex flex-wrap justify-center gap-4">
+			<a href={`${base}start`} class="rounded-full bg-white px-6 py-3 text-sm font-semibold text-indigo-700 hover:bg-indigo-50">Start your journey &rarr;</a>
+			<a href={`${base}admission`} class="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">Explore admissions</a>
+		</div>
+	</section>
 
-		<div
-			class="pointer-events-none fixed inset-0 -z-10"
-			style="background-image: radial-gradient(circle, #16653480 1px, transparent 1px); background-size: 24px 24px;"
-		></div>
+	<!-- Mission -->
+	<section class="mt-8 rounded-2xl border border-slate-200 bg-white px-8 py-10 text-center shadow-sm">
+		<h2 class="text-xl font-bold text-slate-900">Our Mission</h2>
+		<p class="mt-4 mx-auto max-w-2xl leading-relaxed text-slate-600">
+			PGNX exists to make the journey from Pakistan to Germany less confusing and less lonely.
+			We bring together clear, practical guidance on admissions and visas with the support of a
+			community that's walked the same path — so no one has to figure it out alone.
+		</p>
+	</section>
 
-		<div class="pointer-events-none fixed left-1/2 top-40 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-green-300 opacity-20 blur-3xl"></div>
-
-		<!-- Top bar -->
-		<header class="relative w-full py-6 px-6 flex items-center justify-end">
-			<div class="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 bg-green-800"></div>
-			<a href={base} class="relative z-10 flex flex-col items-center gap-1 bg-white rounded-full p-1">
-				<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-20 w-20 rounded-full object-cover border border-green-100" />
-			</a>
-		</header>
-
-		<!-- Side menu toggle tab -->
-		<button
-			id="menu-toggle"
-			class="fixed left-0 top-28 z-40 flex flex-col items-center gap-2 rounded-r-xl bg-green-800 text-white px-2 py-5 [writing-mode:vertical-rl]"
-		>
-			<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="[writing-mode:horizontal-tb] rotate-90">
-				<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-				<path d="M9 22V12h6v10"/>
-			</svg>
-			HOME
-		</button>
-
-		<!-- Slide-out side menu -->
-		<nav
-			id="side-menu"
-			class="fixed left-0 top-0 h-full w-72 -translate-x-full bg-green-900 text-white transition-transform duration-300 z-50 flex flex-col"
-		>
-			<div class="flex items-center justify-end px-5 py-5">
-				<button id="menu-close" class="text-2xl leading-none text-white/80 hover:text-white">&#10005;</button>
+	<!-- Ticker -->
+	<section class="relative left-1/2 -ml-[50vw] mt-8 w-screen overflow-hidden bg-slate-900 py-4">
+		<div class="ticker-track flex whitespace-nowrap">
+			<div class="ticker-content flex items-center gap-12 pr-12 text-sm font-medium text-white">
+				<span>📌 Always verify tuition and deadline details on the official university website before applying.</span>
+				<span>📌 Bachelor's applicants need 13 years of education — complete 2 semesters in Pakistan first if you're one year short.</span>
+				<span>📌 Master's applicants need 16 years of education total, including 2+2 year Bachelor's structures.</span>
+				<span>📌 Start your blocked account and health insurance early — both are required before your visa appointment.</span>
+				<span>📌 Visa appointment waiting times can be long — apply as early as possible.</span>
+				<span>📌 As of 1 Sept 2024, proof of funds is set at 992 EUR/month (11,904 EUR/year).</span>
+				<span>📌 Karachi consulate covers Sindh &amp; Balochistan; Islamabad covers Punjab, KP, Gilgit-Baltistan &amp; AJK.</span>
+				<span>📌 Double-check every document before submission — incomplete files are the #1 cause of visa delays.</span>
 			</div>
+			<div class="ticker-content flex items-center gap-12 pr-12 text-sm font-medium text-white" aria-hidden="true">
+				<span>📌 Always verify tuition and deadline details on the official university website before applying.</span>
+				<span>📌 Bachelor's applicants need 13 years of education — complete 2 semesters in Pakistan first if you're one year short.</span>
+				<span>📌 Master's applicants need 16 years of education total, including 2+2 year Bachelor's structures.</span>
+				<span>📌 Start your blocked account and health insurance early — both are required before your visa appointment.</span>
+				<span>📌 Visa appointment waiting times can be long — apply as early as possible.</span>
+				<span>📌 As of 1 Sept 2024, proof of funds is set at 992 EUR/month (11,904 EUR/year).</span>
+				<span>📌 Karachi consulate covers Sindh &amp; Balochistan; Islamabad covers Punjab, KP, Gilgit-Baltistan &amp; AJK.</span>
+				<span>📌 Double-check every document before submission — incomplete files are the #1 cause of visa delays.</span>
+			</div>
+		</div>
+	</section>
 
-			<ul class="flex-1 px-2 border-b border-white/15">
-				<li class="border-b border-white/15">
-					<a href={base} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Home <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li class="border-b border-white/15">
-					<a href={`${base}admission`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Admission <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li class="border-b border-white/15">
-					<a href={`${base}visa`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Visa <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li class="border-b border-white/15">
-					<a href={`${base}resources`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Resources <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li class="border-b border-white/15">
-					<a href={`${base}about`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						About Us <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li>
-					<a href={`${base}contact`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Contact <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-			</ul>
-
-			<a href={base} class="px-5 py-5 text-white/70 hover:text-white" aria-label="Home">
-				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-					<path d="M9 22V12h6v10"/>
-				</svg>
-			</a>
-		</nav>
-
-		<!-- Main content -->
-		<main class="px-6 py-12 max-w-4xl mx-auto">
-
-			<!-- Hero card -->
-			<section class="min-h-[65vh] flex flex-col justify-center rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm px-8 py-8 text-center">
-				<div class="shimmer-line mx-auto mb-8 h-[2px] w-40" style="background: linear-gradient(to right, transparent, #16a34a, transparent);"></div>
-				<h1 class="text-7xl sm:text-8xl font-extrabold text-green-800"><span class="flag-pk">P</span><span class="flag-de">G</span>NX</h1>
-				<p class="mt-4 text-2xl font-semibold text-gray-800">Pakistan Germany Nexus</p>
-				<p class="text-xl text-green-700">A community for help</p>
-
-				<div class="mt-14">
-					<p class="text-base font-semibold uppercase tracking-wide text-green-700">&mdash; Our founder's message &mdash;</p>
-					<p class="mt-3 text-lg italic text-gray-700">""</p>
-				</div>
-			</section>
-
-			<!-- Mission -->
-			<section class="mt-8 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm px-8 py-10 text-center">
-				<h2 class="text-xl font-bold text-green-800">Our Mission</h2>
-				<p class="mt-4 text-gray-700 leading-relaxed max-w-2xl mx-auto">
-					PGNX exists to make the journey from Pakistan to Germany less confusing and less lonely.
-					We bring together clear, practical guidance on admissions and visas with the support of a
-					community that's walked the same path — so no one has to figure it out alone.
-				</p>
-			</section>
-
-			<!-- What We Help With -->
-			<section class="mt-8 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm px-8 py-10">
-				<h2 class="text-xl font-bold text-green-800 text-center">What We Help With</h2>
-				<div class="mt-8 grid gap-8 sm:grid-cols-3 text-center">
-					<div>
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M22 10L12 5 2 10l10 5 10-5z"/>
-								<path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>
-							</svg>
-						</div>
-						<p class="mt-3 font-semibold text-gray-800">Admission Assistance</p>
-					</div>
-					<div>
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<circle cx="12" cy="12" r="10"/>
-								<path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
-							</svg>
-						</div>
-						<p class="mt-3 font-semibold text-gray-800">Visa Assistance</p>
-					</div>
-					<div>
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-								<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-							</svg>
-						</div>
-						<p class="mt-3 font-semibold text-gray-800">German Language Learning</p>
-					</div>
-				</div>
-			</section>
-
-			<!-- Everything you need to know -->
-			<section class="mt-8 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm px-8 py-12 text-center">
-				<h2 class="text-2xl sm:text-3xl font-bold text-green-800">Everything you need to know about the process</h2>
-				<div class="mt-8 flex items-center justify-center gap-4 sm:gap-6 flex-wrap">
-
-					<span class="inline-flex items-center gap-2 rounded-full border-2 border-green-700 px-6 py-2.5 font-semibold text-green-800 bg-green-50">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24" width="28" height="21" class="rounded-sm">
-							<rect width="32" height="24" fill="#01411C"/>
-							<rect width="8" height="24" fill="#ffffff"/>
-							<circle cx="21" cy="12" r="6" fill="#ffffff"/>
-							<circle cx="23" cy="12" r="5" fill="#01411C"/>
-							<polygon points="26,7 27,10.5 30.5,10.5 27.7,12.7 28.7,16 26,13.8 23.3,16 24.3,12.7 21.5,10.5 25,10.5" fill="#ffffff"/>
-						</svg>
-						Pakistan
-					</span>
-
-					<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-green-700">
-						<line x1="5" y1="12" x2="19" y2="12"/>
-						<polyline points="12 5 19 12 12 19"/>
-					</svg>
-
-					<span class="inline-flex items-center gap-2 rounded-full border-2 border-green-700 px-6 py-2.5 font-semibold text-green-800 bg-green-50">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24" width="28" height="21" class="rounded-sm">
-							<rect width="32" height="8" fill="#000000"/>
-							<rect y="8" width="32" height="8" fill="#DD0000"/>
-							<rect y="16" width="32" height="8" fill="#FFCE00"/>
-						</svg>
-						Germany
-					</span>
-
-				</div>
-			</section>
-
-
-						<!-- Running headline ticker -->
-			<section class="relative left-1/2 -ml-[50vw] w-screen mt-8 overflow-hidden bg-green-800 py-4">
-				<div class="ticker-track flex whitespace-nowrap">
-					<div class="ticker-content flex items-center gap-12 pr-12 text-white text-sm font-medium">
-						<span>📌 Always verify tuition and deadline details on the official university website before applying.</span>
-						<span>📌 Bachelor's applicants need 13 years of education &mdash; complete 2 semesters in Pakistan first if you're one year short.</span>
-						<span>📌 Master's applicants need 16 years of education total, including 2+2 year Bachelor's structures.</span>
-						<span>📌 Start your blocked account and health insurance early &mdash; both are required before your visa appointment.</span>
-						<span>📌 Visa appointment waiting times can be long &mdash; apply as early as possible.</span>
-						<span>📌 As of 1 Sept 2024, proof of funds is set at 992 EUR/month (11,904 EUR/year).</span>
-						<span>📌 Karachi consulate covers Sindh &amp; Balochistan; Islamabad covers Punjab, KP, Gilgit-Baltistan &amp; AJK.</span>
-						<span>📌 Double-check every document before submission &mdash; incomplete files are the #1 cause of visa delays.</span>
-					</div>
-					<div class="ticker-content flex items-center gap-12 pr-12 text-white text-sm font-medium" aria-hidden="true">
-						<span>📌 Always verify tuition and deadline details on the official university website before applying.</span>
-						<span>📌 Bachelor's applicants need 13 years of education &mdash; complete 2 semesters in Pakistan first if you're one year short.</span>
-						<span>📌 Master's applicants need 16 years of education total, including 2+2 year Bachelor's structures.</span>
-						<span>📌 Start your blocked account and health insurance early &mdash; both are required before your visa appointment.</span>
-						<span>📌 Visa appointment waiting times can be long &mdash; apply as early as possible.</span>
-						<span>📌 As of 1 Sept 2024, proof of funds is set at 992 EUR/month (11,904 EUR/year).</span>
-						<span>📌 Karachi consulate covers Sindh &amp; Balochistan; Islamabad covers Punjab, KP, Gilgit-Baltistan &amp; AJK.</span>
-						<span>📌 Double-check every document before submission &mdash; incomplete files are the #1 cause of visa delays.</span>
-					</div>
-				</div>
-			</section>
-
-			<!-- Service cards -->
-			<section class="mt-8">
-				<div class="grid gap-6 sm:grid-cols-4">
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M22 10L12 5 2 10l10 5 10-5z"/>
-								<path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>
-							</svg>
-						</div>
-						<h2 class="mt-4 text-lg font-bold">Admission</h2>
-						<p class="mt-1 text-sm text-gray-600">Get guidance and support for your admission process.</p>
-						<a href={`${base}admission`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
-					</div>
-
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<circle cx="12" cy="12" r="10"/>
-								<path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
-							</svg>
-						</div>
-						<h2 class="mt-4 text-lg font-bold">Visa</h2>
-						<p class="mt-1 text-sm text-gray-600">Information and assistance for your visa process.</p>
-						<a href={`${base}visa`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
-					</div>
-
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6"/>
-							</svg>
-						</div>
-						<h2 class="mt-4 text-lg font-bold">Universities</h2>
-						<p class="mt-1 text-sm text-gray-600">Browse universities and programs, organized by field.</p>
-						<a href={`${base}universities`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
-					</div>
-
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-								<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-							</svg>
-						</div>
-						<h2 class="mt-4 text-lg font-bold">German Language</h2>
-						<p class="mt-1 text-sm text-gray-600">Resources and guidance for learning German.</p>
-						<a href={`${base}german-language`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
-					</div>
-				</div>
-
-				<div class="mt-6 grid gap-6 sm:grid-cols-4">
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-								<polyline points="14 2 14 8 20 8"/>
-								<line x1="8" y1="13" x2="16" y2="13"/>
-								<line x1="8" y1="17" x2="16" y2="17"/>
-							</svg>
-						</div>
-						<h2 class="mt-4 text-lg font-bold">Document Preparation</h2>
-						<p class="mt-1 text-sm text-gray-600">Checklists and guidance for your required documents.</p>
-						<a href={`${base}document-preparation`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
-					</div>
-
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-								<path d="M12 6.5v10M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-							</svg>
-						</div>
-						<h2 class="mt-4 text-lg font-bold">Resources</h2>
-						<p class="mt-1 text-sm text-gray-600">Photo requirements, embassy checklists, and cost breakdowns.</p>
-						<a href={`${base}resources`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
-					</div>
-
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M12 21s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z"/>
-								<circle cx="12" cy="11" r="2"/>
-							</svg>
-						</div>
-						<h2 class="mt-4 text-lg font-bold">Cities</h2>
-						<p class="mt-1 text-sm text-gray-600">Explore German cities and what to know before you move there.</p>
-						<a href={`${base}cities`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
-					</div>
-
-					<div class="rounded-3xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6 text-center">
-						<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M3 21h18"/>
-								<path d="M5 21V7l7-4 7 4v14"/>
-								<path d="M9 9h1M9 13h1M14 9h1M14 13h1M9 21v-4h6v4"/>
-							</svg>
-						</div>
-						<h2 class="mt-4 text-lg font-bold">City Registration</h2>
-						<p class="mt-1 text-sm text-gray-600">Anmeldung guides for registering your address, city by city.</p>
-						<a href={`${base}city-registration`} class="mt-4 inline-block rounded-md bg-green-800 text-white text-sm font-semibold px-4 py-2 hover:bg-green-900">Learn More &rarr;</a>
-					</div>
-				</div>
-
-			</section>
-
-			<!-- Grade Converter highlight -->
-			<section class="mt-8 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm px-8 py-10 text-center">
-				<span class="inline-block rounded-full bg-green-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-green-800">Now Live</span>
-				<h2 class="mt-4 text-xl font-bold text-green-800">German Grade Converter</h2>
-				<p class="mt-2 text-gray-600 max-w-xl mx-auto">Convert your CGPA or percentage into the German grading system in seconds &mdash; free and online.</p>
-				<a href={`${base}grade-converter`} class="mt-6 inline-block rounded-md bg-green-800 text-white font-semibold px-6 py-2.5 hover:bg-green-900">
-					Try It Now &rarr;
-				</a>
-			</section>
-
-			<!-- Start section -->
-			<section class="mt-8 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm px-8 py-10 text-center">
-				<div class="mx-auto h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-700">
+	<!-- Service cards -->
+	<section class="mt-8">
+		<h2 class="text-center text-2xl font-bold text-slate-900">What We Help With</h2>
+		<div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+			<a href={`${base}admission`} class="group rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-						<circle cx="9" cy="7" r="4"/>
-						<path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+						<path d="M22 10L12 5 2 10l10 5 10-5z"/>
+						<path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>
 					</svg>
 				</div>
-				<h2 class="mt-4 text-xl font-bold">Gathered all info right?</h2>
-				<p class="mt-2 text-gray-600">Want to start the process, click here.</p>
-				<a href={`${base}start`} class="mt-6 inline-block rounded-md bg-green-800 text-white font-semibold px-6 py-2.5 hover:bg-green-900">
-					Start &rarr;
-				</a>
-			</section>
+				<h3 class="mt-4 font-bold text-slate-900">Admission</h3>
+				<p class="mt-1 text-sm text-slate-500">Guidance and support for your admission process.</p>
+				<span class="mt-4 inline-block text-sm font-semibold text-indigo-600 group-hover:underline">Learn more &rarr;</span>
+			</a>
 
-			<!-- Student Stories -->
-			<section class="relative left-1/2 -ml-[50vw] w-screen mt-8 bg-white-950 px-8 py-40 text-center text-white">
-				<p class="text-sm font-semibold uppercase tracking-widest text-green-700">&mdash; Success Stories &mdash;</p>
-				<h2 class="mt-2 text-2xl sm:text-3xl font-bold text-green-800">Students Now in Germany</h2>
+			<a href={`${base}visa`} class="group rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="10"/>
+						<path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
+					</svg>
+				</div>
+				<h3 class="mt-4 font-bold text-slate-900">Visa</h3>
+				<p class="mt-1 text-sm text-slate-500">Information and assistance for your visa process.</p>
+				<span class="mt-4 inline-block text-sm font-semibold text-indigo-600 group-hover:underline">Learn more &rarr;</span>
+			</a>
 
-				<div class="mt-10 grid gap-6 sm:grid-cols-3 text-left">
-					<div class="rounded-xl bg-white border border-green-100 p-6">
-						<div class="text-amber-400">★★★★★</div>
-						<p class="mt-3 italic text-gray-700 text-sm leading-relaxed">"Placeholder testimonial text goes here."</p>
-						<div class="mt-4 flex items-center gap-3">
-							<div class="h-9 w-9 rounded-full bg-green-100"></div>
-							<div>
-								<p class="font-semibold text-sm text-gray-900">Aashir Muzaffar</p>
-								<p class="text-xs text-gray-500">M.Sc Autonomous Systems &middot; hochschule bonn</p>
-							</div>
-						</div>
-					</div>
+			<a href={`${base}universities`} class="group rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6"/>
+					</svg>
+				</div>
+				<h3 class="mt-4 font-bold text-slate-900">Universities</h3>
+				<p class="mt-1 text-sm text-slate-500">Browse universities and programs, organized by field.</p>
+				<span class="mt-4 inline-block text-sm font-semibold text-indigo-600 group-hover:underline">Learn more &rarr;</span>
+			</a>
 
-					<div class="rounded-xl bg-white border border-green-100 p-6">
-						<div class="text-amber-400">★★★★★</div>
-						<p class="mt-3 italic text-gray-700 text-sm leading-relaxed">"Placeholder testimonial text goes here."</p>
-						<div class="mt-4 flex items-center gap-3">
-							<div class="h-9 w-9 rounded-full bg-green-100"></div>
-							<div>
-								<p class="font-semibold text-sm text-gray-900">Student Name</p>
-								<p class="text-xs text-gray-500">Msc Information and communication systems &middot; Technische Universität Chemnitz</p>
-							</div>
-						</div>
-					</div>
+			<a href={`${base}german-language`} class="group rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+						<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+					</svg>
+				</div>
+				<h3 class="mt-4 font-bold text-slate-900">German Language</h3>
+				<p class="mt-1 text-sm text-slate-500">Resources and guidance for learning German.</p>
+				<span class="mt-4 inline-block text-sm font-semibold text-indigo-600 group-hover:underline">Learn more &rarr;</span>
+			</a>
 
-					<div class="rounded-xl bg-white border border-green-100 p-6">
-						<div class="text-amber-400">★★★★★</div>
-						<p class="mt-3 italic text-gray-700 text-sm leading-relaxed">"Placeholder testimonial text goes here."</p>
-						<div class="mt-4 flex items-center gap-3">
-							<div class="h-9 w-9 rounded-full bg-green-100"></div>
-							<div>
-								<p class="font-semibold text-sm text-gray-900">Student Name</p>
-								<p class="text-xs text-gray-500">Program &middot; University</p>
-							</div>
-						</div>
+			<a href={`${base}document-preparation`} class="group rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+						<polyline points="14 2 14 8 20 8"/>
+						<line x1="8" y1="13" x2="16" y2="13"/>
+						<line x1="8" y1="17" x2="16" y2="17"/>
+					</svg>
+				</div>
+				<h3 class="mt-4 font-bold text-slate-900">Document Preparation</h3>
+				<p class="mt-1 text-sm text-slate-500">Checklists and guidance for your required documents.</p>
+				<span class="mt-4 inline-block text-sm font-semibold text-indigo-600 group-hover:underline">Learn more &rarr;</span>
+			</a>
+
+			<a href={`${base}resources`} class="group rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+						<path d="M12 6.5v10M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+					</svg>
+				</div>
+				<h3 class="mt-4 font-bold text-slate-900">Resources</h3>
+				<p class="mt-1 text-sm text-slate-500">Photo requirements, embassy checklists, and cost breakdowns.</p>
+				<span class="mt-4 inline-block text-sm font-semibold text-indigo-600 group-hover:underline">Learn more &rarr;</span>
+			</a>
+
+			<a href={`${base}cities`} class="group rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 21s-6-5.5-6-10a6 6 0 0 1 12 0c0 4.5-6 10-6 10z"/>
+						<circle cx="12" cy="11" r="2"/>
+					</svg>
+				</div>
+				<h3 class="mt-4 font-bold text-slate-900">Cities</h3>
+				<p class="mt-1 text-sm text-slate-500">Explore German cities and what to know before you move there.</p>
+				<span class="mt-4 inline-block text-sm font-semibold text-indigo-600 group-hover:underline">Learn more &rarr;</span>
+			</a>
+
+			<a href={`${base}city-registration`} class="group rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+				<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M3 21h18"/>
+						<path d="M5 21V7l7-4 7 4v14"/>
+						<path d="M9 9h1M9 13h1M14 9h1M14 13h1M9 21v-4h6v4"/>
+					</svg>
+				</div>
+				<h3 class="mt-4 font-bold text-slate-900">City Registration</h3>
+				<p class="mt-1 text-sm text-slate-500">Anmeldung guides for registering your address, city by city.</p>
+				<span class="mt-4 inline-block text-sm font-semibold text-indigo-600 group-hover:underline">Learn more &rarr;</span>
+			</a>
+		</div>
+	</section>
+
+	<!-- Grade Converter highlight -->
+	<section class="mt-8 rounded-2xl border border-orange-100 bg-gradient-to-r from-orange-50 to-amber-50 px-8 py-10 text-center">
+		<span class="inline-block rounded-full bg-orange-500 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-white">Now Live</span>
+		<h2 class="mt-4 text-xl font-bold text-slate-900">German Grade Converter</h2>
+		<p class="mt-2 mx-auto max-w-xl text-slate-600">Convert your CGPA or percentage into the German grading system in seconds — free and online.</p>
+		<a href={`${base}grade-converter`} class="mt-6 inline-block rounded-full bg-orange-500 px-6 py-3 font-semibold text-white hover:bg-orange-600">
+			Try It Now &rarr;
+		</a>
+	</section>
+
+	<!-- Student Stories -->
+	<section class="mt-8 rounded-2xl border border-slate-200 bg-white px-8 py-12 text-center shadow-sm">
+		<p class="text-sm font-semibold uppercase tracking-widest text-indigo-600">Success Stories</p>
+		<h2 class="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Students Now in Germany</h2>
+
+		<div class="mt-10 grid gap-6 text-left sm:grid-cols-3">
+			<div class="rounded-xl border border-slate-200 p-6">
+				<div class="text-amber-400">★★★★★</div>
+				<p class="mt-3 text-sm italic leading-relaxed text-slate-600">"Placeholder testimonial text goes here."</p>
+				<div class="mt-4 flex items-center gap-3">
+					<div class="h-9 w-9 rounded-full bg-indigo-100"></div>
+					<div>
+						<p class="text-sm font-semibold text-slate-900">Aashir Muzaffar</p>
+						<p class="text-xs text-slate-500">M.Sc Autonomous Systems &middot; Hochschule Bonn</p>
 					</div>
 				</div>
-			</section>
-
-			<!-- Closing Hero -->
-			<section class="relative left-1/2 -ml-[50vw] w-screen mt-8 bg-green-950 px-8 py-40 text-center text-white">
-				<h2 class="text-3xl sm:text-5xl font-extrabold">Your Complete Guide to Germany</h2>
-				<p class="mt-4 text-green-100 max-w-xl mx-auto text-lg">
-					From admission to visa to your first German lesson — everything you need, in one place.
-				</p>
-			</section>
-
-		</main>
-
-		<!-- Footer -->
-		<footer class="mt-12 border-t border-green-100 py-6 px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500 max-w-4xl mx-auto">
-			<p>&copy; 2025 PGNX &mdash; Pakistan Germany Nexus. All rights reserved.</p>
-			<div class="flex gap-4">
-				<a href="#" aria-label="Facebook" class="hover:text-green-700">FB</a>
-				<a href="#" aria-label="Instagram" class="hover:text-green-700">IG</a>
-				<a href="#" aria-label="WhatsApp" class="hover:text-green-700">WA</a>
 			</div>
-		</footer>
+			<div class="rounded-xl border border-slate-200 p-6">
+				<div class="text-amber-400">★★★★★</div>
+				<p class="mt-3 text-sm italic leading-relaxed text-slate-600">"Placeholder testimonial text goes here."</p>
+				<div class="mt-4 flex items-center gap-3">
+					<div class="h-9 w-9 rounded-full bg-indigo-100"></div>
+					<div>
+						<p class="text-sm font-semibold text-slate-900">Student Name</p>
+						<p class="text-xs text-slate-500">MSc Information and Communication Systems &middot; TU Chemnitz</p>
+					</div>
+				</div>
+			</div>
+			<div class="rounded-xl border border-slate-200 p-6">
+				<div class="text-amber-400">★★★★★</div>
+				<p class="mt-3 text-sm italic leading-relaxed text-slate-600">"Placeholder testimonial text goes here."</p>
+				<div class="mt-4 flex items-center gap-3">
+					<div class="h-9 w-9 rounded-full bg-indigo-100"></div>
+					<div>
+						<p class="text-sm font-semibold text-slate-900">Student Name</p>
+						<p class="text-xs text-slate-500">Program &middot; University</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-		<!-- Floating WhatsApp button -->
-		<a href="https://wa.me/YOUR_NUMBER_HERE"
-		   target="_blank"
-		   rel="noopener noreferrer"
-		   aria-label="Chat on WhatsApp"
-		   class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 transition-colors">
-
-			<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-				<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.86 9.86 0 0 0 12.04 2zm5.8 14.1c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.98 0-1.42.74-2.11 1-2.4.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.35 1.45.29.15.46.13.63-.08.17-.21.72-.84.91-1.13.19-.29.38-.24.63-.14.26.09 1.65.78 1.93.92.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/>
-			</svg>
+	<!-- Closing CTA -->
+	<section class="relative left-1/2 -ml-[50vw] mt-8 w-screen bg-slate-900 px-8 py-24 text-center text-white">
+		<h2 class="text-3xl font-extrabold sm:text-5xl">Your Complete Guide to Germany</h2>
+		<p class="mx-auto mt-4 max-w-xl text-lg text-slate-300">
+			From admission to visa to your first German lesson — everything you need, in one place.
+		</p>
+		<a href={`${base}start`} class="mt-8 inline-block rounded-full bg-indigo-500 px-8 py-3 font-semibold text-white hover:bg-indigo-400">
+			Get Started &rarr;
 		</a>
-
-		<script>
-			const toggle = document.getElementById("menu-toggle");
-			const menu = document.getElementById("side-menu");
-			const close = document.getElementById("menu-close");
-
-			toggle?.addEventListener("click", () => {
-				menu?.classList.remove("-translate-x-full");
-			});
-			close?.addEventListener("click", () => {
-				menu?.classList.add("-translate-x-full");
-			});
-		</script>
-	<style>
-		.flag-pk {
-			background: linear-gradient(90deg, #ffffff 0%, #ffffff 34%, #01411c 34%, #01411c 100%);
-			-webkit-background-clip: text;
-			background-clip: text;
-			color: transparent;
-			-webkit-text-stroke: 1px #01411c;
-		}
-		.flag-de {
-			background: linear-gradient(180deg, #000000 0%, #000000 42%, #dd0000 42%, #dd0000 64%, #ffce00 64%, #ffce00 100%);
-			-webkit-background-clip: text;
-			background-clip: text;
-			color: transparent;
-		}
-	</style>
-	</body>
-</html>
+	</section>
+</Layout>

@@ -1,258 +1,145 @@
 ---
-import '../styles/global.css';
-const base = import.meta.env.BASE_URL;
+import Layout from '../layouts/Layout.astro';
 ---
- 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Document Preparation | PGNX</title>
-	</head>
-	<body class="min-h-screen bg-gradient-to-b from-white via-green-50 to-white text-gray-900 relative">
- 
-		<div
-			class="pointer-events-none fixed inset-0 -z-10"
-			style="background-image: radial-gradient(circle, #16653480 1px, transparent 1px); background-size: 24px 24px;"
-		></div>
- 
-		<div class="pointer-events-none fixed left-1/2 top-40 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-green-300 opacity-20 blur-3xl"></div>
- 
-		<!-- Top bar -->
-		<header class="relative w-full py-6 px-6 flex items-center justify-end">
-			<div class="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 bg-green-800"></div>
-			<a href={base} class="relative z-10 flex flex-col items-center gap-1 bg-white rounded-full p-1">
-				<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-20 w-20 rounded-full object-cover border border-green-100" />
-			</a>
-		</header>
- 
-		<!-- Side menu toggle tab -->
-		<button
-			id="menu-toggle"
-			class="fixed left-0 top-28 z-40 flex flex-col items-center gap-2 rounded-r-xl bg-green-800 text-white px-2 py-5 [writing-mode:vertical-rl]"
-		>
-			<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="[writing-mode:horizontal-tb] rotate-90">
-				<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-				<path d="M9 22V12h6v10"/>
-			</svg>
-			HOME
-		</button>
- 
-		<!-- Slide-out side menu -->
-		<nav
-			id="side-menu"
-			class="fixed left-0 top-0 h-full w-72 -translate-x-full bg-green-900 text-white transition-transform duration-300 z-50 flex flex-col"
-		>
-			<div class="flex items-center justify-end px-5 py-5">
-				<button id="menu-close" class="text-2xl leading-none text-white/80 hover:text-white">&#10005;</button>
-			</div>
- 
-			<ul class="flex-1 px-2 border-b border-white/15">
-				<li class="border-b border-white/15">
-					<a href={base} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Home <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li class="border-b border-white/15">
-					<a href={`${base}admission`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Admission <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li class="border-b border-white/15">
-					<a href={`${base}visa`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Visa <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li class="border-b border-white/15">
-					<a href={`${base}resources`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Resources <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li class="border-b border-white/15">
-					<a href={`${base}about`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						About Us <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-				<li>
-					<a href={`${base}contact`} class="flex items-center justify-between px-4 py-4 text-sm font-semibold uppercase tracking-wide hover:bg-white/5">
-						Contact <span class="flex items-center gap-3"><span class="h-5 w-px bg-white/25"></span><span class="text-white/60">&raquo;</span></span>
-					</a>
-				</li>
-			</ul>
- 
-			<a href={base} class="px-5 py-5 text-white/70 hover:text-white" aria-label="Home">
-				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-					<path d="M9 22V12h6v10"/>
-				</svg>
-			</a>
-		</nav>
- 
-		<!-- Main content -->
-		<main class="px-6 py-12 max-w-3xl mx-auto">
-			<a href={base} class="text-sm text-green-700 hover:text-green-900">&larr; Back to Home</a>
- 
-			<h1 class="mt-4 text-4xl font-extrabold text-green-800">Document Preparation</h1>
-			<p class="mt-2 text-gray-600">Checklists and real example documents to help you prepare your application.</p>
- 
-			<!-- LOM intro -->
-			<section class="mt-10 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-xl font-bold text-green-800">Letter of Motivation (LOM)</h2>
-				<p class="mt-4 text-gray-700 leading-relaxed">
-					Your Letter of Motivation (sometimes called a Statement of Purpose) is where you explain
-					why you've chosen your program, your university, and Germany itself &mdash; and what you
-					plan to do afterward. Embassies and universities look for a clear, honest connection
-					between your background, the specific program, and your future goals.
-				</p>
-				<p class="mt-4 text-gray-700 leading-relaxed">
-					Below you'll find the official guidance on how to write one, fill-in-the-blank templates
-					to help you structure your own, and finally two real examples shared by community
-					members, kept as they were written. Use the samples as inspiration &mdash; not a template
-					to copy &mdash; your own letter should reflect your own background and reasoning.
-				</p>
-			</section>
- 
-			<!-- DAAD Official Guide -->
-			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-xl font-bold text-green-800">How to Write a Letter of Motivation &mdash; DAAD Guide</h2>
-				<p class="mt-1 text-xs uppercase tracking-wide text-gray-500">Deutscher Akademischer Austausch Dienst (German Academic Exchange Service)</p>
- 
-				<p class="mt-4 text-gray-700 leading-relaxed">
-					When applying for a Master's programme in Germany, applicants must submit a letter of
-					motivation (sometimes called a "statement of purpose"). It plays an important role in
-					the selection process &mdash; yet many letters fail to convince the selection committee.
-				</p>
- 
-				<ol class="mt-4 space-y-4 text-sm text-gray-700 leading-relaxed list-decimal list-inside">
-					<li>
-						<strong>Start early.</strong> This is a crucial document &mdash; never try to write it in one evening.
-					</li>
-					<li>
-						<strong>Don't repeat your CV</strong> as the opening of your letter.
-					</li>
-					<li>
-						<strong>Answer these questions:</strong>
-						<ul class="mt-2 space-y-1.5 list-disc list-inside pl-4">
-							<li>What is your professional goal, and in which sector do you want to work after your Master's?</li>
-							<li>How do you intend to contribute to your home country's social, political, or technical development? (Facts and figures are welcome.)</li>
-							<li>Why this Master's programme, and which of its courses serve your professional goals? Be well informed.</li>
-							<li>Why are you the right person for this programme &mdash; what knowledge, skills, and relevant experience (including organizational or volunteer involvement) do you bring? Be honest about your leadership qualities and strengths.</li>
-							<li>Why study in Germany &mdash; what do you know about the German university system, and is there anything about Germany's society, politics, economy, or technology you'd like to bring back home? Are there German organizations or institutions you'd like to learn more about?</li>
-						</ul>
-					</li>
-					<li>
-						<strong>Compose it carefully.</strong> Reflect on the questions, take notes, discuss with friends, write an outline, then the text &mdash; but don't include the outline or questions themselves in your final letter.
-					</li>
-					<li>
-						<strong>Write in an appropriate style:</strong> avoid platitudes, flowery phrases, and flattery. Be reflective and factual rather than campaigning for your beliefs.
-					</li>
-					<li>
-						<strong>Proofread</strong> and cut anything redundant. Aim for no more than two to three pages, and check grammar and spelling carefully.
-					</li>
-				</ol>
- 
-				<div class="mt-6 rounded-lg bg-amber-50 border border-amber-200 p-4 text-sm text-amber-900">
-					Keep in mind your letter of motivation may be discussed with you during pre-selection interviews.
-				</div>
-			</section>
- 
-			<!-- LOM Templates -->
-			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-xl font-bold text-green-800">Motivation Letter Templates</h2>
-				<p class="mt-4 text-gray-700 leading-relaxed">
-					Fill-in-the-blank starting points for Bachelor's and Master's applicants. Replace every
-					bracketed placeholder with your own details &mdash; these are meant as a structural
-					starting point, not a letter to submit as-is.
-				</p>
- 
-				<h3 class="mt-6 font-semibold text-green-800">Template &mdash; Master's Applicants</h3>
-				<div class="mt-4 text-sm text-gray-700 leading-relaxed space-y-4">
-					<p>Dear Admission Committee,</p>
-					<p>I am writing to express my strong interest in the Master's program in <strong>[Program Name]</strong> at your university. Having completed a Bachelor's degree in <strong>[Your Bachelor's Field]</strong>, I am eager to deepen my knowledge, strengthen my technical expertise, and gain international academic exposure through a high-quality master's education in Germany. The interdisciplinary curriculum, practical orientation, and research opportunities offered by your program align closely with my academic background and long-term career aspirations.</p>
-					<p>My academic journey began with a strong interest in <strong>[your field of interest]</strong>, which led me to pursue my Bachelor's degree. During my undergraduate studies, I developed a solid foundation in <strong>[list relevant subjects/skills]</strong>. These courses equipped me with analytical thinking skills and a comprehensive understanding of my field.</p>
-					<p>Throughout my studies, I actively participated in academic and practical projects that strengthened both my technical and teamwork abilities. <strong>[Describe a key project &mdash; what it was, your role, and what it taught you.]</strong></p>
-					<p>In addition to my academic projects, I gained practical industry experience through internships. <strong>[Describe your internship(s), the tools/skills used, and what you learned.]</strong></p>
-					<p>I have chosen Germany as my study destination because of its globally recognized education system, strong emphasis on research and innovation, and close collaboration between universities and industry. Studying in such an international and technologically advanced environment will enable me to broaden my perspective and collaborate with students from diverse backgrounds.</p>
-					<p>I am particularly interested in your Master's program because of its focus on <strong>[mention specialization areas, e.g., Artificial Intelligence, Data Science, Robotics, etc.]</strong>. Courses such as <strong>[mention relevant courses]</strong> are especially appealing because they will allow me to build on my previous knowledge while exploring advanced concepts.</p>
-					<p>My long-term objective is to become a highly skilled professional in <strong>[your field]</strong>. After completing my master's degree, I intend to gain international industry experience and apply the knowledge acquired during my studies to solve real-world challenges. Eventually, I aim to contribute to <strong>[your long-term goal, e.g., technological growth in Pakistan]</strong>.</p>
-					<p>Beyond academics, I have participated in leadership and community initiatives. <strong>[Mention any leadership roles, societies, or volunteer work.]</strong> These experiences taught me the importance of collaboration, responsibility, and continuous learning.</p>
-					<p>I am confident that my academic background, practical experience, and commitment to professional growth make me a strong candidate for your Master's program. Thank you for considering my application.</p>
-					<p>Yours sincerely,<br /><strong>[Full Name]</strong></p>
-				</div>
- 
-				<h3 class="mt-8 font-semibold text-green-800">Template &mdash; Bachelor's Applicants</h3>
-				<div class="mt-4 text-sm text-gray-700 leading-relaxed space-y-4">
-					<p>Dear Admissions Committee,</p>
-					<p>I am writing to express my strong interest in pursuing a Bachelor's degree in <strong>[Program Name]</strong> at your university. The excellent academic reputation of German higher education, combined with your university's commitment to innovation, practical learning, and international cooperation, makes your program an ideal choice for my academic and professional development.</p>
-					<p>Since my school years, I have been deeply interested in <strong>[field of study]</strong>. Through my academic coursework and personal learning experiences, I have developed a strong foundation in subjects such as <strong>[relevant subjects]</strong>. These experiences have strengthened my analytical thinking, problem-solving abilities, and curiosity to explore new concepts.</p>
-					<p>I completed my secondary education at <strong>[School Name]</strong> with a focus on <strong>[Science/Computer Science/Business/etc.]</strong>. During my studies, I particularly enjoyed courses related to <strong>[relevant subjects]</strong>. I also actively participated in <strong>[competitions, projects, volunteer work, student societies, or extracurricular activities]</strong>, which helped me develop teamwork, leadership, and communication skills.</p>
-					<p>Germany has long been recognized for its high-quality education system, advanced research environment, and strong connection between academia and industry. I am particularly attracted to your university because of its modern curriculum, emphasis on practical applications, and supportive learning environment.</p>
-					<p>I believe the Bachelor's program in <strong>[Program Name]</strong> will give me the knowledge and skills to build a successful career in <strong>[career field]</strong>. I am especially interested in courses such as <strong>[mention relevant courses if known]</strong>, which will help me develop expertise important for my future career.</p>
-					<p>After completing my bachelor's degree, I intend to gain professional experience in my field and contribute to innovative projects that address real-world challenges. In the long term, I aspire to make meaningful contributions to society through <strong>[technology/research/industry &mdash; your field]</strong>.</p>
-					<p>I am confident that my motivation, dedication, and willingness to learn will enable me to succeed in your academic environment. Thank you for considering my application.</p>
-					<p>Yours sincerely,<br /><strong>[Full Name]</strong></p>
-				</div>
-			</section>
- 
-			<!-- Sample 1 -->
-			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-lg font-bold text-green-800">Sample &mdash; International Corporate Communication &amp; Media Management (HNU)</h2>
-				<p class="mt-1 text-xs uppercase tracking-wide text-gray-500">By Ali Hamza</p>
-				<div class="mt-4 text-sm text-gray-700 leading-relaxed space-y-4">
-					<p>To,<br />The Visa Officer, German Embassy, Islamabad</p>
-					<p>Dear Sir/Madam,</p>
-					<p>I am writing to share my motivation for applying for a student visa to pursue the master's degree program in "International Corporate Communication and Media Management (ICM)" at the Neu-Ulm University of Applied Sciences (HNU). This program connects well with my academic background, work experience, and career goals.</p>
-					<p>I completed my four-year bachelor's degree in "Media Studies" at Bahria University, Karachi. During my studies, I learned about digital media, advertisement and public relations, development support communication, and media management. These subjects helped me understand how to manage digital media and utilize it for communication with the public in a corporate environment. My work experience in digital media also gave me the skills to handle corporate communication.</p>
-					<p>The reason for choosing Germany as a study destination is that it is one of the most advanced countries in sustainability, economics, and research. I am also interested in studying in Germany due to no tuition fees and high-quality education. It will also offer me great opportunities for practical learning, and the multicultural environment makes it an even better place to study.</p>
-					<p>The Master in "International Corporate Communication and Media Management (ICM)" is the next step for me to grow academically and professionally. This program focuses on providing the skills to utilize media for marketing and communication in this digital age. With courses like strategic brand management, content production, sustainability, and CSR communication, this program will help me to achieve my career goals and use my media management skills to bring positive change to society.</p>
-					<p>After completing my master's degree, I plan to work in Germany to gain experience in corporate communication and media management. I want to work in a diverse environment and learn from global companies. After gaining experience, I aim to start my own media agency in Pakistan. I aim to help businesses improve their communication strategies and adopt sustainable practices.</p>
-					<p>In conclusion, I am excited to join the "International Corporate Communication and Media Management (ICM)" program at HNU. My educational and professional career aligns perfectly with the objective of this course. I am determined to make the most of this educational opportunity and contribute to this university.</p>
-					<p>I am looking forward to a positive response. Thank you for your time and consideration.</p>
-					<p>Sincerely,<br />Ali Hamza</p>
-				</div>
-			</section>
- 
-			<!-- Sample 2 -->
-			<section class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-lg font-bold text-green-800">Sample &mdash; MSc Autonomous Systems (Hochschule Bonn-Rhein-Sieg)</h2>
-				<p class="mt-1 text-xs uppercase tracking-wide text-gray-500">By Aashir Muzaffar</p>
-				<div class="mt-4 text-sm text-gray-700 leading-relaxed space-y-4">
-					<p>To,<br />The Visa Officer, German Embassy, Islamabad</p>
-					<p>Respected Sir/Madam,</p>
-					<p>I am Aashir Muzaffar, and I am writing to express my motivation for pursuing a Master of Science in "Autonomous Systems" at Hochschule Bonn Rhein Sieg (HBRS). This program perfectly aligns with my academic background, technical experience, and long-term career aspirations in the fields of computer systems, and automation.</p>
-					<p>I have completed my Bachelor of Science in Software Engineering from the University of Gujrat, Pakistan, where I gained a strong foundation in programming, computer architecture, and systems design. My coursework covered subjects such as Software Engineering, Computer Networks, Data Science, Artificial Intelligence, and Data Structures and Algorithms, which allowed me to develop a solid understanding of both theoretical and practical aspects of computer science. Also, my final year project, "UD-Knives", was an e-commerce platform developed using the MERN stack, integrating user authentication, payment systems, and responsive design.</p>
-					<p>Additionally, I gained practical experience through internships in web development. During my internship at Adan I.T Center, I developed responsive and user-friendly web interfaces using HTML, CSS, and JavaScript, and worked on designing RESTful APIs using Node.js to ensure smooth communication between front-end and back-end systems. I also optimized website performance by debugging code and improving responsiveness. However, during my internship at CODSOFT, I enhanced my development skills by building responsive web pages, troubleshooting and optimizing code, and improving overall site performance.</p>
-					<p>I chose this course because it offers a strong combination of software, artificial intelligence, and robotics, which directly aligns with my academic background and career goals. Modules such as Advanced Software Technology and Artificial Intelligence will strengthen my ability to design intelligent and scalable systems, while Autonomous Mobile Robots and Mathematics for Robotics and Control will help me understand how these systems operate in real-world environments. The structure of Scientific Experimentation and Evaluation will definitely enhance my practical and research skills. Overall, this course offers the exact blend of theory and hands-on experience I need to specialize in autonomous systems.</p>
-					<p>I chose HBRS specifically because of its strong focus on practical oriented learning, directly matching my goal of gaining skills in Autonomous Systems. As a University of Applied Sciences, HBRS provides hands-on experience through labs, projects, and industry collaboration, that would allow me to work on real-world problems rather than theoretical concepts. Also, the curriculum's mix-up between software, AI, and robotics, along with project-based modules like the Research and Development Project, will provide me with the practical exposure for sure.</p>
-					<p>The reason why I chose Germany because of its strong leadership in engineering, automation, and intelligent systems, especially in the automotive and robotics sectors. With my interest in Autonomous Systems, studying in Germany offers me direct exposure to real-world applications such as self-driving technologies, smart manufacturing, and advanced control systems. The close collaboration between universities and industry aligns with my goal of gaining practical, hands-on experience alongside theoretical knowledge. This environment will allow me to develop skills in advance automotive technologies that are not easily accessible in Pakistan.</p>
-					<p>After completing my master's degree, I plan to gain professional experience for a short period in Germany's advanced technology and automotive sector, particularly in companies such as Bosch, BMW, or Continental that work with automation, robotics, and autonomous systems. This experience will help me strengthen my practical knowledge and understand real-world industrial applications of AI-driven technologies. In the long run, I intend to return to Pakistan and apply the technical expertise and industrial exposure gained in Germany to contribute to the development of intelligent automation and robotics solutions. I aim to work in responsible technical roles and support industries in adopting modern autonomous and AI-based systems to improve efficiency, innovation, and technological growth.</p>
-					<p>In conclusion, I fully understand the responsibilities that come with studying abroad, and I am committed to complying with all visa regulations and academic requirements. My sole purpose in applying for this visa is to complete my master's degree and return to Pakistan with the skills to contribute to my country's technological advancement.</p>
-					<p>Thank you for your time and consideration.</p>
-					<p>Sincerely,<br />Aashir Muzaffar</p>
-				</div>
-			</section>
- 
-		</main>
- 
-		<!-- Footer -->
-		<footer class="mt-12 border-t border-green-100 py-6 px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500 max-w-3xl mx-auto">
-			<p>&copy; 2025 PGNX &mdash; Pakistan Germany Nexus. All rights reserved.</p>
-			<div class="flex gap-4">
-				<a href="#" aria-label="Facebook" class="hover:text-green-700">FB</a>
-				<a href="#" aria-label="Instagram" class="hover:text-green-700">IG</a>
-				<a href="#" aria-label="WhatsApp" class="hover:text-green-700">WA</a>
-			</div>
-		</footer>
- 
-		<script>
-			const toggle = document.getElementById("menu-toggle");
-			const menu = document.getElementById("side-menu");
-			const close = document.getElementById("menu-close");
-			toggle?.addEventListener("click", () => menu?.classList.remove("-translate-x-full"));
-			close?.addEventListener("click", () => menu?.classList.add("-translate-x-full"));
-		</script>
-	</body>
-</html>
- 
+
+<Layout title="Document Preparation">
+	<h1 class="text-4xl font-extrabold text-slate-900">Document Preparation</h1>
+	<p class="mt-2 text-slate-600">Checklists and real example documents to help you prepare your application.</p>
+
+	<!-- LOM intro -->
+	<section class="mt-10 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-xl font-bold text-slate-900">Letter of Motivation (LOM)</h2>
+		<p class="mt-4 leading-relaxed text-slate-600">
+			Your Letter of Motivation (sometimes called a Statement of Purpose) is where you explain
+			why you've chosen your program, your university, and Germany itself &mdash; and what you
+			plan to do afterward. Embassies and universities look for a clear, honest connection
+			between your background, the specific program, and your future goals.
+		</p>
+		<p class="mt-4 leading-relaxed text-slate-600">
+			Below you'll find the official guidance on how to write one, fill-in-the-blank templates
+			to help you structure your own, and finally two real examples shared by community
+			members, kept as they were written. Use the samples as inspiration &mdash; not a template
+			to copy &mdash; your own letter should reflect your own background and reasoning.
+		</p>
+	</section>
+
+	<!-- DAAD Official Guide -->
+	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-xl font-bold text-slate-900">How to Write a Letter of Motivation &mdash; DAAD Guide</h2>
+		<p class="mt-1 text-xs uppercase tracking-wide text-slate-500">Deutscher Akademischer Austausch Dienst (German Academic Exchange Service)</p>
+
+		<p class="mt-4 leading-relaxed text-slate-600">
+			When applying for a Master's programme in Germany, applicants must submit a letter of
+			motivation (sometimes called a "statement of purpose"). It plays an important role in
+			the selection process &mdash; yet many letters fail to convince the selection committee.
+		</p>
+
+		<ol class="mt-4 list-inside list-decimal space-y-4 text-sm leading-relaxed text-slate-600">
+			<li>
+				<strong>Start early.</strong> This is a crucial document &mdash; never try to write it in one evening.
+			</li>
+			<li>
+				<strong>Don't repeat your CV</strong> as the opening of your letter.
+			</li>
+			<li>
+				<strong>Answer these questions:</strong>
+				<ul class="mt-2 list-inside list-disc space-y-1.5 pl-4">
+					<li>What is your professional goal, and in which sector do you want to work after your Master's?</li>
+					<li>How do you intend to contribute to your home country's social, political, or technical development? (Facts and figures are welcome.)</li>
+					<li>Why this Master's programme, and which of its courses serve your professional goals? Be well informed.</li>
+					<li>Why are you the right person for this programme &mdash; what knowledge, skills, and relevant experience (including organizational or volunteer involvement) do you bring? Be honest about your leadership qualities and strengths.</li>
+					<li>Why study in Germany &mdash; what do you know about the German university system, and is there anything about Germany's society, politics, economy, or technology you'd like to bring back home? Are there German organizations or institutions you'd like to learn more about?</li>
+				</ul>
+			</li>
+			<li>
+				<strong>Compose it carefully.</strong> Reflect on the questions, take notes, discuss with friends, write an outline, then the text &mdash; but don't include the outline or questions themselves in your final letter.
+			</li>
+			<li>
+				<strong>Write in an appropriate style:</strong> avoid platitudes, flowery phrases, and flattery. Be reflective and factual rather than campaigning for your beliefs.
+			</li>
+			<li>
+				<strong>Proofread</strong> and cut anything redundant. Aim for no more than two to three pages, and check grammar and spelling carefully.
+			</li>
+		</ol>
+
+		<div class="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+			Keep in mind your letter of motivation may be discussed with you during pre-selection interviews.
+		</div>
+	</section>
+
+	<!-- LOM Templates -->
+	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-xl font-bold text-slate-900">Motivation Letter Templates</h2>
+		<p class="mt-4 leading-relaxed text-slate-600">
+			Fill-in-the-blank starting points for Bachelor's and Master's applicants. Replace every
+			bracketed placeholder with your own details &mdash; these are meant as a structural
+			starting point, not a letter to submit as-is.
+		</p>
+
+		<h3 class="mt-6 font-semibold text-slate-900">Template &mdash; Master's Applicants</h3>
+		<div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+			<p>Dear Admission Committee,</p>
+			<p>I am writing to express my strong interest in the Master's program in <strong>[Program Name]</strong> at your university. Having completed a Bachelor's degree in <strong>[Your Bachelor's Field]</strong>, I am eager to deepen my knowledge, strengthen my technical expertise, and gain international academic exposure through a high-quality master's education in Germany. The interdisciplinary curriculum, practical orientation, and research opportunities offered by your program align closely with my academic background and long-term career aspirations.</p>
+			<p>My academic journey began with a strong interest in <strong>[your field of interest]</strong>, which led me to pursue my Bachelor's degree. During my undergraduate studies, I developed a solid foundation in <strong>[list relevant subjects/skills]</strong>. These courses equipped me with analytical thinking skills and a comprehensive understanding of my field.</p>
+			<p>Throughout my studies, I actively participated in academic and practical projects that strengthened both my technical and teamwork abilities. <strong>[Describe a key project &mdash; what it was, your role, and what it taught you.]</strong></p>
+			<p>In addition to my academic projects, I gained practical industry experience through internships. <strong>[Describe your internship(s), the tools/skills used, and what you learned.]</strong></p>
+			<p>I have chosen Germany as my study destination because of its globally recognized education system, strong emphasis on research and innovation, and close collaboration between universities and industry. Studying in such an international and technologically advanced environment will enable me to broaden my perspective and collaborate with students from diverse backgrounds.</p>
+			<p>I am particularly interested in your Master's program because of its focus on <strong>[mention specialization areas, e.g., Artificial Intelligence, Data Science, Robotics, etc.]</strong>. Courses such as <strong>[mention relevant courses]</strong> are especially appealing because they will allow me to build on my previous knowledge while exploring advanced concepts.</p>
+			<p>My long-term objective is to become a highly skilled professional in <strong>[your field]</strong>. After completing my master's degree, I intend to gain international industry experience and apply the knowledge acquired during my studies to solve real-world challenges. Eventually, I aim to contribute to <strong>[your long-term goal, e.g., technological growth in Pakistan]</strong>.</p>
+			<p>Beyond academics, I have participated in leadership and community initiatives. <strong>[Mention any leadership roles, societies, or volunteer work.]</strong> These experiences taught me the importance of collaboration, responsibility, and continuous learning.</p>
+			<p>I am confident that my academic background, practical experience, and commitment to professional growth make me a strong candidate for your Master's program. Thank you for considering my application.</p>
+			<p>Yours sincerely,<br /><strong>[Full Name]</strong></p>
+		</div>
+
+		<h3 class="mt-8 font-semibold text-slate-900">Template &mdash; Bachelor's Applicants</h3>
+		<div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+			<p>Dear Admissions Committee,</p>
+			<p>I am writing to express my strong interest in pursuing a Bachelor's degree in <strong>[Program Name]</strong> at your university. The excellent academic reputation of German higher education, combined with your university's commitment to innovation, practical learning, and international cooperation, makes your program an ideal choice for my academic and professional development.</p>
+			<p>Since my school years, I have been deeply interested in <strong>[field of study]</strong>. Through my academic coursework and personal learning experiences, I have developed a strong foundation in subjects such as <strong>[relevant subjects]</strong>. These experiences have strengthened my analytical thinking, problem-solving abilities, and curiosity to explore new concepts.</p>
+			<p>I completed my secondary education at <strong>[School Name]</strong> with a focus on <strong>[Science/Computer Science/Business/etc.]</strong>. During my studies, I particularly enjoyed courses related to <strong>[relevant subjects]</strong>. I also actively participated in <strong>[competitions, projects, volunteer work, student societies, or extracurricular activities]</strong>, which helped me develop teamwork, leadership, and communication skills.</p>
+			<p>Germany has long been recognized for its high-quality education system, advanced research environment, and strong connection between academia and industry. I am particularly attracted to your university because of its modern curriculum, emphasis on practical applications, and supportive learning environment.</p>
+			<p>I believe the Bachelor's program in <strong>[Program Name]</strong> will give me the knowledge and skills to build a successful career in <strong>[career field]</strong>. I am especially interested in courses such as <strong>[mention relevant courses if known]</strong>, which will help me develop expertise important for my future career.</p>
+			<p>After completing my bachelor's degree, I intend to gain professional experience in my field and contribute to innovative projects that address real-world challenges. In the long term, I aspire to make meaningful contributions to society through <strong>[technology/research/industry &mdash; your field]</strong>.</p>
+			<p>I am confident that my motivation, dedication, and willingness to learn will enable me to succeed in your academic environment. Thank you for considering my application.</p>
+			<p>Yours sincerely,<br /><strong>[Full Name]</strong></p>
+		</div>
+	</section>
+
+	<!-- Sample 1 -->
+	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-lg font-bold text-slate-900">Sample &mdash; International Corporate Communication &amp; Media Management (HNU)</h2>
+		<p class="mt-1 text-xs uppercase tracking-wide text-slate-500">By Ali Hamza</p>
+		<div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+			<p>To,<br />The Visa Officer, German Embassy, Islamabad</p>
+			<p>Dear Sir/Madam,</p>
+			<p>I am writing to share my motivation for applying for a student visa to pursue the master's degree program in "International Corporate Communication and Media Management (ICM)" at the Neu-Ulm University of Applied Sciences (HNU). This program connects well with my academic background, work experience, and career goals.</p>
+			<p>I completed my four-year bachelor's degree in "Media Studies" at Bahria University, Karachi. During my studies, I learned about digital media, advertisement and public relations, development support communication, and media management. These subjects helped me understand how to manage digital media and utilize it for communication with the public in a corporate environment. My work experience in digital media also gave me the skills to handle corporate communication.</p>
+			<p>The reason for choosing Germany as a study destination is that it is one of the most advanced countries in sustainability, economics, and research. I am also interested in studying in Germany due to no tuition fees and high-quality education. It will also offer me great opportunities for practical learning, and the multicultural environment makes it an even better place to study.</p>
+			<p>The Master in "International Corporate Communication and Media Management (ICM)" is the next step for me to grow academically and professionally. This program focuses on providing the skills to utilize media for marketing and communication in this digital age. With courses like strategic brand management, content production, sustainability, and CSR communication, this program will help me to achieve my career goals and use my media management skills to bring positive change to society.</p>
+			<p>After completing my master's degree, I plan to work in Germany to gain experience in corporate communication and media management. I want to work in a diverse environment and learn from global companies. After gaining experience, I aim to start my own media agency in Pakistan. I aim to help businesses improve their communication strategies and adopt sustainable practices.</p>
+			<p>In conclusion, I am excited to join the "International Corporate Communication and Media Management (ICM)" program at HNU. My educational and professional career aligns perfectly with the objective of this course. I am determined to make the most of this educational opportunity and contribute to this university.</p>
+			<p>I am looking forward to a positive response. Thank you for your time and consideration.</p>
+			<p>Sincerely,<br />Ali Hamza</p>
+		</div>
+	</section>
+
+	<!-- Sample 2 -->
+	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-lg font-bold text-slate-900">Sample &mdash; MSc Autonomous Systems (Hochschule Bonn-Rhein-Sieg)</h2>
+		<p class="mt-1 text-xs uppercase tracking-wide text-slate-500">By Aashir Muzaffar</p>
+		<div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
+			<p>To,<br />The Visa Officer, German Embassy, Islamabad</p>
+			<p>Respected Sir/Madam,</p>
+			<p>I am Aashir Muzaffar, and I am writing to express my motivation for pursuing a Master of Science in "Autonomous Systems" at Hochschule Bonn Rhein Sieg (HBRS). This program perfectly aligns with my academic background, technical experience, and long-term career aspirations in the fields of computer systems, and automation.</p>
+			<p>I have completed my Bachelor of Science in Software Engineering from the University of Gujrat, Pakistan, where I gained a strong foundation in programming, computer architecture, and systems design. My coursework covered subjects such as Software Engineering, Computer Networks, Data Science, Artificial Intelligence, and Data Structures and Algorithms, which allowed me to develop a solid understanding of both theoretical and practical aspects of computer science. Also, my final year project, "UD-Knives", was an e-commerce platform developed using the MERN stack, integrating user authentication, payment systems, and responsive design.</p>
+			<p>Additionally, I gained practical experience through internships in web development. During my internship at Adan I.T Center, I developed responsive and user-friendly web interfaces using HTML, CSS, and JavaScript, and worked on designing RESTful APIs using Node.js to ensure smooth communication between front-end and back-end systems. I also optimized website performance by debugging code and improving responsiveness. However, during my internship at CODSOFT, I enhanced my development skills by building responsive web pages, troubleshooting and optimizing code, and improving overall site performance.</p>
+			<p>I chose this course because it offers a strong combination of software, artificial intelligence, and robotics, which directly aligns with my academic background and career goals. Modules such as Advanced Software Technology and Artificial Intelligence will strengthen my ability to design intelligent and scalable systems, while Autonomous Mobile Robots and Mathematics for Robotics and Control will help me understand how these systems operate in real-world environments. The structure of Scientific Experimentation and Evaluation will definitely enhance my practical and research skills. Overall, this course offers the exact blend of theory and hands-on experience I need to specialize in autonomous systems.</p>
+			<p>I chose HBRS specifically because of its strong focus on practical oriented learning, directly matching my goal of gaining skills in Autonomous Systems. As a University of Applied Sciences, HBRS provides hands-on experience through labs, projects, and industry collaboration, that would allow me to work on real-world problems rather than theoretical concepts. Also, the curriculum's mix-up between software, AI, and robotics, along with project-based modules like the Research and Development Project, will provide me with the practical exposure for sure.</p>
+			<p>The reason why I chose Germany because of its strong leadership in engineering, automation, and intelligent systems, especially in the automotive and robotics sectors. With my interest in Autonomous Systems, studying in Germany offers me direct exposure to real-world applications such as self-driving technologies, smart manufacturing, and advanced control systems. The close collaboration between universities and industry aligns with my goal of gaining practical, hands-on experience alongside theoretical knowledge. This environment will allow me to develop skills in advance automotive technologies that are not easily accessible in Pakistan.</p>
+			<p>After completing my master's degree, I plan to gain professional experience for a short period in Germany's advanced technology and automotive sector, particularly in companies such as Bosch, BMW, or Continental that work with automation, robotics, and autonomous systems. This experience will help me strengthen my practical knowledge and understand real-world industrial applications of AI-driven technologies. In the long run, I intend to return to Pakistan and apply the technical expertise and industrial exposure gained in Germany to contribute to the development of intelligent automation and robotics solutions. I aim to work in responsible technical roles and support industries in adopting modern autonomous and AI-based systems to improve efficiency, innovation, and technological growth.</p>
+			<p>In conclusion, I fully understand the responsibilities that come with studying abroad, and I am committed to complying with all visa regulations and academic requirements. My sole purpose in applying for this visa is to complete my master's degree and return to Pakistan with the skills to contribute to my country's technological advancement.</p>
+			<p>Thank you for your time and consideration.</p>
+			<p>Sincerely,<br />Aashir Muzaffar</p>
+		</div>
+	</section>
+</Layout>

@@ -1,50 +1,30 @@
 @import "tailwindcss";
 
-/* Hover lift + glow effect for cards and buttons */
+@theme {
+	--font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+	--color-indigo-50: #EEF4FA;
+	--color-indigo-100: #D7E6F3;
+	--color-indigo-200: #AFCBE7;
+	--color-indigo-300: #82ACD7;
+	--color-indigo-400: #5588C2;
+	--color-indigo-500: #3A6FAD;
+	--color-indigo-600: #2C5C96;
+	--color-indigo-700: #23579F;
+	--color-indigo-800: #1C4780;
+	--color-indigo-900: #153863;
+	--color-indigo-950: #0E2745;
+}
+
+/* Hover lift effect for cards */
 .rounded-2xl,
 .rounded-xl {
 	transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.rounded-2xl:hover,
-.rounded-xl:hover {
+a.rounded-2xl:hover,
+a.rounded-xl:hover {
 	transform: translateY(-4px);
-	box-shadow: 0 12px 28px -8px rgba(22, 101, 52, 0.3);
-}
-
-.bg-green-800 {
-	transition: box-shadow 0.25s ease, background-color 0.25s ease;
-}
-.bg-green-800:hover {
-	box-shadow: 0 0 18px rgba(22, 101, 52, 0.45);
-}
-
-/* HOME tab: mostly hidden off-screen, slides fully into view on hover */
-#menu-toggle {
-	transform: translateX(-3rem);
-	transition: transform 0.3s ease;
-}
-#menu-toggle:hover {
-	transform: translateX(0);
-}
-
-/* Subtle shimmering glow on the hero divider line */
-.shimmer-line {
-	position: relative;
-	overflow: hidden;
-}
-.shimmer-line::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 60%;
-	height: 100%;
-	background: linear-gradient(to right, transparent, #86efac, #ffffff, #86efac, transparent);
-	animation: shimmer 3s ease-in-out infinite;
-}
-@keyframes shimmer {
-	0% { left: -100%; }
-	100% { left: 150%; }
+	box-shadow: 0 12px 28px -8px rgba(79, 70, 229, 0.25);
 }
 
 /* Running headline ticker */
