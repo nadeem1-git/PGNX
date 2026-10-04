@@ -1,42 +1,15 @@
 ---
-import '../../styles/global.css';
+import Layout from '../../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL;
 ---
- 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Bachelor's Programs | PGNX</title>
-	</head>
-	<body class="min-h-screen bg-gradient-to-b from-white via-green-50 to-white text-gray-900 relative">
- 
-		<div
-			class="pointer-events-none fixed inset-0 -z-10"
-			style="background-image: radial-gradient(circle, #16653480 1px, transparent 1px); background-size: 24px 24px;"
-		></div>
- 
-		<header class="relative w-full py-6 px-6 flex items-center justify-end">
-			<div class="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 bg-green-800"></div>
-			<a href={base} class="relative z-10 flex flex-col items-center gap-1 bg-white rounded-full p-1">
-				<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-20 w-20 rounded-full object-cover border border-green-100" />
-			</a>
-		</header>
- 
-		<main class="px-6 py-20 max-w-2xl mx-auto text-center">
-			<a href={`${base}universities`} class="text-sm text-green-700 hover:text-green-900 block text-left mb-8">&larr; Bachelor's / Master's</a>
- 
-			<h1 class="text-3xl font-extrabold text-green-800">Bachelor's Programs</h1>
-			<p class="mt-4 text-gray-600">
-				This section is coming soon. In the meantime, check out our <a href={`${base}universities/masters`} class="text-green-700 underline font-medium">Master's Programs</a> listing.
-			</p>
-		</main>
- 
-		<footer class="mt-12 border-t border-green-100 py-6 px-6 text-center text-sm text-gray-500 max-w-2xl mx-auto">
-			<p>&copy; 2025 PGNX &mdash; Pakistan Germany Nexus. All rights reserved.</p>
-		</footer>
-	</body>
-</html>
- 
+
+<Layout title="Bachelor's Programs">
+	<div class="mx-auto max-w-2xl py-12 text-center">
+		<a href={`${base}universities`} class="mb-8 block text-left text-sm text-indigo-600 hover:text-indigo-700">&larr; Bachelor's / Master's</a>
+
+		<h1 class="text-3xl font-extrabold text-slate-900">Bachelor's Programs</h1>
+		<p class="mt-4 text-slate-600">
+			This section is coming soon. In the meantime, check out our <a href={`${base}universities/masters`} class="font-medium text-indigo-600 underline">Master's Programs</a> listing.
+		</p>
+	</div>
+</Layout>

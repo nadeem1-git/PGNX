@@ -1,168 +1,99 @@
 ---
-import '../../styles/global.css';
+import Layout from '../../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Chemnitz City Registration | PGNX</title>
-	</head>
-	<body class="min-h-screen bg-gradient-to-b from-white via-green-50 to-white text-gray-900 relative">
+<Layout title="Chemnitz City Registration">
+	<a href={`${base}city-registration`} class="text-sm text-indigo-600 hover:text-indigo-700">Back to City Registration</a>
 
-		<div
-			class="pointer-events-none fixed inset-0 -z-10"
-			style="background-image: radial-gradient(circle, #16653480 1px, transparent 1px); background-size: 24px 24px;"
-		></div>
+	<h1 class="mt-4 text-4xl font-extrabold text-slate-900">Chemnitz &mdash; City Registration (Anmeldung)</h1>
+	<p class="mt-2 text-slate-600">Everything you need to register your address after moving to Chemnitz.</p>
 
-		<header class="relative w-full py-6 px-6 flex items-center justify-end">
-			<div class="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 bg-green-800"></div>
-			<a href={base} class="relative z-10 flex flex-col items-center gap-1 bg-white rounded-full p-1">
-				<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-20 w-20 rounded-full object-cover border border-green-100" />
-			</a>
-		</header>
+	<!-- In This Guide -->
+	<nav class="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+		<p class="text-xs font-semibold uppercase tracking-wide text-indigo-700">In This Guide</p>
+		<ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+			<li><a href="#why-it-matters" class="text-indigo-700 hover:underline">Why It Matters</a></li>
+			<li><a href="#where-to-register" class="text-indigo-700 hover:underline">Where to Register</a></li>
+			<li><a href="#documents-required" class="text-indigo-700 hover:underline">Documents Required</a></li>
+			<li><a href="#steps-to-register" class="text-indigo-700 hover:underline">Steps to Register</a></li>
+			<li><a href="#after-registration" class="text-indigo-700 hover:underline">After Registration</a></li>
+		</ul>
+	</nav>
 
-		<button
-			id="menu-toggle"
-			class="fixed left-0 top-28 z-40 flex flex-col items-center gap-2 rounded-r-xl bg-green-800 text-white px-2 py-5 [writing-mode:vertical-rl]"
-		>
-			<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="[writing-mode:horizontal-tb] rotate-90">
-				<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-				<path d="M9 22V12h6v10"></path>
-			</svg>
-			HOME
-		</button>
+	<!-- Why it matters -->
+	<section id="why-it-matters" class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-2xl font-bold text-slate-900">Why City Registration Matters</h2>
+		<p class="mt-4 leading-relaxed text-slate-600">
+			Once you move into your accommodation in Germany, you're required to register your address at
+			the local city office within <strong>14 days</strong>. This process is called <strong>Anmeldung</strong>.
+		</p>
+		<p class="mt-4 leading-relaxed text-slate-600">
+			You'll need your registration certificate before you can open a bank account, receive your
+			Tax ID, or apply for a residence permit extension &mdash; so it's one of the first things to
+			sort out after arriving.
+		</p>
+		<div class="mt-6 rounded-lg border border-indigo-100 bg-indigo-50 p-4 text-sm text-indigo-800">
+			<strong>Note:</strong> Without completing your Anmeldung, none of the above are possible, and you
+			will not be considered legally resident.
+		</div>
+	</section>
 
-		<nav
-			id="side-menu"
-			class="fixed left-0 top-0 h-full w-64 -translate-x-full bg-green-900 text-white p-6 transition-transform duration-300 z-50"
-		>
-			<button id="menu-close" class="mb-6 text-sm text-green-200">Close</button>
-			<ul class="space-y-4 font-medium">
-				<li><a href={base} class="hover:text-green-300">Home</a></li>
-				<li><a href={`${base}admission`} class="hover:text-green-300">Admission</a></li>
-				<li><a href={`${base}visa`} class="hover:text-green-300">Visa</a></li>
-				<li><a href={`${base}resources`} class="hover:text-green-300">Resources</a></li>
-				<li><a href={`${base}about`} class="hover:text-green-300">About Us</a></li>
-				<li><a href={`${base}contact`} class="hover:text-green-300">Contact</a></li>
-			</ul>
-		</nav>
+	<!-- Where to register -->
+	<section id="where-to-register" class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-2xl font-bold text-slate-900">Where to Register</h2>
+		<p class="mt-4 leading-relaxed text-slate-600">
+			Registration is handled at the <strong>Bürgeramt (Citizens' Office)</strong> in Chemnitz.
+		</p>
+		<ul class="mt-4 space-y-2 text-slate-600">
+			<li><strong>Address:</strong> Düsseldorfer Platz 1, 09111 Chemnitz</li>
+			<li><strong>Phone:</strong> +49 (0)371/115</li>
+			<li><strong>Email:</strong> meldebehoerde@stadt-chemnitz.de</li>
+			<li><strong>Website:</strong> <a href="https://www.chemnitz.de/chemnitz/de/buerger-rathaus/buergerservice/anmeldung/index.html" target="_blank" rel="noopener noreferrer" class="text-indigo-600 underline hover:text-indigo-700">City of Chemnitz &ndash; Anmeldung</a></li>
+			<li><strong>Book appointment:</strong> <a href="http://www-19.stadt-chemnitz.de/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 underline hover:text-indigo-700">www-19.stadt-chemnitz.de</a></li>
+		</ul>
 
-		<main class="px-6 py-12 max-w-3xl mx-auto">
+		<h3 class="mt-6 font-semibold text-slate-800">Office Hours</h3>
+		<ul class="mt-2 space-y-1 text-sm text-slate-600">
+			<li>Monday: 08:30 &ndash; 12:00</li>
+			<li>Tuesday: 08:30 &ndash; 18:00</li>
+			<li>Wednesday: Closed</li>
+			<li>Thursday: 08:30 &ndash; 18:00</li>
+			<li>Friday: 08:30 &ndash; 12:00</li>
+			<li>Saturday: 09:00 &ndash; 13:00</li>
+		</ul>
+	</section>
 
-			<a href={`${base}city-registration`} class="text-sm text-green-700 hover:text-green-900">Back to City Registration</a>
+	<!-- Documents required -->
+	<section id="documents-required" class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-2xl font-bold text-slate-900">Documents Required</h2>
+		<ul class="mt-4 list-inside list-disc space-y-2 text-slate-600">
+			<li>Passport</li>
+			<li>Visa or residence permit</li>
+			<li>Signed rental contract / lease agreement</li>
+		</ul>
+	</section>
 
-			<h1 class="mt-4 text-4xl font-extrabold text-green-800">Chemnitz &mdash; City Registration (Anmeldung)</h1>
-			<p class="mt-2 text-gray-600">Everything you need to register your address after moving to Chemnitz.</p>
+	<!-- Steps -->
+	<section id="steps-to-register" class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-2xl font-bold text-slate-900">Steps to Register</h2>
+		<ol class="mt-4 space-y-4 text-slate-600">
+			<li><strong>1. Book an appointment</strong> using the online booking link above, or go as a walk-in early in the morning at Düsseldorfer Platz 1, 09111 Chemnitz.</li>
+			<li><strong>2. Gather your documents</strong> and bring them with you to the appointment.</li>
+			<li><strong>3. Attend on time.</strong> If you booked online, you'll get a confirmation email with your appointment details.</li>
+			<li><strong>4. Receive your registration certificate</strong> (Meldebescheinigung) at the end of the appointment.</li>
+		</ol>
+		<div class="mt-6 rounded-lg border border-indigo-100 bg-indigo-50 p-4 text-sm text-indigo-800">
+			<strong>Tip:</strong> Appointment slots can fill up quickly &mdash; book as early as possible or try walking in right when the office opens.
+		</div>
+	</section>
 
-			<!-- In This Guide -->
-			<nav class="mt-8 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-6">
-				<p class="text-xs font-semibold uppercase tracking-wide text-green-700">In This Guide</p>
-				<ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-					<li><a href="#why-it-matters" class="text-green-800 hover:underline">Why It Matters</a></li>
-					<li><a href="#where-to-register" class="text-green-800 hover:underline">Where to Register</a></li>
-					<li><a href="#documents-required" class="text-green-800 hover:underline">Documents Required</a></li>
-					<li><a href="#steps-to-register" class="text-green-800 hover:underline">Steps to Register</a></li>
-					<li><a href="#after-registration" class="text-green-800 hover:underline">After Registration</a></li>
-				</ul>
-			</nav>
-
-			<!-- Why it matters -->
-			<section id="why-it-matters" class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-2xl font-bold text-green-800">Why City Registration Matters</h2>
-				<p class="mt-4 text-gray-700 leading-relaxed">
-					Once you move into your accommodation in Germany, you're required to register your address at
-					the local city office within <strong>14 days</strong>. This process is called <strong>Anmeldung</strong>.
-				</p>
-				<p class="mt-4 text-gray-700 leading-relaxed">
-					You'll need your registration certificate before you can open a bank account, receive your
-					Tax ID, or apply for a residence permit extension &mdash; so it's one of the first things to
-					sort out after arriving.
-				</p>
-				<div class="mt-6 rounded-lg bg-green-50 border border-green-100 p-4 text-sm text-green-800">
-					<strong>Note:</strong> Without completing your Anmeldung, none of the above are possible, and you
-					will not be considered legally resident.
-				</div>
-			</section>
-
-			<!-- Where to register -->
-			<section id="where-to-register" class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-2xl font-bold text-green-800">Where to Register</h2>
-				<p class="mt-4 text-gray-700 leading-relaxed">
-					Registration is handled at the <strong>Bürgeramt (Citizens' Office)</strong> in Chemnitz.
-				</p>
-				<ul class="mt-4 space-y-2 text-gray-700">
-					<li><strong>Address:</strong> Düsseldorfer Platz 1, 09111 Chemnitz</li>
-					<li><strong>Phone:</strong> +49 (0)371/115</li>
-					<li><strong>Email:</strong> meldebehoerde@stadt-chemnitz.de</li>
-					<li><strong>Website:</strong> <a href="https://www.chemnitz.de/chemnitz/de/buerger-rathaus/buergerservice/anmeldung/index.html" target="_blank" rel="noopener noreferrer" class="text-green-700 underline hover:text-green-900">City of Chemnitz &ndash; Anmeldung</a></li>
-					<li><strong>Book appointment:</strong> <a href="http://www-19.stadt-chemnitz.de/" target="_blank" rel="noopener noreferrer" class="text-green-700 underline hover:text-green-900">www-19.stadt-chemnitz.de</a></li>
-				</ul>
-
-				<h3 class="mt-6 font-semibold text-gray-800">Office Hours</h3>
-				<ul class="mt-2 text-sm text-gray-700 space-y-1">
-					<li>Monday: 08:30 &ndash; 12:00</li>
-					<li>Tuesday: 08:30 &ndash; 18:00</li>
-					<li>Wednesday: Closed</li>
-					<li>Thursday: 08:30 &ndash; 18:00</li>
-					<li>Friday: 08:30 &ndash; 12:00</li>
-					<li>Saturday: 09:00 &ndash; 13:00</li>
-				</ul>
-			</section>
-
-			<!-- Documents required -->
-			<section id="documents-required" class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-2xl font-bold text-green-800">Documents Required</h2>
-				<ul class="mt-4 list-disc list-inside space-y-2 text-gray-700">
-					<li>Passport</li>
-					<li>Visa or residence permit</li>
-					<li>Signed rental contract / lease agreement</li>
-				</ul>
-			</section>
-
-			<!-- Steps -->
-			<section id="steps-to-register" class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-2xl font-bold text-green-800">Steps to Register</h2>
-				<ol class="mt-4 space-y-4 text-gray-700">
-					<li><strong>1. Book an appointment</strong> using the online booking link above, or go as a walk-in early in the morning at Düsseldorfer Platz 1, 09111 Chemnitz.</li>
-					<li><strong>2. Gather your documents</strong> and bring them with you to the appointment.</li>
-					<li><strong>3. Attend on time.</strong> If you booked online, you'll get a confirmation email with your appointment details.</li>
-					<li><strong>4. Receive your registration certificate</strong> (Meldebescheinigung) at the end of the appointment.</li>
-				</ol>
-				<div class="mt-6 rounded-lg bg-green-50 border border-green-100 p-4 text-sm text-green-800">
-					<strong>Tip:</strong> Appointment slots can fill up quickly &mdash; book as early as possible or try walking in right when the office opens.
-				</div>
-			</section>
-
-			<!-- After registration -->
-			<section id="after-registration" class="mt-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-green-100 shadow-sm p-8">
-				<h2 class="text-2xl font-bold text-green-800">After Registration</h2>
-				<p class="mt-4 text-gray-700 leading-relaxed">
-					Once you're registered, your <strong>Tax ID (Steuer-ID)</strong> will be sent to your address by
-					post automatically, usually within 2&ndash;3 weeks.
-				</p>
-			</section>
-
-		</main>
-
-		<footer class="mt-12 border-t border-green-100 py-6 px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500 max-w-3xl mx-auto">
-			<p>&copy; 2025 PGNX &mdash; Pakistan Germany Nexus. All rights reserved.</p>
-			<div class="flex gap-4">
-				<a href="#" aria-label="Facebook" class="hover:text-green-700">FB</a>
-				<a href="#" aria-label="Instagram" class="hover:text-green-700">IG</a>
-				<a href="#" aria-label="WhatsApp" class="hover:text-green-700">WA</a>
-			</div>
-		</footer>
-
-		<script>
-			const toggle = document.getElementById("menu-toggle");
-			const menu = document.getElementById("side-menu");
-			const close = document.getElementById("menu-close");
-			toggle?.addEventListener("click", () => menu?.classList.remove("-translate-x-full"));
-			close?.addEventListener("click", () => menu?.classList.add("-translate-x-full"));
-		</script>
-	</body>
-</html>
+	<!-- After registration -->
+	<section id="after-registration" class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h2 class="text-2xl font-bold text-slate-900">After Registration</h2>
+		<p class="mt-4 leading-relaxed text-slate-600">
+			Once you're registered, your <strong>Tax ID (Steuer-ID)</strong> will be sent to your address by
+			post automatically, usually within 2&ndash;3 weeks.
+		</p>
+	</section>
+</Layout>
