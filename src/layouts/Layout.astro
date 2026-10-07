@@ -26,6 +26,10 @@ const navLinks = [
 	{ label: "About Us", href: `${base}about` },
 	{ label: "Contact", href: `${base}contact` },
 ];
+
+const normalizedPath = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/";
+const normalizedBase = base.endsWith("/") ? base : base + "/";
+const isHome = normalizedPath === normalizedBase;
 ---
 
 <!doctype html>
@@ -48,8 +52,8 @@ const navLinks = [
 		<!-- Top bar -->
 		<header class="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-md">
 			<div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-				<a href={base} class="flex items-center gap-2">
-					<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-11 w-11 rounded-full object-cover ring-2 ring-indigo-100" />
+				<a href={base} class="flex items-center gap-3">
+					<img src={`${base}logo.jpg`} alt="PGNX logo" class="h-18 w-18 rounded-full object-cover ring-2 ring-indigo-100" />
 					<span class="text-lg font-extrabold tracking-tight text-slate-900">PGNX</span>
 				</a>
 				<button
@@ -90,6 +94,19 @@ const navLinks = [
 
 		<!-- Page content -->
 		<main class="mx-auto max-w-6xl px-6 py-12">
+			{!isHome && (
+				<button
+					id="back-button"
+					data-home={base}
+					class="group -ml-3 mb-6 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-indigo-600 transition-colors hover:bg-indigo-50 hover:text-indigo-700"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform group-hover:-translate-x-0.5">
+						<path d="M19 12H5" />
+						<path d="M12 19l-7-7 7-7" />
+					</svg>
+					Back
+				</button>
+			)}
 			<slot />
 		</main>
 
@@ -136,6 +153,38 @@ const navLinks = [
 			toggle?.addEventListener("click", openMenu);
 			close?.addEventListener("click", closeMenu);
 			overlay?.addEventListener("click", closeMenu);
+
+			// Back button: use real browser history so the page we land on
+			// restores its scroll position, instead of a fresh link to "/"
+			// which always starts at the top.
+			const backBtn = document.getElementById("back-button") as HTMLButtonElement | null;
+			backBtn?.addEventListener("click", () => {
+				const cameFromSite =
+					document.referrer && new URL(document.referrer).origin === window.location.origin;
+				if (cameFromSite && window.history.length > 1) {
+					history.back();
+				} else {
+					window.location.href = backBtn.dataset.home || "/";
+				}
+			});
+
+			// Scroll-position memory: belt-and-braces on top of the browser's
+			// own back/forward scroll restoration, in case hosting/caching
+			// interferes with it.
+			if ("scrollRestoration" in history) {
+				history.scrollRestoration = "manual";
+			}
+			const navEntries = performance.getEntriesByType("navigation");
+			const navType = navEntries.length ? (navEntries[0] as PerformanceNavigationTiming).type : "navigate";
+			if (navType === "back_forward") {
+				const saved = sessionStorage.getItem("scroll:" + location.pathname);
+				if (saved) {
+					window.scrollTo(0, parseInt(saved, 10));
+				}
+			}
+			window.addEventListener("pagehide", () => {
+				sessionStorage.setItem("scroll:" + location.pathname, String(window.scrollY));
+			});
 		</script>
 	</body>
 </html>
