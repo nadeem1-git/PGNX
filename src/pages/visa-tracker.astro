@@ -3,16 +3,547 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Visa Tracker">
-	<div class="mx-auto max-w-2xl py-12 text-center">
-		<span class="inline-block rounded-full bg-orange-500 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-white">Coming Soon</span>
-		<h1 class="mt-4 text-4xl font-extrabold text-slate-900">Visa Tracker</h1>
-		<p class="mt-4 leading-relaxed text-slate-600">
-			A community-powered tool to track German student visa timelines &mdash; submit your own
-			registration, appointment, and decision dates, and see real average wait times by
-			consulate, updated as more students share their experience.
+	<div class="mx-auto max-w-4xl">
+		<h1 class="text-4xl font-extrabold text-slate-900">Visa Tracker</h1>
+		<p class="mt-2 max-w-2xl text-slate-600">
+			See how long German student visas are really taking, based on timelines shared by PGNX students.
+			Add yours to help the next person.
 		</p>
-		<div class="mt-8 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-			<p class="text-sm text-slate-500">We're building this now. Check back soon!</p>
+		<a href="#share" class="mt-5 inline-flex items-center gap-2 rounded-full bg-indigo-700 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-800">
+			Share your timeline &darr;
+		</a>
+
+		<!-- Degree filter -->
+		<div class="mt-8 flex flex-wrap items-center gap-2">
+			<span class="mr-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Show:</span>
+			<button data-deg="all" class="deg-btn rounded-full border border-indigo-600 bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white">All degrees</button>
+			<button data-deg="Bachelor's" class="deg-btn rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-indigo-700 hover:border-indigo-400">Bachelor's</button>
+			<button data-deg="Master's" class="deg-btn rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-indigo-700 hover:border-indigo-400">Master's</button>
 		</div>
+
+		<div id="load-error" class="mt-6 hidden rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+			The tracker is temporarily unavailable. Please try again in a little while.
+		</div>
+
+		<!-- Summary cards -->
+		<div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+			<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+				<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Reports shared</p>
+				<p id="stat-total" class="mt-2 text-3xl font-extrabold text-slate-900">&hellip;</p>
+				<p id="stat-total-sub" class="mt-1 text-xs text-slate-500">&nbsp;</p>
+			</div>
+			<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+				<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">To appointment</p>
+				<p id="stat-appt" class="mt-2 text-3xl font-extrabold text-slate-900">&hellip;</p>
+				<p id="stat-appt-sub" class="mt-1 text-xs text-slate-500">&nbsp;</p>
+			</div>
+			<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+				<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">To decision</p>
+				<p id="stat-decision" class="mt-2 text-3xl font-extrabold text-slate-900">&hellip;</p>
+				<p id="stat-decision-sub" class="mt-1 text-xs text-slate-500">&nbsp;</p>
+			</div>
+			<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+				<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Approved</p>
+				<p id="stat-approval" class="mt-2 text-3xl font-extrabold text-slate-900">&hellip;</p>
+				<p id="stat-approval-sub" class="mt-1 text-xs text-slate-500">&nbsp;</p>
+			</div>
+		</div>
+		<p class="mt-2 text-xs text-slate-500">Typical = median, counted from the day the student registered on the portal.</p>
+
+		<!-- By consulate -->
+		<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+			<h2 class="text-xl font-bold text-slate-900">Typical wait by consulate</h2>
+			<div id="consulate-bars" class="mt-6 grid gap-8 sm:grid-cols-2"></div>
+			<div class="mt-6 flex flex-wrap gap-5 text-xs text-slate-500">
+				<span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-indigo-500"></span>Until appointment</span>
+				<span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-orange-500"></span>Until decision</span>
+			</div>
+		</section>
+
+		<!-- Outcomes -->
+		<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+			<h2 class="text-xl font-bold text-slate-900">Outcomes so far</h2>
+			<div id="outcome-bar" class="mt-4 flex h-4 overflow-hidden rounded-full bg-slate-100"></div>
+			<div id="outcome-legend" class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-slate-600"></div>
+		</section>
+
+		<!-- Latest reports -->
+		<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+			<h2 class="text-xl font-bold text-slate-900">Latest reports</h2>
+			<ul id="recent-list" class="mt-4 divide-y divide-slate-100"></ul>
+		</section>
+
+		<!-- Share form -->
+		<section id="share" class="mt-6 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+			<h2 class="text-2xl font-bold text-slate-900">Share your timeline</h2>
+			<p class="mt-1 text-sm text-slate-600">Takes about 30 seconds. We never ask for your name, email or phone number.</p>
+
+			<form id="tracker-form" class="mt-6 space-y-6" novalidate>
+				<input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+				<fieldset>
+					<legend class="text-sm font-semibold text-slate-700">Which consulate?</legend>
+					<div class="mt-2 grid grid-cols-2 gap-3">
+						<label class="cursor-pointer">
+							<input type="radio" name="consulate" value="Islamabad" class="peer sr-only" />
+							<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-400">Islamabad</span>
+						</label>
+						<label class="cursor-pointer">
+							<input type="radio" name="consulate" value="Karachi" class="peer sr-only" />
+							<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-400">Karachi</span>
+						</label>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend class="text-sm font-semibold text-slate-700">Which degree?</legend>
+					<div class="mt-2 grid grid-cols-2 gap-3">
+						<label class="cursor-pointer">
+							<input type="radio" name="degree_level" value="Bachelor's" class="peer sr-only" />
+							<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-400">Bachelor's</span>
+						</label>
+						<label class="cursor-pointer">
+							<input type="radio" name="degree_level" value="Master's" class="peer sr-only" />
+							<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-400">Master's</span>
+						</label>
+					</div>
+				</fieldset>
+
+				<div>
+					<label for="registration_date" class="text-sm font-semibold text-slate-700">When did you register on the portal (join the waiting list)?</label>
+					<input id="registration_date" name="registration_date" type="date" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+				</div>
+
+				<fieldset>
+					<legend class="text-sm font-semibold text-slate-700">Where are you right now?</legend>
+					<div class="mt-2 grid gap-3 sm:grid-cols-3">
+						<label class="cursor-pointer">
+							<input type="radio" name="stage" value="waiting" class="peer sr-only" checked />
+							<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-400">Waiting for an appointment</span>
+						</label>
+						<label class="cursor-pointer">
+							<input type="radio" name="stage" value="appointment" class="peer sr-only" />
+							<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-400">Got an appointment</span>
+						</label>
+						<label class="cursor-pointer">
+							<input type="radio" name="stage" value="decided" class="peer sr-only" />
+							<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-400">Got my decision</span>
+						</label>
+					</div>
+				</fieldset>
+
+				<div id="appointment-wrap" class="hidden">
+					<label for="appointment_date" class="text-sm font-semibold text-slate-700">Appointment date</label>
+					<input id="appointment_date" name="appointment_date" type="date" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+				</div>
+
+				<div id="decision-wrap" class="hidden space-y-6">
+					<div>
+						<label for="decision_date" class="text-sm font-semibold text-slate-700">Decision date</label>
+						<input id="decision_date" name="decision_date" type="date" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+					</div>
+					<fieldset>
+						<legend class="text-sm font-semibold text-slate-700">What was the decision?</legend>
+						<div class="mt-2 grid grid-cols-2 gap-3">
+							<label class="cursor-pointer">
+								<input type="radio" name="outcome" value="Approved" class="peer sr-only" />
+								<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-green-600 peer-checked:bg-green-50 peer-checked:text-green-700 peer-focus-visible:ring-2 peer-focus-visible:ring-green-400">Approved</span>
+							</label>
+							<label class="cursor-pointer">
+								<input type="radio" name="outcome" value="Rejected" class="peer sr-only" />
+								<span class="block rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700 peer-checked:border-red-600 peer-checked:bg-red-50 peer-checked:text-red-700 peer-focus-visible:ring-2 peer-focus-visible:ring-red-400">Rejected</span>
+							</label>
+						</div>
+					</fieldset>
+				</div>
+
+				<p id="form-msg" role="status" class="hidden"></p>
+
+				<button id="submit-btn" type="submit" class="w-full rounded-md bg-indigo-700 px-6 py-3 font-semibold text-white hover:bg-indigo-800 disabled:opacity-60">
+					Submit my timeline
+				</button>
+			</form>
+		</section>
+
+		<p class="mt-6 text-xs leading-relaxed text-slate-500">
+			Community-reported and unofficial. Real timelines vary from case to case and the sample is still small,
+			so treat these numbers as a rough guide, not a promise. Obviously false entries may be hidden.
+		</p>
 	</div>
 </Layout>
+
+<script>
+	const SUPABASE_URL = "https://nrwpfxgwlqlvelpgslgd.supabase.co";
+	const SUPABASE_KEY = "sb_publishable_ihgevXeasyygrtA8u5LuJA_6lHV881v";
+	const TABLE_URL = SUPABASE_URL + "/rest/v1/visa_submissions";
+	const MIN_SAMPLE = 3;
+	const COOLDOWN_MS = 20000;
+	const LAST_KEY = "pgnx_visa_last_submit";
+	const DAY = 86400000;
+
+	type Row = {
+		consulate: string;
+		degree_level: string;
+		registration_date: string;
+		appointment_date: string | null;
+		decision_date: string | null;
+		status: string;
+		created_at: string;
+	};
+
+	let allRows: Row[] = [];
+	let degreeFilter = "all";
+
+	const byId = (id: string) => document.getElementById(id) as HTMLElement;
+
+	function el(tag: string, cls: string, text?: string): HTMLElement {
+		const node = document.createElement(tag);
+		node.className = cls;
+		if (text !== undefined) node.textContent = text;
+		return node;
+	}
+
+	function toUTC(s: string): number {
+		return Date.parse(s + "T00:00:00Z");
+	}
+	function dayDiff(a: string, b: string): number {
+		return Math.round((toUTC(b) - toUTC(a)) / DAY);
+	}
+	function median(nums: number[]): number | null {
+		if (!nums.length) return null;
+		const s = [...nums].sort((x, y) => x - y);
+		const m = Math.floor(s.length / 2);
+		return s.length % 2 ? s[m] : Math.round((s[m - 1] + s[m]) / 2);
+	}
+	function fmtDate(s: string): string {
+		return new Date(toUTC(s)).toLocaleDateString("en-GB", {
+			day: "numeric",
+			month: "short",
+			year: "numeric",
+			timeZone: "UTC",
+		});
+	}
+	function weeksText(d: number): string {
+		return "\u2248 " + Math.round(d / 7) + " weeks";
+	}
+	function plural(n: number, word: string): string {
+		return n + " " + word + (n === 1 ? "" : "s");
+	}
+
+	function metric(rows: Row[], from: "registration_date", to: "appointment_date" | "decision_date") {
+		const vals: number[] = [];
+		for (const r of rows) {
+			const end = r[to];
+			if (end) vals.push(dayDiff(r[from], end));
+		}
+		return { n: vals.length, med: vals.length >= MIN_SAMPLE ? median(vals) : null };
+	}
+
+	function filtered(): Row[] {
+		return degreeFilter === "all" ? allRows : allRows.filter((r) => r.degree_level === degreeFilter);
+	}
+
+	function setCard(id: string, value: string, sub: string) {
+		byId(id).textContent = value;
+		byId(id + "-sub").textContent = sub;
+	}
+
+	function renderStats(rows: Row[]) {
+		setCard("stat-total", String(rows.length), degreeFilter === "all" ? "all degrees" : degreeFilter);
+
+		const appt = metric(rows, "registration_date", "appointment_date");
+		if (appt.med !== null) setCard("stat-appt", appt.med + " days", weeksText(appt.med) + " \u00b7 " + plural(appt.n, "report"));
+		else setCard("stat-appt", "Not enough data", appt.n + " of " + MIN_SAMPLE + " reports needed");
+
+		const dec = metric(rows, "registration_date", "decision_date");
+		if (dec.med !== null) setCard("stat-decision", dec.med + " days", weeksText(dec.med) + " \u00b7 " + plural(dec.n, "report"));
+		else setCard("stat-decision", "Not enough data", dec.n + " of " + MIN_SAMPLE + " reports needed");
+
+		const approved = rows.filter((r) => r.status === "Approved").length;
+		const decided = rows.filter((r) => r.status === "Approved" || r.status === "Rejected").length;
+		if (decided >= MIN_SAMPLE) setCard("stat-approval", Math.round((approved / decided) * 100) + "%", approved + " of " + plural(decided, "decision"));
+		else setCard("stat-approval", "Not enough data", decided + " of " + MIN_SAMPLE + " decisions needed");
+	}
+
+	function renderConsulates(rows: Row[]) {
+		const container = byId("consulate-bars");
+		container.textContent = "";
+		const names = ["Islamabad", "Karachi"];
+		const data = names.map((name) => {
+			const subset = rows.filter((r) => r.consulate === name);
+			return {
+				name,
+				count: subset.length,
+				appt: metric(subset, "registration_date", "appointment_date"),
+				dec: metric(subset, "registration_date", "decision_date"),
+			};
+		});
+		const meds = data.flatMap((d) => [d.appt.med, d.dec.med]).filter((v): v is number => v !== null);
+		const max = meds.length ? Math.max(...meds) : 1;
+
+		for (const d of data) {
+			const box = el("div", "");
+			box.append(el("h3", "font-semibold text-slate-900", d.name));
+			box.append(el("p", "text-xs text-slate-500", plural(d.count, "report")));
+
+			const lines: Array<[string, { n: number; med: number | null }, string]> = [
+				["Registration \u2192 appointment", d.appt, "bg-indigo-500"],
+				["Registration \u2192 decision", d.dec, "bg-orange-500"],
+			];
+			for (const [label, m, color] of lines) {
+				const row = el("div", "mt-4");
+				const top = el("div", "flex items-baseline justify-between gap-2 text-sm");
+				top.append(el("span", "text-slate-600", label));
+				top.append(
+					el("span", "font-semibold text-slate-900", m.med !== null ? m.med + " days" : "Not enough data")
+				);
+				const track = el("div", "mt-1.5 h-3 overflow-hidden rounded-full bg-slate-100");
+				const fill = el("div", "h-full rounded-full " + color);
+				fill.style.width = m.med !== null ? Math.max(6, Math.round((m.med / max) * 100)) + "%" : "0%";
+				track.append(fill);
+				row.append(top, track);
+				box.append(row);
+			}
+			container.append(box);
+		}
+	}
+
+	function renderOutcomes(rows: Row[]) {
+		const bar = byId("outcome-bar");
+		const legend = byId("outcome-legend");
+		bar.textContent = "";
+		legend.textContent = "";
+		const counts = {
+			Approved: rows.filter((r) => r.status === "Approved").length,
+			Rejected: rows.filter((r) => r.status === "Rejected").length,
+			Pending: rows.filter((r) => r.status === "Pending").length,
+		};
+		const total = rows.length;
+		const parts: Array<[keyof typeof counts, string]> = [
+			["Approved", "bg-green-500"],
+			["Rejected", "bg-red-500"],
+			["Pending", "bg-slate-300"],
+		];
+		for (const [name, color] of parts) {
+			if (total > 0 && counts[name] > 0) {
+				const seg = el("div", "h-full " + color);
+				seg.style.width = (counts[name] / total) * 100 + "%";
+				bar.append(seg);
+			}
+			const item = el("span", "inline-flex items-center gap-1.5");
+			item.append(el("span", "h-2.5 w-2.5 rounded-full " + color));
+			item.append(el("span", "", name + " " + counts[name]));
+			legend.append(item);
+		}
+	}
+
+	function renderRecent(rows: Row[]) {
+		const list = byId("recent-list");
+		list.textContent = "";
+		if (!rows.length) {
+			list.append(el("li", "py-3 text-sm text-slate-500", "No reports yet. Be the first to share yours!"));
+			return;
+		}
+		const badge: Record<string, string> = {
+			Approved: "border-green-200 bg-green-50 text-green-700",
+			Rejected: "border-red-200 bg-red-50 text-red-700",
+			Pending: "border-slate-200 bg-slate-50 text-slate-600",
+		};
+		for (const r of rows.slice(0, 8)) {
+			const li = el("li", "flex flex-wrap items-center justify-between gap-2 py-3");
+			const left = el("div", "");
+			left.append(el("p", "text-sm font-semibold text-slate-900", r.consulate + " \u00b7 " + r.degree_level));
+			let detail = "Registered " + fmtDate(r.registration_date);
+			if (r.appointment_date) detail += " \u00b7 appointment after " + plural(dayDiff(r.registration_date, r.appointment_date), "day");
+			if (r.decision_date) detail += " \u00b7 decision after " + plural(dayDiff(r.registration_date, r.decision_date), "day");
+			left.append(el("p", "text-xs text-slate-500", detail));
+			li.append(left);
+			li.append(el("span", "rounded-full border px-3 py-1 text-xs font-semibold " + (badge[r.status] || badge.Pending), r.status));
+			list.append(li);
+		}
+	}
+
+	function render() {
+		const rows = filtered();
+		renderStats(rows);
+		renderConsulates(rows);
+		renderOutcomes(rows);
+		renderRecent(rows);
+	}
+
+	async function loadData() {
+		try {
+			const url =
+				TABLE_URL +
+				"?select=consulate,degree_level,registration_date,appointment_date,decision_date,status,created_at&order=created_at.desc&limit=1000";
+			const res = await fetch(url, { headers: { apikey: SUPABASE_KEY } });
+			if (!res.ok) throw new Error("HTTP " + res.status);
+			allRows = (await res.json()) as Row[];
+			byId("load-error").classList.add("hidden");
+			render();
+		} catch (err) {
+			byId("load-error").classList.remove("hidden");
+			for (const id of ["stat-total", "stat-appt", "stat-decision", "stat-approval"]) setCard(id, "\u2014", "");
+		}
+	}
+
+	// Degree filter pills
+	const degButtons = Array.from(document.querySelectorAll<HTMLButtonElement>(".deg-btn"));
+	degButtons.forEach((btn) => {
+		btn.addEventListener("click", () => {
+			degreeFilter = btn.dataset.deg || "all";
+			degButtons.forEach((b) => {
+				const active = b === btn;
+				b.classList.toggle("bg-indigo-600", active);
+				b.classList.toggle("text-white", active);
+				b.classList.toggle("border-indigo-600", active);
+				b.classList.toggle("bg-white", !active);
+				b.classList.toggle("text-indigo-700", !active);
+				b.classList.toggle("border-slate-200", !active);
+			});
+			render();
+		});
+	});
+
+	// Share form
+	const form = byId("tracker-form") as HTMLFormElement;
+	const submitBtn = byId("submit-btn") as HTMLButtonElement;
+	const msg = byId("form-msg");
+	const regInput = byId("registration_date") as HTMLInputElement;
+	const apptInput = byId("appointment_date") as HTMLInputElement;
+	const decInput = byId("decision_date") as HTMLInputElement;
+
+	const todayUTC = new Date().toISOString().slice(0, 10);
+	const maxAppt = new Date(Date.now() + 364 * DAY).toISOString().slice(0, 10);
+	regInput.min = "2023-01-01";
+	regInput.max = todayUTC;
+	apptInput.max = maxAppt;
+	decInput.max = todayUTC;
+
+	function showMsg(text: string, kind: "ok" | "err" | "") {
+		if (!text) {
+			msg.className = "hidden";
+			msg.textContent = "";
+			return;
+		}
+		msg.className =
+			"rounded-lg border p-3 text-sm " +
+			(kind === "ok" ? "border-green-200 bg-green-50 text-green-800" : "border-red-200 bg-red-50 text-red-700");
+		msg.textContent = text;
+	}
+
+	function currentStage(): string {
+		const checked = form.querySelector<HTMLInputElement>('input[name="stage"]:checked');
+		return checked ? checked.value : "waiting";
+	}
+	function updateStage() {
+		const stage = currentStage();
+		byId("appointment-wrap").classList.toggle("hidden", stage === "waiting");
+		byId("decision-wrap").classList.toggle("hidden", stage !== "decided");
+	}
+	form.querySelectorAll('input[name="stage"]').forEach((r) => r.addEventListener("change", updateStage));
+
+	form.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		showMsg("", "");
+		const fd = new FormData(form);
+
+		// Honeypot: real people never see this field
+		if (fd.get("website")) {
+			showMsg("Thanks! Your timeline has been added.", "ok");
+			return;
+		}
+
+		let last = 0;
+		try {
+			last = Number(localStorage.getItem(LAST_KEY) || 0);
+		} catch {}
+		if (Date.now() - last < COOLDOWN_MS) {
+			showMsg("Please wait a few seconds before sending another report.", "err");
+			return;
+		}
+
+		const consulate = String(fd.get("consulate") || "");
+		const degree = String(fd.get("degree_level") || "");
+		const stage = String(fd.get("stage") || "waiting");
+		const reg = String(fd.get("registration_date") || "");
+		const appt = stage !== "waiting" ? String(fd.get("appointment_date") || "") : "";
+		const dec = stage === "decided" ? String(fd.get("decision_date") || "") : "";
+		const outcome = stage === "decided" ? String(fd.get("outcome") || "") : "";
+
+		if (!consulate || !degree || !reg) {
+			showMsg("Please choose your consulate and degree, and enter your registration date.", "err");
+			return;
+		}
+		if (reg < "2023-01-01" || reg > todayUTC) {
+			showMsg("Your registration date can't be in the future or before 2023.", "err");
+			return;
+		}
+		if (stage !== "waiting") {
+			if (!appt) {
+				showMsg("Please enter your appointment date.", "err");
+				return;
+			}
+			if (appt < reg) {
+				showMsg("Your appointment can't be before your registration date.", "err");
+				return;
+			}
+			if (appt > maxAppt) {
+				showMsg("That appointment date is too far ahead. Please check it.", "err");
+				return;
+			}
+		}
+		if (stage === "decided") {
+			if (!dec || !outcome) {
+				showMsg("Please enter your decision date and choose Approved or Rejected.", "err");
+				return;
+			}
+			if (dec < appt) {
+				showMsg("Your decision can't be before your appointment date.", "err");
+				return;
+			}
+			if (dec > todayUTC) {
+				showMsg("Your decision date can't be in the future.", "err");
+				return;
+			}
+		}
+
+		const payload = {
+			consulate,
+			degree_level: degree,
+			registration_date: reg,
+			appointment_date: appt || null,
+			decision_date: dec || null,
+			status: stage === "decided" ? outcome : "Pending",
+		};
+
+		submitBtn.disabled = true;
+		submitBtn.textContent = "Sending\u2026";
+		try {
+			const res = await fetch(TABLE_URL, {
+				method: "POST",
+				headers: {
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=minimal",
+				},
+				body: JSON.stringify(payload),
+			});
+			if (!res.ok) throw new Error("HTTP " + res.status);
+			try {
+				localStorage.setItem(LAST_KEY, String(Date.now()));
+			} catch {}
+			form.reset();
+			updateStage();
+			showMsg("Thank you! Your timeline has been added.", "ok");
+			await loadData();
+		} catch (err) {
+			showMsg("We couldn't save your report. Please double-check your dates and try again later.", "err");
+		} finally {
+			submitBtn.disabled = false;
+			submitBtn.textContent = "Submit my timeline";
+		}
+	});
+
+	loadData();
+</script>
