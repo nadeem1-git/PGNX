@@ -3,10 +3,86 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Contact">
-	<h1 class="text-4xl font-extrabold text-slate-900">Contact</h1>
-	<p class="mt-2 text-slate-600">Get in touch with the PGNX community.</p>
+	<div class="mx-auto max-w-2xl">
+		<h1 class="text-4xl font-extrabold text-slate-900">Contact</h1>
+		<p class="mt-2 text-slate-600">Have a question? Send us a message and we'll get back to you.</p>
 
-	<section class="mt-10 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-		<p class="text-slate-600">Content coming soon.</p>
-	</section>
+		<div id="sent-banner" class="mt-6 hidden rounded-lg border border-indigo-100 bg-indigo-50 p-4 text-sm font-medium text-indigo-800">
+			Thanks! Your message has been sent. We'll get back to you soon.
+		</div>
+
+		<section class="mt-8 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+			<form
+				action="https://formsubmit.co/pgnexus245@gmail.com"
+				method="POST"
+				class="space-y-4"
+			>
+				<input type="hidden" name="_subject" value="New message from PGNX website" />
+				<input type="hidden" name="_template" value="table" />
+				<input type="hidden" name="_next" id="next-url" value="" />
+				<input type="text" name="_honey" style="display:none" />
+
+				<div class="grid gap-4 sm:grid-cols-2">
+					<div>
+						<label for="name" class="block text-sm font-semibold text-slate-700">Name</label>
+						<input
+							id="name"
+							type="text"
+							name="name"
+							required
+							class="mt-1.5 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+						/>
+					</div>
+					<div>
+						<label for="phone" class="block text-sm font-semibold text-slate-700">Phone Number</label>
+						<input
+							id="phone"
+							type="tel"
+							name="phone"
+							class="mt-1.5 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+						/>
+					</div>
+				</div>
+
+				<div>
+					<label for="email" class="block text-sm font-semibold text-slate-700">Email</label>
+					<input
+						id="email"
+						type="email"
+						name="email"
+						required
+						class="mt-1.5 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+					/>
+				</div>
+
+				<div>
+					<label for="message" class="block text-sm font-semibold text-slate-700">Message</label>
+					<textarea
+						id="message"
+						name="message"
+						rows="5"
+						required
+						class="mt-1.5 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+					></textarea>
+				</div>
+
+				<button
+					type="submit"
+					class="w-full rounded-md bg-indigo-700 px-6 py-3 font-semibold text-white hover:bg-indigo-800"
+				>
+					Send Message
+				</button>
+			</form>
+		</section>
+	</div>
 </Layout>
+
+<script>
+	const next = document.getElementById("next-url") as HTMLInputElement | null;
+	if (next) {
+		next.value = window.location.origin + window.location.pathname + "?sent=1";
+	}
+	if (new URLSearchParams(window.location.search).get("sent") === "1") {
+		document.getElementById("sent-banner")?.classList.remove("hidden");
+	}
+</script>
