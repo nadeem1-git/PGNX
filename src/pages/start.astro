@@ -1,196 +1,117 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import programsData from '../data/masterPrograms.json';
+
 const base = import.meta.env.BASE_URL;
+
+type Program = {
+  id: string;
+  degree: string;
+  category: string;
+  university: string;
+  course: string;
+  ownership: 'Public' | 'Private';
+  link: string | null;
+  requirements: string;
+};
+
+const programs = (programsData as Program[]).slice().sort((a, b) => a.course.localeCompare(b.course));
+
+const categoryCounts = new Map<string, number>();
+for (const p of programs) {
+  categoryCounts.set(p.category, (categoryCounts.get(p.category) ?? 0) + 1);
+}
+const categories = [...categoryCounts.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
 <Layout title="Find Your Path">
-	<div class="mx-auto max-w-2xl">
+	<div class="mx-auto max-w-5xl">
 		<h1 class="text-center text-4xl font-extrabold text-slate-900">Find Your Path</h1>
-		<p class="mt-2 text-center text-slate-600">Answer a few questions and we'll help point you in the right direction.</p>
+		<p class="mt-2 text-center text-slate-600">Pick your field of study and see every Master's program in it.</p>
 
-		<!-- Progress -->
-		<div class="mt-8 flex items-center justify-center gap-2">
-			<span class="progress-dot h-2 w-8 rounded-full bg-indigo-600" data-step="degree"></span>
-			<span class="progress-dot h-2 w-8 rounded-full bg-indigo-100" data-step="education"></span>
-			<span class="progress-dot h-2 w-8 rounded-full bg-indigo-100" data-step="language"></span>
-			<span class="progress-dot h-2 w-8 rounded-full bg-indigo-100" data-step="field"></span>
-		</div>
-
-		<!-- Step: Degree -->
-		<section id="step-degree" class="step mt-8 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-			<h2 class="text-center text-xl font-bold text-slate-900">Are you applying for a Bachelor's or Master's?</h2>
-			<div class="mt-6 grid gap-4 sm:grid-cols-2">
-				<button class="degree-btn rounded-xl border border-slate-200 bg-white p-6 text-center font-semibold text-slate-900 hover:border-indigo-400" data-degree="bachelors">
-					Bachelor's
-				</button>
-				<button class="degree-btn rounded-xl border border-slate-200 bg-white p-6 text-center font-semibold text-slate-900 hover:border-indigo-400" data-degree="masters">
-					Master's
-				</button>
-			</div>
-		</section>
-
-		<!-- Step: Education check -->
-		<section id="step-education" class="step hidden mt-8 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-			<h2 id="education-question" class="text-center text-xl font-bold text-slate-900"></h2>
-			<div class="mt-6 grid gap-4 sm:grid-cols-2">
-				<button class="edu-btn rounded-xl border border-slate-200 bg-white p-6 text-center font-semibold text-slate-900 hover:border-indigo-400" data-answer="yes">
-					Yes
-				</button>
-				<button class="edu-btn rounded-xl border border-slate-200 bg-white p-6 text-center font-semibold text-slate-900 hover:border-indigo-400" data-answer="no">
-					No
-				</button>
-			</div>
-		</section>
-
-		<!-- Step: Not eligible -->
-		<section id="step-not-eligible" class="step hidden mt-8 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-			<h2 class="text-xl font-bold text-slate-900">Not quite there yet</h2>
-			<p class="mt-4 leading-relaxed text-slate-600">
-				Based on your answer, you don't currently meet the education requirement for this degree
-				level. Check our <a href={`${base}admission`} class="text-indigo-600 underline">Admission page</a>{" "}
-				for ways to close that gap.
-			</p>
-			<button id="restart-btn" class="mt-6 rounded-md bg-indigo-700 px-6 py-2.5 font-semibold text-white hover:bg-indigo-800">
-				Start Over
-			</button>
-		</section>
-
-		<!-- Step: Language -->
-		<section id="step-language" class="step hidden mt-8 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-			<h2 class="text-center text-xl font-bold text-slate-900">Your language levels</h2>
-			<div class="mt-6 space-y-5">
-				<div>
-					<label class="block text-sm font-semibold text-slate-700">English (IELTS band)</label>
-					<select id="ielts-select" class="mt-1.5 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm">
-						<option value="">Select your band</option>
-						<option>0</option><option>1</option><option>2</option><option>3</option>
-						<option>3.5</option><option>4</option><option>4.5</option><option>5</option>
-						<option>5.5</option><option>6</option><option>6.5</option><option>7</option>
-						<option>7.5</option><option>8</option><option>8.5</option><option>9</option>
-					</select>
-				</div>
-				<div>
-					<label class="block text-sm font-semibold text-slate-700">German level</label>
-					<select id="german-select" class="mt-1.5 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm">
-						<option value="">Select your level</option>
-						<option>A1</option><option>A2</option><option>B1</option>
-						<option>B2</option><option>C1</option><option>C2</option>
-						<option value="none">None yet</option>
-					</select>
-				</div>
-			</div>
-			<button id="language-continue" class="mt-6 w-full rounded-md bg-indigo-700 px-6 py-2.5 font-semibold text-white hover:bg-indigo-800">
-				Continue
-			</button>
-		</section>
-
-		<!-- Step: Field of study -->
-		<section id="step-field" class="step hidden mt-8 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<!-- Step: choose a field -->
+		<section id="field-picker" class="mt-10">
 			<h2 class="text-center text-xl font-bold text-slate-900">What field do you want to study?</h2>
-			<input
-				id="field-input"
-				type="text"
-				placeholder="e.g. Computer Science"
-				class="mt-6 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm"
-			/>
-			<button id="field-continue" class="mt-6 w-full rounded-md bg-indigo-700 px-6 py-2.5 font-semibold text-white hover:bg-indigo-800">
-				See Results
-			</button>
+			<div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+				{categories.map(([cat, count]) => (
+					<button type="button" data-cat={cat} class="field-btn rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-left shadow-sm transition-colors hover:border-indigo-400 hover:bg-indigo-50">
+						<span class="block text-sm font-semibold text-slate-900">{cat}</span>
+						<span class="mt-0.5 block text-xs text-slate-500">{count} {count === 1 ? "program" : "programs"}</span>
+					</button>
+				))}
+			</div>
 		</section>
 
-		<!-- Step: Results -->
-		<section id="step-results" class="step hidden mt-8 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-			<h2 class="text-xl font-bold text-slate-900">We're building this next</h2>
-			<p class="mt-4 leading-relaxed text-slate-600">
-				Based on what you told us, here's a summary of your answers. Matching universities and
-				programs to this is coming soon.
+		<!-- Results -->
+		<section id="results" class="mt-10 hidden">
+			<div class="flex flex-wrap items-end justify-between gap-3">
+				<div>
+					<h2 id="results-title" class="text-2xl font-bold text-slate-900"></h2>
+					<p id="results-count" class="mt-1 text-sm text-slate-500"></p>
+				</div>
+				<button id="change-btn" type="button" class="rounded-full border border-slate-300 px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-50">
+					Change field
+				</button>
+			</div>
+
+			<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				{programs.map((p) => (
+					<ProgramCard
+						course={p.course}
+						university={p.university}
+						ownership={p.ownership}
+						requirements={p.requirements}
+						link={p.link}
+						category={p.category}
+					/>
+				))}
+			</div>
+
+			<p class="mt-8 text-center text-sm text-slate-500">
+				Want to search by university or filter by public or private?
+				<a href={`${base}universities/masters`} class="text-indigo-600 underline">Browse the full Master's list</a>.
 			</p>
-			<div id="results-summary" class="mt-6 space-y-1 rounded-lg border border-indigo-100 bg-indigo-50 p-4 text-left text-sm text-slate-600"></div>
-			<button id="restart-btn-2" class="mt-6 rounded-md bg-indigo-700 px-6 py-2.5 font-semibold text-white hover:bg-indigo-800">
-				Start Over
-			</button>
 		</section>
 	</div>
 </Layout>
 
 <script>
-	const answers = { degree: "", education: "", ielts: "", german: "", field: "" };
+	const picker = document.getElementById("field-picker") as HTMLElement;
+	const results = document.getElementById("results") as HTMLElement;
+	const title = document.getElementById("results-title") as HTMLElement;
+	const count = document.getElementById("results-count") as HTMLElement;
+	const cards = Array.from(document.querySelectorAll<HTMLElement>(".program-card"));
+	const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>(".field-btn"));
 
-	const steps = ["degree", "education", "language", "field"];
-	function showStep(id: string) {
-		document.querySelectorAll(".step").forEach((el) => el.classList.add("hidden"));
-		document.getElementById(`step-${id}`)?.classList.remove("hidden");
-		document.querySelectorAll(".progress-dot").forEach((dot) => {
-			const dotStep = dot.getAttribute("data-step");
-			const idx = steps.indexOf(dotStep || "");
-			const currentIdx = steps.indexOf(id);
-			dot.classList.toggle("bg-indigo-600", idx <= currentIdx && idx !== -1);
-			dot.classList.toggle("bg-indigo-100", !(idx <= currentIdx) || idx === -1);
-		});
-	}
-
-	// Step 1: degree choice
-	document.querySelectorAll(".degree-btn").forEach((btn) => {
-		btn.addEventListener("click", () => {
-			answers.degree = btn.getAttribute("data-degree") || "";
-			const question = document.getElementById("education-question");
-			if (question) {
-				if (answers.degree === "bachelors") {
-					question.textContent = "Do you have 13 years of education in total?";
-				} else {
-					question.textContent = "Do you have 16 years of education in total?";
-				}
-			}
-			showStep("education");
-		});
-	});
-
-	// Step 2: education check
-	document.querySelectorAll(".edu-btn").forEach((btn) => {
-		btn.addEventListener("click", () => {
-			answers.education = btn.getAttribute("data-answer") || "";
-			if (answers.education === "no") {
-				document.querySelectorAll(".step").forEach((el) => el.classList.add("hidden"));
-				document.getElementById("step-not-eligible")?.classList.remove("hidden");
-			} else {
-				showStep("language");
-			}
-		});
-	});
-
-	// Step 3: language
-	document.getElementById("language-continue")?.addEventListener("click", () => {
-		const ielts = document.getElementById("ielts-select") as HTMLSelectElement;
-		const german = document.getElementById("german-select") as HTMLSelectElement;
-		answers.ielts = ielts.value;
-		answers.german = german.value;
-		showStep("field");
-	});
-
-	// Step 4: field of study
-	document.getElementById("field-continue")?.addEventListener("click", () => {
-		const field = document.getElementById("field-input") as HTMLInputElement;
-		answers.field = field.value || "Not specified";
-
-		const summary = document.getElementById("results-summary");
-		if (summary) {
-			summary.innerHTML = `
-				<p><strong>Degree:</strong> ${answers.degree === "bachelors" ? "Bachelor's" : "Master's"}</p>
-				<p><strong>English (IELTS):</strong> ${answers.ielts || "Not specified"}</p>
-				<p><strong>German level:</strong> ${answers.german || "Not specified"}</p>
-				<p><strong>Field of study:</strong> ${answers.field}</p>
-			`;
+	function showField(cat: string, updateHash: boolean) {
+		let n = 0;
+		for (const card of cards) {
+			const match = card.dataset.category === cat;
+			card.classList.toggle("hidden", !match);
+			if (match) n++;
 		}
-
-		document.querySelectorAll(".step").forEach((el) => el.classList.add("hidden"));
-		document.getElementById("step-results")?.classList.remove("hidden");
-	});
-
-	// Restart
-	function restart() {
-		answers.degree = ""; answers.education = ""; answers.ielts = ""; answers.german = ""; answers.field = "";
-		showStep("degree");
+		title.textContent = cat;
+		count.textContent = n + " Master's program" + (n === 1 ? "" : "s") + ", sorted A to Z";
+		picker.classList.add("hidden");
+		results.classList.remove("hidden");
+		if (updateHash) history.replaceState(null, "", "#" + encodeURIComponent(cat));
+		window.scrollTo({ top: 0 });
 	}
-	document.getElementById("restart-btn")?.addEventListener("click", restart);
-	document.getElementById("restart-btn-2")?.addEventListener("click", restart);
+
+	function showPicker() {
+		results.classList.add("hidden");
+		picker.classList.remove("hidden");
+		history.replaceState(null, "", location.pathname + location.search);
+		window.scrollTo({ top: 0 });
+	}
+
+	buttons.forEach((btn) => btn.addEventListener("click", () => showField(btn.dataset.cat || "", true)));
+	document.getElementById("change-btn")?.addEventListener("click", showPicker);
+
+	// Open straight to a field if the link has one, e.g. .../start/#Computer%20Science
+	try {
+		const wanted = decodeURIComponent(location.hash.slice(1));
+		if (wanted && buttons.some((b) => b.dataset.cat === wanted)) showField(wanted, false);
+	} catch {}
 </script>
