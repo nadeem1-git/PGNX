@@ -3,11 +3,38 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Document Preparation">
-	<h1 class="text-4xl font-extrabold text-slate-900">Document Preparation</h1>
-	<p class="mt-2 text-slate-600">Checklists and real example documents to help you prepare your application.</p>
+	<h1 id="top" class="text-4xl font-extrabold text-slate-900">Document Preparation</h1>
+	<p class="mt-2 text-slate-600">Checklists and real example documents to help you prepare your application &mdash; tap any topic below to jump straight to it.</p>
+
+	<!-- ===== ON THIS PAGE ===== -->
+	<nav aria-label="On this page" class="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+		<p class="text-xs font-bold uppercase tracking-wide text-slate-500">On this page</p>
+		<div class="mt-3 space-y-3">
+			<div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-4">
+				<a href="#cat-write" class="shrink-0 text-sm font-bold text-indigo-700 hover:underline sm:w-40">Learn How to Write</a>
+				<div class="flex flex-wrap gap-2">
+					<a href="#daad-guide" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700">DAAD Guide</a>
+				</div>
+			</div>
+			<div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-4">
+				<a href="#cat-templates" class="shrink-0 text-sm font-bold text-indigo-700 hover:underline sm:w-40">Templates</a>
+				<div class="flex flex-wrap gap-2">
+					<a href="#template-masters" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700">Master's Template</a>
+					<a href="#template-bachelors" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700">Bachelor's Template</a>
+				</div>
+			</div>
+			<div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:gap-4">
+				<a href="#cat-samples" class="shrink-0 text-sm font-bold text-indigo-700 hover:underline sm:w-40">Real Samples</a>
+				<div class="flex flex-wrap gap-2">
+					<a href="#sample-ali" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700">Ali Hamza &mdash; HNU</a>
+					<a href="#sample-aashir" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700">Aashir Muzaffar &mdash; HBRS</a>
+				</div>
+			</div>
+		</div>
+	</nav>
 
 	<!-- LOM intro -->
-	<section class="mt-10 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+	<section class="mt-8 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
 		<h2 class="text-xl font-bold text-slate-900">Letter of Motivation (LOM)</h2>
 		<p class="mt-4 leading-relaxed text-slate-600">
 			Your Letter of Motivation (sometimes called a Statement of Purpose) is where you explain
@@ -23,9 +50,17 @@ import Layout from '../layouts/Layout.astro';
 		</p>
 	</section>
 
-	<!-- DAAD Official Guide -->
-	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-		<h2 class="text-xl font-bold text-slate-900">How to Write a Letter of Motivation &mdash; DAAD Guide</h2>
+	<!-- ===== PART 1: LEARN HOW TO WRITE ===== -->
+	<div id="cat-write" class="mt-14 scroll-mt-24">
+		<div class="flex items-end justify-between gap-4 border-b-2 border-indigo-700 pb-2">
+			<h2 class="text-2xl font-extrabold text-indigo-700"><span class="text-orange-500">1.</span> Learn How to Write</h2>
+			<a href="#top" class="text-sm text-slate-500 hover:text-indigo-700">&uarr; Contents</a>
+		</div>
+	</div>
+
+	<!-- DAAD Guide -->
+	<section id="daad-guide" class="scroll-mt-24 mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h3 class="text-xl font-bold text-slate-900">How to Write a Letter of Motivation &mdash; DAAD Guide</h3>
 		<p class="mt-1 text-xs uppercase tracking-wide text-slate-500">Deutscher Akademischer Austausch Dienst (German Academic Exchange Service)</p>
 
 		<p class="mt-4 leading-relaxed text-slate-600">
@@ -65,18 +100,27 @@ import Layout from '../layouts/Layout.astro';
 		<div class="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
 			Keep in mind your letter of motivation may be discussed with you during pre-selection interviews.
 		</div>
+		<p class="mt-6 text-right text-sm"><a href="#cat-write" class="text-slate-500 hover:text-indigo-700">&uarr; Back to Learn How to Write</a></p>
 	</section>
 
-	<!-- LOM Templates -->
-	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-		<h2 class="text-xl font-bold text-slate-900">Motivation Letter Templates</h2>
+	<!-- ===== PART 2: TEMPLATES ===== -->
+	<div id="cat-templates" class="mt-14 scroll-mt-24">
+		<div class="flex items-end justify-between gap-4 border-b-2 border-indigo-700 pb-2">
+			<h2 class="text-2xl font-extrabold text-indigo-700"><span class="text-orange-500">2.</span> Templates</h2>
+			<a href="#top" class="text-sm text-slate-500 hover:text-indigo-700">&uarr; Contents</a>
+		</div>
+	</div>
+
+	<!-- Templates -->
+	<section id="templates-section" class="scroll-mt-24 mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h3 class="text-xl font-bold text-slate-900">Motivation Letter Templates</h3>
 		<p class="mt-4 leading-relaxed text-slate-600">
 			Fill-in-the-blank starting points for Bachelor's and Master's applicants. Replace every
 			bracketed placeholder with your own details &mdash; these are meant as a structural
 			starting point, not a letter to submit as-is.
 		</p>
 
-		<h3 class="mt-6 font-semibold text-slate-900">Template &mdash; Master's Applicants</h3>
+		<h3 id="template-masters" class="mt-6 scroll-mt-24 font-semibold text-slate-900">Template &mdash; Master's Applicants</h3>
 		<div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
 			<p>Dear Admission Committee,</p>
 			<p>I am writing to express my strong interest in the Master's program in <strong>[Program Name]</strong> at your university. Having completed a Bachelor's degree in <strong>[Your Bachelor's Field]</strong>, I am eager to deepen my knowledge, strengthen my technical expertise, and gain international academic exposure through a high-quality master's education in Germany. The interdisciplinary curriculum, practical orientation, and research opportunities offered by your program align closely with my academic background and long-term career aspirations.</p>
@@ -91,7 +135,7 @@ import Layout from '../layouts/Layout.astro';
 			<p>Yours sincerely,<br /><strong>[Full Name]</strong></p>
 		</div>
 
-		<h3 class="mt-8 font-semibold text-slate-900">Template &mdash; Bachelor's Applicants</h3>
+		<h3 id="template-bachelors" class="mt-8 scroll-mt-24 font-semibold text-slate-900">Template &mdash; Bachelor's Applicants</h3>
 		<div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
 			<p>Dear Admissions Committee,</p>
 			<p>I am writing to express my strong interest in pursuing a Bachelor's degree in <strong>[Program Name]</strong> at your university. The excellent academic reputation of German higher education, combined with your university's commitment to innovation, practical learning, and international cooperation, makes your program an ideal choice for my academic and professional development.</p>
@@ -103,11 +147,20 @@ import Layout from '../layouts/Layout.astro';
 			<p>I am confident that my motivation, dedication, and willingness to learn will enable me to succeed in your academic environment. Thank you for considering my application.</p>
 			<p>Yours sincerely,<br /><strong>[Full Name]</strong></p>
 		</div>
+		<p class="mt-6 text-right text-sm"><a href="#cat-templates" class="text-slate-500 hover:text-indigo-700">&uarr; Back to Templates</a></p>
 	</section>
 
+	<!-- ===== PART 3: REAL SAMPLES ===== -->
+	<div id="cat-samples" class="mt-14 scroll-mt-24">
+		<div class="flex items-end justify-between gap-4 border-b-2 border-indigo-700 pb-2">
+			<h2 class="text-2xl font-extrabold text-indigo-700"><span class="text-orange-500">3.</span> Real Samples</h2>
+			<a href="#top" class="text-sm text-slate-500 hover:text-indigo-700">&uarr; Contents</a>
+		</div>
+	</div>
+
 	<!-- Sample 1 -->
-	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-		<h2 class="text-lg font-bold text-slate-900">Sample &mdash; International Corporate Communication &amp; Media Management (HNU)</h2>
+	<section id="sample-ali" class="scroll-mt-24 mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h3 class="text-lg font-bold text-slate-900">Sample &mdash; International Corporate Communication &amp; Media Management (HNU)</h3>
 		<p class="mt-1 text-xs uppercase tracking-wide text-slate-500">By Ali Hamza</p>
 		<div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
 			<p>To,<br />The Visa Officer, German Embassy, Islamabad</p>
@@ -121,11 +174,12 @@ import Layout from '../layouts/Layout.astro';
 			<p>I am looking forward to a positive response. Thank you for your time and consideration.</p>
 			<p>Sincerely,<br />Ali Hamza</p>
 		</div>
+		<p class="mt-6 text-right text-sm"><a href="#cat-samples" class="text-slate-500 hover:text-indigo-700">&uarr; Back to Real Samples</a></p>
 	</section>
 
 	<!-- Sample 2 -->
-	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-		<h2 class="text-lg font-bold text-slate-900">Sample &mdash; MSc Autonomous Systems (Hochschule Bonn-Rhein-Sieg)</h2>
+	<section id="sample-aashir" class="scroll-mt-24 mt-6 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+		<h3 class="text-lg font-bold text-slate-900">Sample &mdash; MSc Autonomous Systems (Hochschule Bonn-Rhein-Sieg)</h3>
 		<p class="mt-1 text-xs uppercase tracking-wide text-slate-500">By Aashir Muzaffar</p>
 		<div class="mt-4 space-y-4 text-sm leading-relaxed text-slate-600">
 			<p>To,<br />The Visa Officer, German Embassy, Islamabad</p>
@@ -141,5 +195,11 @@ import Layout from '../layouts/Layout.astro';
 			<p>Thank you for your time and consideration.</p>
 			<p>Sincerely,<br />Aashir Muzaffar</p>
 		</div>
+		<p class="mt-6 text-right text-sm"><a href="#cat-samples" class="text-slate-500 hover:text-indigo-700">&uarr; Back to Real Samples</a></p>
 	</section>
+
 </Layout>
+
+<style is:global>
+	html { scroll-behavior: smooth; }
+</style>

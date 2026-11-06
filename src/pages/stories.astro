@@ -1,0 +1,281 @@
+---
+import Layout from '../layouts/Layout.astro';
+import programs from '../data/masterPrograms.json';
+
+const base = import.meta.env.BASE_URL;
+
+const universities = [...new Set((programs as { university: string }[]).map((p) => p.university))].sort((a, b) =>
+	a.localeCompare(b)
+);
+---
+
+<Layout title="Student Stories">
+	<h1 class="text-4xl font-extrabold text-slate-900">Student Stories</h1>
+	<p class="mt-2 max-w-2xl text-slate-600">
+		Real experiences from students who walked the Pakistan &rarr; Germany path with PGNX. Read how
+		their journeys went, and share yours to help the next person.
+	</p>
+	<a href="#share" class="mt-5 inline-flex items-center gap-2 rounded-full bg-indigo-700 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-800">
+		Share your story &darr;
+	</a>
+
+	<div id="load-error" class="mt-8 hidden rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+		Stories are temporarily unavailable. Please try again in a little while.
+	</div>
+
+	<!-- Stories -->
+	<section class="mt-8">
+		<p id="stories-count" class="text-sm text-slate-500">&nbsp;</p>
+		<div id="stories-list" class="mt-4 gap-5 md:columns-2"></div>
+		<p id="stories-empty" class="mt-4 hidden rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+			No stories yet. Be the first to share yours!
+		</p>
+	</section>
+
+	<!-- Share form -->
+	<section id="share" class="mx-auto mt-12 max-w-2xl scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+		<h2 class="text-2xl font-bold text-slate-900">Share your story</h2>
+		<p class="mt-1 text-sm text-slate-600">
+			Tell us about your journey: admission, visa, arriving in Germany, and how PGNX helped. Every
+			story is read by the PGNX team before it appears on this page.
+		</p>
+
+		<form id="story-form" class="mt-6 space-y-6" novalidate>
+			<input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+			<div>
+				<label for="display_name" class="text-sm font-semibold text-slate-700">Name to show</label>
+				<p class="mt-0.5 text-xs text-slate-500">First name or a nickname is fine. This is shown publicly with your story.</p>
+				<input id="display_name" name="display_name" type="text" maxlength="60" autocomplete="given-name" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+			</div>
+
+			<div class="grid gap-6 sm:grid-cols-2">
+				<div>
+					<label for="university" class="text-sm font-semibold text-slate-700">University <span class="font-normal text-slate-400">(optional)</span></label>
+					<input id="university" name="university" type="text" list="university-list" maxlength="120" autocomplete="off" placeholder="e.g. TU Dresden" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+					<datalist id="university-list">
+						{universities.map((u) => <option value={u} />)}
+					</datalist>
+				</div>
+				<div>
+					<label for="program" class="text-sm font-semibold text-slate-700">Program <span class="font-normal text-slate-400">(optional)</span></label>
+					<input id="program" name="program" type="text" maxlength="120" autocomplete="off" placeholder="e.g. MSc Computer Science" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+				</div>
+			</div>
+
+			<div>
+				<label for="story" class="text-sm font-semibold text-slate-700">Your story</label>
+				<textarea id="story" name="story" rows="7" maxlength="2000" placeholder="How did your journey go? What would you tell someone just starting?" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-indigo-400"></textarea>
+				<p id="story-count" class="mt-1 text-right text-xs text-slate-400">0 / 2000</p>
+			</div>
+
+			<div>
+				<label for="contact" class="text-sm font-semibold text-slate-700">Email or WhatsApp <span class="font-normal text-slate-400">(optional)</span></label>
+				<p class="mt-0.5 text-xs text-slate-500">Only seen by the PGNX team, in case we need to confirm your story. Never shown on the website.</p>
+				<input id="contact" name="contact" type="text" maxlength="120" autocomplete="off" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+			</div>
+
+			<p id="form-msg" role="status" class="hidden"></p>
+
+			<button id="submit-btn" type="submit" class="w-full rounded-md bg-indigo-700 px-6 py-3 font-semibold text-white hover:bg-indigo-800 disabled:opacity-60">
+				Submit my story
+			</button>
+		</form>
+	</section>
+
+	<p class="mt-6 text-center text-xs leading-relaxed text-slate-500">
+		Stories are shared by students in their own words and reviewed before publishing. Questions?
+		<a href={`${base}contact`} class="text-indigo-600 underline">Contact us</a>.
+	</p>
+</Layout>
+
+<script>
+	const SUPABASE_URL = "https://nrwpfxgwlqlvelpgslgd.supabase.co";
+	const SUPABASE_KEY = "sb_publishable_ihgevXeasyygrtA8u5LuJA_6lHV881v";
+	const TABLE_URL = SUPABASE_URL + "/rest/v1/success_stories";
+	const SELECT_COLS = "id,display_name,university,program,story,created_at";
+	const COOLDOWN_MS = 60000;
+	const LAST_KEY = "pgnx_story_last_submit";
+	const LONG_STORY = 380;
+	const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+	type Story = {
+		id: number;
+		display_name: string;
+		university: string | null;
+		program: string | null;
+		story: string;
+		created_at: string;
+	};
+
+	const byId = (id: string) => document.getElementById(id) as HTMLElement;
+
+	function el(tag: string, cls: string, text?: string): HTMLElement {
+		const node = document.createElement(tag);
+		node.className = cls;
+		if (text !== undefined) node.textContent = text;
+		return node;
+	}
+
+	function fmtMonth(s: string): string {
+		const d = new Date(s);
+		return MONTHS[d.getUTCMonth()] + " " + d.getUTCFullYear();
+	}
+
+	function renderStories(rows: Story[]) {
+		const list = byId("stories-list");
+		list.textContent = "";
+		byId("stories-empty").classList.toggle("hidden", rows.length > 0);
+		byId("stories-count").textContent = rows.length
+			? rows.length + (rows.length === 1 ? " story" : " stories")
+			: "";
+
+		for (const r of rows) {
+			const card = el("article", "mb-5 break-inside-avoid rounded-2xl border border-slate-200 bg-white p-6 shadow-sm");
+
+			const head = el("div", "flex items-center gap-3");
+			head.append(
+				el(
+					"div",
+					"flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-base font-bold text-indigo-700",
+					(r.display_name.trim()[0] || "?").toUpperCase()
+				)
+			);
+			const who = el("div", "min-w-0");
+			who.append(el("p", "truncate font-bold text-slate-900", r.display_name));
+			const meta = [r.program, r.university].filter(Boolean).join(" · ");
+			if (meta) who.append(el("p", "text-xs text-slate-500", meta));
+			head.append(who);
+			card.append(head);
+
+			const body = el("p", "mt-4 whitespace-pre-line text-sm leading-relaxed text-slate-600", r.story);
+			card.append(body);
+
+			if (r.story.length > LONG_STORY) {
+				body.classList.add("line-clamp-6");
+				const btn = el("button", "mt-2 text-sm font-semibold text-indigo-600 hover:underline", "Read more");
+				btn.setAttribute("type", "button");
+				btn.addEventListener("click", () => {
+					const open = body.classList.toggle("line-clamp-6");
+					btn.textContent = open ? "Read more" : "Show less";
+				});
+				card.append(btn);
+			}
+
+			card.append(el("p", "mt-4 text-xs text-slate-400", fmtMonth(r.created_at)));
+			list.append(card);
+		}
+	}
+
+	async function loadStories() {
+		try {
+			const url = TABLE_URL + "?select=" + SELECT_COLS + "&order=created_at.desc&limit=200";
+			const res = await fetch(url, { headers: { apikey: SUPABASE_KEY } });
+			if (!res.ok) throw new Error("HTTP " + res.status);
+			renderStories((await res.json()) as Story[]);
+			byId("load-error").classList.add("hidden");
+		} catch (err) {
+			byId("load-error").classList.remove("hidden");
+		}
+	}
+
+	// Form
+	const form = byId("story-form") as HTMLFormElement;
+	const submitBtn = byId("submit-btn") as HTMLButtonElement;
+	const msg = byId("form-msg");
+	const storyBox = byId("story") as HTMLTextAreaElement;
+
+	storyBox.addEventListener("input", () => {
+		byId("story-count").textContent = storyBox.value.length + " / 2000";
+	});
+
+	function showMsg(text: string, kind: "ok" | "err" | "") {
+		if (!text) {
+			msg.className = "hidden";
+			msg.textContent = "";
+			return;
+		}
+		msg.className =
+			"rounded-lg border p-3 text-sm " +
+			(kind === "ok" ? "border-green-200 bg-green-50 text-green-800" : "border-red-200 bg-red-50 text-red-700");
+		msg.textContent = text;
+	}
+
+	const clean = (v: FormDataEntryValue | null) => String(v || "").replace(/[ \t]+/g, " ").trim();
+
+	form.addEventListener("submit", async (e) => {
+		e.preventDefault();
+		showMsg("", "");
+		const fd = new FormData(form);
+
+		// Honeypot: real people never see this field
+		if (fd.get("website")) {
+			showMsg("Thank you! Your story was sent for review.", "ok");
+			return;
+		}
+
+		let last = 0;
+		try {
+			last = Number(localStorage.getItem(LAST_KEY) || 0);
+		} catch {}
+		if (Date.now() - last < COOLDOWN_MS) {
+			showMsg("Please wait a minute before sending another story.", "err");
+			return;
+		}
+
+		const display_name = clean(fd.get("display_name"));
+		const university = clean(fd.get("university"));
+		const program = clean(fd.get("program"));
+		const contact = clean(fd.get("contact"));
+		const story = clean(fd.get("story"));
+
+		if (display_name.length < 2 || display_name.length > 60) {
+			showMsg("Please enter a name to show (2 to 60 characters).", "err");
+			return;
+		}
+		if (story.length < 30) {
+			showMsg("Your story is a little short. Please write at least 30 characters.", "err");
+			return;
+		}
+		if (story.length > 2000) {
+			showMsg("Your story is too long. Please keep it under 2000 characters.", "err");
+			return;
+		}
+
+		const payload = {
+			display_name,
+			university: university || null,
+			program: program || null,
+			contact: contact || null,
+			story,
+		};
+
+		submitBtn.disabled = true;
+		submitBtn.textContent = "Sending…";
+		try {
+			const res = await fetch(TABLE_URL + "?columns=display_name,contact,university,program,story", {
+				method: "POST",
+				headers: {
+					apikey: SUPABASE_KEY,
+					"Content-Type": "application/json",
+					Prefer: "return=minimal",
+				},
+				body: JSON.stringify(payload),
+			});
+			if (!res.ok) throw new Error("HTTP " + res.status);
+			try {
+				localStorage.setItem(LAST_KEY, String(Date.now()));
+			} catch {}
+			form.reset();
+			byId("story-count").textContent = "0 / 2000";
+			showMsg("Thank you! Your story was sent to the PGNX team and will appear here once approved.", "ok");
+		} catch (err) {
+			showMsg("We couldn't send your story. Please check your details and try again later.", "err");
+		} finally {
+			submitBtn.disabled = false;
+			submitBtn.textContent = "Submit my story";
+		}
+	});
+
+	loadStories();
+</script>

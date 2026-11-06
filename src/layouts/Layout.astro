@@ -13,24 +13,61 @@ const {
 
 const base = import.meta.env.BASE_URL;
 
-const navLinks = [
+// Menu structure: a plain link, or a group with sub-links.
+const navStructure = [
 	{ label: "Home", href: base },
-	{ label: "Admission", href: `${base}admission` },
-	{ label: "Visa", href: `${base}visa` },
-	{ label: "Visa Tracker", href: `${base}visa-tracker` },
-	{ label: "Universities", href: `${base}universities` },
-	{ label: "German Language", href: `${base}german-language` },
-	{ label: "Document Preparation", href: `${base}document-preparation` },
-	{ label: "City Registration", href: `${base}city-registration` },
-	{ label: "Cities", href: `${base}cities` },
-	{ label: "Resources", href: `${base}resources` },
-	{ label: "About Us", href: `${base}about` },
-	{ label: "Contact", href: `${base}contact` },
+	{
+		label: "Admission & Study",
+		children: [
+			{ label: "Admission Process", href: `${base}admission` },
+			{ label: "Universities", href: `${base}universities` },
+			{ label: "Find Your Program", href: `${base}start` },
+			{ label: "German Language", href: `${base}german-language` },
+			{ label: "Grade Converter", href: `${base}grade-converter` },
+		],
+	},
+	{
+		label: "Visa",
+		children: [
+			{ label: "Visa Process", href: `${base}visa` },
+			{ label: "Visa Tracker", href: `${base}visa-tracker` },
+			{ label: "Document Preparation", href: `${base}document-preparation` },
+			{ label: "Resources", href: `${base}resources` },
+		],
+	},
+	{
+		label: "Life in Germany",
+		children: [
+			{ label: "Cities", href: `${base}cities` },
+			{ label: "City Registration", href: `${base}city-registration` },
+		],
+	},
+	{
+		label: "PGNX",
+		children: [
+			{ label: "Student Stories", href: `${base}stories` },
+			{ label: "Our Team", href: `${base}team` },
+			{ label: "About Us", href: `${base}about` },
+			{ label: "Contact", href: `${base}contact` },
+		],
+	},
 ];
 
 const normalizedPath = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/";
 const normalizedBase = base.endsWith("/") ? base : base + "/";
 const isHome = normalizedPath === normalizedBase;
+
+const isActive = (href) => {
+	const h = href.endsWith("/") ? href : href + "/";
+	return h === normalizedBase ? normalizedPath === h : normalizedPath.startsWith(h);
+};
+const navItems = navStructure.map((item) => {
+	if (item.children) {
+		const children = item.children.map((c) => ({ label: c.label, href: c.href, active: isActive(c.href) }));
+		return { label: item.label, children, open: children.some((c) => c.active) };
+	}
+	return { label: item.label, href: item.href, active: isActive(item.href) };
+});
 ---
 
 <!doctype html>
@@ -59,16 +96,16 @@ const isHome = normalizedPath === normalizedBase;
 					<span class="text-lg font-extrabold tracking-tight text-slate-900">PGNX</span>
 				</a>
 				<button
-					id="menu-toggle"
-					class="flex items-center gap-2 rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700"
-				>
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<line x1="4" y1="7" x2="20" y2="7" />
-						<line x1="4" y1="12" x2="20" y2="12" />
-						<line x1="4" y1="17" x2="20" y2="17" />
-					</svg>
-					Menu
-				</button>
+						id="menu-toggle"
+						class="group flex items-center gap-2 rounded-full border border-indigo-400/40 bg-gradient-to-b from-indigo-500 to-indigo-700 px-5 py-2.5 text-sm font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_5px_0_0_#1b4580,0_10px_16px_rgba(35,87,159,0.35)] transition-all duration-150 hover:-translate-y-0.5 hover:from-indigo-400 hover:to-indigo-600 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_7px_0_0_#1b4580,0_14px_22px_rgba(35,87,159,0.4)] active:translate-y-[4px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_1px_0_0_#1b4580,0_3px_6px_rgba(35,87,159,0.3)]"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform duration-200 group-hover:scale-110">
+							<line x1="4" y1="7" x2="20" y2="7" />
+							<line x1="4" y1="12" x2="20" y2="12" />
+							<line x1="4" y1="17" x2="20" y2="17" />
+						</svg>
+						Menu
+					</button>
 			</div>
 		</header>
 
@@ -82,15 +119,40 @@ const isHome = normalizedPath === normalizedBase;
 				<button id="menu-close" class="text-2xl leading-none text-white/70 hover:text-white">&#10005;</button>
 			</div>
 			<ul class="flex-1 overflow-y-auto px-2">
-				{navLinks.map((link) => (
-					<li class="border-b border-white/10">
-						<a href={link.href} class="flex items-center justify-between px-4 py-4 text-sm font-semibold hover:bg-white/5 hover:text-indigo-300">
-							{link.label}
-							<span class="text-white/30">&rsaquo;</span>
-						</a>
-					</li>
-				))}
-			</ul>
+					{navItems.map((item) =>
+						item.children ? (
+							<li class="border-b border-white/10">
+								<details class="group" name="nav-group" open={item.open}>
+									<summary class={`flex cursor-pointer list-none items-center justify-between px-4 py-4 text-sm font-semibold hover:bg-white/5 hover:text-indigo-300 [&::-webkit-details-marker]:hidden ${item.open ? "text-indigo-300" : ""}`}>
+										{item.label}
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/40 transition-transform duration-200 group-open:rotate-90">
+											<path d="M9 6l6 6-6 6" />
+										</svg>
+									</summary>
+									<ul class="pb-3">
+										{item.children.map((child) => (
+											<li>
+												<a
+													href={child.href}
+													class={`block rounded-md py-2.5 pl-8 pr-4 text-sm hover:bg-white/5 hover:text-indigo-300 ${child.active ? "bg-white/5 font-semibold text-indigo-300" : "text-slate-300"}`}
+												>
+													{child.label}
+												</a>
+											</li>
+										))}
+									</ul>
+								</details>
+							</li>
+						) : (
+							<li class="border-b border-white/10">
+								<a href={item.href} class={`flex items-center justify-between px-4 py-4 text-sm font-semibold hover:bg-white/5 hover:text-indigo-300 ${item.active ? "text-indigo-300" : ""}`}>
+									{item.label}
+									<span class="text-white/30">&rsaquo;</span>
+								</a>
+							</li>
+						)
+					)}
+				</ul>
 		</nav>
 		<div id="menu-overlay" class="fixed inset-0 z-40 hidden bg-slate-900/40"></div>
 

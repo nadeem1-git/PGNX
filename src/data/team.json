@@ -1,0 +1,50 @@
+[
+	{
+		"name": "Team Member 1",
+		"role": "Founder",
+		"photo": "",
+		"bio": ""
+	},
+	{
+		"name": "Team Member 2",
+		"role": "Role / Title",
+		"photo": "",
+		"bio": ""
+	},
+	{
+		"name": "Team Member 3",
+		"role": "Role / Title",
+		"photo": "",
+		"bio": ""
+	},
+	{
+		"name": "Team Member 4",
+		"role": "Role / Title",
+		"photo": "",
+		"bio": ""
+	},
+	{
+		"name": "Team Member 5",
+		"role": "Role / Title",
+		"photo": "",
+		"bio": ""
+	},
+	{
+		"name": "Team Member 6",
+		"role": "Role / Title",
+		"photo": "",
+		"bio": ""
+	},
+	{
+		"name": "Team Member 7",
+		"role": "Role / Title",
+		"photo": "",
+		"bio": ""
+	},
+	{
+		"name": "Team Member 8",
+		"role": "Role / Title",
+		"photo": "",
+		"bio": ""
+	}
+]
