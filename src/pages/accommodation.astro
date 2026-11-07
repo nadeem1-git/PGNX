@@ -1,0 +1,264 @@
+---
+import Layout from '../layouts/Layout.astro';
+import all from '../data/accommodations.json';
+
+const base = import.meta.env.BASE_URL;
+
+// Entries with "draft": true are shown only while developing locally.
+const listings = all.filter((l) => import.meta.env.DEV || !l.draft);
+
+const cities = [...new Set(listings.map((l) => l.city))].sort((a, b) => a.localeCompare(b));
+const types = [...new Set(listings.map((l) => l.type))].sort((a, b) => a.localeCompare(b));
+
+const priceText = (l) =>
+	l.priceTo && l.priceTo !== l.priceFrom ? `€${l.priceFrom}–${l.priceTo}` : `€${l.priceFrom}`;
+const photoUrl = (f) => `${base}accommodation/${f}`;
+---
+
+<Layout title="Accommodation">
+	<h1 class="text-4xl font-extrabold text-slate-900">Accommodation</h1>
+	<p class="mt-2 max-w-2xl text-slate-600">
+		Places to live in Germany, collected by the PGNX team. Filter by city, type and budget to find
+		what suits you.
+	</p>
+
+	<!-- Safety box -->
+	<div class="mt-6 rounded-2xl border border-amber-300 bg-amber-50 p-5 text-sm leading-relaxed text-amber-900">
+		<p class="font-bold">Stay safe when searching for a room</p>
+		<ul class="mt-2 list-inside list-disc space-y-1">
+			<li>Never pay a deposit or rent before you have seen a signed contract.</li>
+			<li>Be careful with offers that ask for Western Union, gift cards or money before a viewing.</li>
+			<li>Ask for a video call tour if you can't visit in person, and check that the address exists.</li>
+		</ul>
+		<p class="mt-3">
+			Looking in Fulda? Read our
+			<a href={`${base}resources#housing`} class="font-semibold underline">housing tips</a>.
+		</p>
+	</div>
+
+	{listings.length > 0 && (
+		<>
+			<!-- Filters -->
+			<div class="mt-8 grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-4">
+				<div>
+					<label for="f-city" class="text-xs font-semibold uppercase tracking-wide text-slate-500">City</label>
+					<select id="f-city" class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+						<option value="">All cities</option>
+						{cities.map((c) => <option value={c}>{c}</option>)}
+					</select>
+				</div>
+				<div>
+					<label for="f-type" class="text-xs font-semibold uppercase tracking-wide text-slate-500">Type</label>
+					<select id="f-type" class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+						<option value="">All types</option>
+						{types.map((t) => <option value={t}>{t}</option>)}
+					</select>
+				</div>
+				<div>
+					<label for="f-price" class="text-xs font-semibold uppercase tracking-wide text-slate-500">Budget per month</label>
+					<select id="f-price" class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+						<option value="">Any budget</option>
+						<option value="300">Up to €300</option>
+						<option value="400">Up to €400</option>
+						<option value="500">Up to €500</option>
+						<option value="700">Up to €700</option>
+					</select>
+				</div>
+				<div>
+					<label for="f-search" class="text-xs font-semibold uppercase tracking-wide text-slate-500">Search</label>
+					<input id="f-search" type="search" placeholder="Name, area, keyword&hellip;" class="mt-1 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+				</div>
+			</div>
+			<p id="result-count" class="mt-4 text-sm text-slate-500">&nbsp;</p>
+		</>
+	)}
+
+	<!-- Listings -->
+	<div id="listing-grid" class="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+		{listings.map((l) => (
+			<article
+				class="listing flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+				data-city={l.city}
+				data-type={l.type}
+				data-price={l.priceFrom}
+				data-text={[l.title, l.city, l.type, l.description, l.distance].join(" ").toLowerCase()}
+				data-photos={JSON.stringify(l.photos.map(photoUrl))}
+				data-title={l.title}
+			>
+				<div class="relative aspect-[4/3] bg-slate-100">
+					{l.photos.length ? (
+						<button type="button" class="open-gallery block h-full w-full" aria-label={`View photos of ${l.title}`}>
+							<img src={photoUrl(l.photos[0])} alt={l.title} loading="lazy" class="h-full w-full object-cover" />
+						</button>
+					) : (
+						<div class="flex h-full w-full items-center justify-center text-slate-300">
+							<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6" />
+							</svg>
+						</div>
+					)}
+					{l.photos.length > 1 && (
+						<span class="pointer-events-none absolute bottom-2 right-2 rounded-full bg-slate-900/70 px-2.5 py-1 text-xs font-semibold text-white">
+							{l.photos.length} photos
+						</span>
+					)}
+					{l.verified && (
+						<span class="absolute left-2 top-2 rounded-full bg-green-600 px-2.5 py-1 text-xs font-semibold text-white">Checked by PGNX</span>
+					)}
+					{l.draft && (
+						<span class="absolute right-2 top-2 rounded-full bg-orange-500 px-2.5 py-1 text-xs font-semibold text-white">Draft (local only)</span>
+					)}
+				</div>
+
+				<div class="flex flex-1 flex-col p-5">
+					<div class="flex flex-wrap items-center gap-2 text-xs">
+						<span class="rounded-full bg-indigo-50 px-2.5 py-1 font-semibold text-indigo-700">{l.city}</span>
+						<span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-600">{l.type}</span>
+					</div>
+					<h2 class="mt-3 font-bold text-slate-900">{l.title}</h2>
+					<p class="mt-1 text-lg font-extrabold text-indigo-700">{priceText(l)} <span class="text-xs font-medium text-slate-500">/ month</span></p>
+
+					<p class="desc mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600">{l.description}</p>
+					<button type="button" class="more-btn mt-1 hidden self-start text-sm font-semibold text-indigo-600 hover:underline">Read more</button>
+
+					<dl class="mt-4 space-y-1 text-xs text-slate-500">
+						{l.distance && <div><dt class="inline font-semibold text-slate-600">Distance: </dt><dd class="inline">{l.distance}</dd></div>}
+						{l.available && <div><dt class="inline font-semibold text-slate-600">Available: </dt><dd class="inline">{l.available}</dd></div>}
+					</dl>
+
+					<div class="mt-5 flex-1"></div>
+					{l.link ? (
+						<a href={l.link} target="_blank" rel="noopener noreferrer" class="inline-block rounded-full bg-indigo-700 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-indigo-800">
+							{l.linkLabel || "How to apply"} &rarr;
+						</a>
+					) : (
+						<a href={`${base}contact`} class="inline-block rounded-full border border-slate-300 px-5 py-2.5 text-center text-sm font-semibold text-indigo-700 hover:bg-indigo-50">
+							Ask PGNX about this &rarr;
+						</a>
+					)}
+				</div>
+			</article>
+		))}
+	</div>
+
+	<p id="empty-msg" class={`mt-4 rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500 ${listings.length ? "hidden" : ""}`}>
+		{listings.length ? "No accommodation matches your filters. Try changing them." : "Accommodation listings are coming soon."}
+	</p>
+
+	<div class="mt-12 rounded-2xl border border-slate-200 bg-white px-8 py-8 text-center shadow-sm">
+		<h2 class="text-lg font-bold text-slate-900">Have a room or flat to share?</h2>
+		<p class="mt-1 text-sm text-slate-600">Tell us about it and we may feature it here for other students.</p>
+		<a href={`${base}contact`} class="mt-4 inline-block rounded-full bg-indigo-700 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-800">Contact us</a>
+	</div>
+
+	<!-- Photo gallery (lightbox) -->
+	<div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/90 p-4" role="dialog" aria-modal="true" aria-label="Photo gallery">
+		<button id="lb-close" type="button" class="absolute right-4 top-4 text-3xl leading-none text-white/80 hover:text-white" aria-label="Close">&#10005;</button>
+		<button id="lb-prev" type="button" class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/10 px-4 py-3 text-2xl text-white hover:bg-white/20" aria-label="Previous photo">&lsaquo;</button>
+		<figure class="max-h-full max-w-4xl">
+			<img id="lb-img" src="" alt="" class="max-h-[80vh] w-auto max-w-full rounded-lg object-contain" />
+			<figcaption id="lb-cap" class="mt-3 text-center text-sm text-white/80"></figcaption>
+		</figure>
+		<button id="lb-next" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/10 px-4 py-3 text-2xl text-white hover:bg-white/20" aria-label="Next photo">&rsaquo;</button>
+	</div>
+</Layout>
+
+<script>
+	const cards = Array.from(document.querySelectorAll<HTMLElement>(".listing"));
+	const citySel = document.getElementById("f-city") as HTMLSelectElement | null;
+	const typeSel = document.getElementById("f-type") as HTMLSelectElement | null;
+	const priceSel = document.getElementById("f-price") as HTMLSelectElement | null;
+	const searchBox = document.getElementById("f-search") as HTMLInputElement | null;
+	const countEl = document.getElementById("result-count");
+	const emptyEl = document.getElementById("empty-msg");
+
+	function applyFilters() {
+		const city = citySel?.value || "";
+		const type = typeSel?.value || "";
+		const max = Number(priceSel?.value || 0);
+		const q = (searchBox?.value || "").trim().toLowerCase();
+		let shown = 0;
+		for (const c of cards) {
+			const ok =
+				(!city || c.dataset.city === city) &&
+				(!type || c.dataset.type === type) &&
+				(!max || Number(c.dataset.price) <= max) &&
+				(!q || (c.dataset.text || "").includes(q));
+			c.classList.toggle("hidden", !ok);
+			if (ok) shown++;
+		}
+		if (countEl) countEl.textContent = shown + (shown === 1 ? " place" : " places");
+		if (emptyEl && cards.length) emptyEl.classList.toggle("hidden", shown > 0);
+	}
+	[citySel, typeSel, priceSel].forEach((s) => s?.addEventListener("change", applyFilters));
+	searchBox?.addEventListener("input", applyFilters);
+	applyFilters();
+
+	// "Read more" only where the description is actually cut off
+	for (const c of cards) {
+		const desc = c.querySelector<HTMLElement>(".desc");
+		const btn = c.querySelector<HTMLButtonElement>(".more-btn");
+		if (!desc || !btn) continue;
+		if (desc.scrollHeight > desc.clientHeight + 1) btn.classList.remove("hidden");
+		btn.addEventListener("click", () => {
+			const clamped = desc.classList.toggle("line-clamp-3");
+			btn.textContent = clamped ? "Read more" : "Show less";
+		});
+	}
+
+	// Gallery
+	const lb = document.getElementById("lightbox") as HTMLElement;
+	const lbImg = document.getElementById("lb-img") as HTMLImageElement;
+	const lbCap = document.getElementById("lb-cap") as HTMLElement;
+	let photos: string[] = [];
+	let idx = 0;
+	let title = "";
+
+	function show() {
+		lbImg.src = photos[idx];
+		lbImg.alt = title;
+		lbCap.textContent = title + " · " + (idx + 1) + " / " + photos.length;
+		const many = photos.length > 1;
+		document.getElementById("lb-prev")!.classList.toggle("hidden", !many);
+		document.getElementById("lb-next")!.classList.toggle("hidden", !many);
+	}
+	function openGallery(card: HTMLElement) {
+		try {
+			photos = JSON.parse(card.dataset.photos || "[]");
+		} catch {
+			photos = [];
+		}
+		if (!photos.length) return;
+		title = card.dataset.title || "";
+		idx = 0;
+		show();
+		lb.classList.remove("hidden");
+		lb.classList.add("flex");
+		document.body.style.overflow = "hidden";
+	}
+	function closeGallery() {
+		lb.classList.add("hidden");
+		lb.classList.remove("flex");
+		document.body.style.overflow = "";
+	}
+	const step = (d: number) => {
+		idx = (idx + d + photos.length) % photos.length;
+		show();
+	};
+
+	for (const c of cards) {
+		c.querySelector(".open-gallery")?.addEventListener("click", () => openGallery(c));
+	}
+	document.getElementById("lb-close")!.addEventListener("click", closeGallery);
+	document.getElementById("lb-prev")!.addEventListener("click", () => step(-1));
+	document.getElementById("lb-next")!.addEventListener("click", () => step(1));
+	lb.addEventListener("click", (e) => {
+		if (e.target === lb) closeGallery();
+	});
+	document.addEventListener("keydown", (e) => {
+		if (lb.classList.contains("hidden")) return;
+		if (e.key === "Escape") closeGallery();
+		if (e.key === "ArrowLeft") step(-1);
+		if (e.key === "ArrowRight") step(1);
+	});
+</script>
