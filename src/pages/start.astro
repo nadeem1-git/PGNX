@@ -55,18 +55,40 @@ const categories = [...categoryCounts.entries()].sort((a, b) => a[0].localeCompa
 				</button>
 			</div>
 
+			<!-- Search within the chosen field -->
+			<div class="relative mt-5">
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+					<circle cx="11" cy="11" r="7" />
+					<path d="M21 21l-4.3-4.3" />
+				</svg>
+				<input
+					id="program-search"
+					type="search"
+					placeholder="Search by course or university&hellip;"
+					autocomplete="off"
+					aria-label="Search programs in this field"
+					class="w-full rounded-full border border-slate-200 bg-white py-3 pl-11 pr-5 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+				/>
+			</div>
+
 			<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 				{programs.map((p) => (
-					<ProgramCard
-						course={p.course}
-						university={p.university}
-						ownership={p.ownership}
-						requirements={p.requirements}
-						link={p.link}
-						category={p.category}
-					/>
+					<div class="contents" data-search={`${p.course} ${p.university}`}>
+						<ProgramCard
+							course={p.course}
+							university={p.university}
+							ownership={p.ownership}
+							requirements={p.requirements}
+							link={p.link}
+							category={p.category}
+						/>
+					</div>
 				))}
 			</div>
+
+			<p id="no-results" class="mt-6 hidden rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-500">
+				No programs match your search. Try a different word, or clear the search box.
+			</p>
 
 			<p class="mt-8 text-center text-sm text-slate-500">
 				Want to search by university or filter by public or private?
@@ -81,18 +103,46 @@ const categories = [...categoryCounts.entries()].sort((a, b) => a[0].localeCompa
 	const results = document.getElementById("results") as HTMLElement;
 	const title = document.getElementById("results-title") as HTMLElement;
 	const count = document.getElementById("results-count") as HTMLElement;
+	const searchBox = document.getElementById("program-search") as HTMLInputElement;
+	const noResults = document.getElementById("no-results") as HTMLElement;
 	const cards = Array.from(document.querySelectorAll<HTMLElement>(".program-card"));
 	const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>(".field-btn"));
 
-	function showField(cat: string, updateHash: boolean) {
+	let currentCat = "";
+
+	// Lower-case and drop accents so "munchen" finds "München"
+	const norm = (t: string) =>
+		t
+			.toLowerCase()
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "");
+
+	// Each card's course + university text, stored on its wrapper
+	const searchText = new Map<HTMLElement, string>();
+	for (const card of cards) {
+		const wrap = card.closest<HTMLElement>("[data-search]");
+		searchText.set(card, norm(wrap?.dataset.search || card.textContent || ""));
+	}
+
+	function applyFilters() {
+		const words = norm(searchBox.value).split(/\s+/).filter(Boolean);
 		let n = 0;
 		for (const card of cards) {
-			const match = card.dataset.category === cat;
+			const text = searchText.get(card) || "";
+			const match = card.dataset.category === currentCat && words.every((w) => text.includes(w));
 			card.classList.toggle("hidden", !match);
 			if (match) n++;
 		}
+		const label = n + " Master's program" + (n === 1 ? "" : "s");
+		count.textContent = words.length ? label + " found" : label + ", sorted A to Z";
+		noResults.classList.toggle("hidden", n > 0);
+	}
+
+	function showField(cat: string, updateHash: boolean) {
+		currentCat = cat;
+		searchBox.value = "";
 		title.textContent = cat;
-		count.textContent = n + " Master's program" + (n === 1 ? "" : "s") + ", sorted A to Z";
+		applyFilters();
 		picker.classList.add("hidden");
 		results.classList.remove("hidden");
 		if (updateHash) history.replaceState(null, "", "#" + encodeURIComponent(cat));
@@ -102,12 +152,14 @@ const categories = [...categoryCounts.entries()].sort((a, b) => a[0].localeCompa
 	function showPicker() {
 		results.classList.add("hidden");
 		picker.classList.remove("hidden");
+		searchBox.value = "";
 		history.replaceState(null, "", location.pathname + location.search);
 		window.scrollTo({ top: 0 });
 	}
 
 	buttons.forEach((btn) => btn.addEventListener("click", () => showField(btn.dataset.cat || "", true)));
 	document.getElementById("change-btn")?.addEventListener("click", showPicker);
+	searchBox.addEventListener("input", applyFilters);
 
 	// Open straight to a field if the link has one, e.g. .../start/#Computer%20Science
 	try {

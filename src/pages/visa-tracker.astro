@@ -12,68 +12,60 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 <Layout title="Visa Tracker">
 	<h1 class="text-4xl font-extrabold text-slate-900">Visa Tracker</h1>
 	<p class="mt-2 max-w-2xl text-slate-600">
-		Follow the German student visa waiting list. See how long applicants wait for their submission, appointment
-		and decision, and add yourself so the next person knows what to expect.
+		See who is on the German student visa waiting list, by consulate and by month, and add yourself so the
+		next person knows what to expect.
 	</p>
 	<a href="#share" class="mt-5 inline-flex items-center gap-2 rounded-full bg-indigo-700 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-800">
 		Add yourself to the tracker &darr;
 	</a>
 
-	<!-- Consulate filter -->
-	<div class="mt-8 flex flex-wrap items-center gap-2">
-		<span class="mr-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Consulate:</span>
-		<button data-cons="all" class="cons-btn rounded-full border border-indigo-600 bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white">All</button>
-		<button data-cons="Islamabad" class="cons-btn rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-indigo-700 hover:border-indigo-400">Islamabad</button>
-		<button data-cons="Karachi" class="cons-btn rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-indigo-700 hover:border-indigo-400">Karachi</button>
-	</div>
-
-	<div id="load-error" class="mt-6 hidden rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+	<div id="load-error" class="mt-8 hidden rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
 		The tracker is temporarily unavailable. Please try again in a little while.
 	</div>
 
-	<!-- Summary cards -->
-	<div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
-		<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Applicants</p>
-			<p id="stat-total" class="mt-2 text-3xl font-extrabold text-slate-900">&hellip;</p>
-			<p id="stat-total-sub" class="mt-1 text-xs text-slate-500">&nbsp;</p>
+	<!-- Filters -->
+	<div class="mt-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:flex-wrap sm:items-end">
+		<div>
+			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Consulate</p>
+			<div class="mt-2 flex flex-wrap gap-2">
+				<button type="button" data-cons="all" class="cons-btn rounded-full border border-indigo-600 bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white">All</button>
+				<button type="button" data-cons="Islamabad" class="cons-btn rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-indigo-700 hover:border-indigo-400">Islamabad</button>
+				<button type="button" data-cons="Karachi" class="cons-btn rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-indigo-700 hover:border-indigo-400">Karachi</button>
+			</div>
 		</div>
-		<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">To submission</p>
-			<p id="stat-submission" class="mt-2 text-3xl font-extrabold text-slate-900">&hellip;</p>
-			<p id="stat-submission-sub" class="mt-1 text-xs text-slate-500">&nbsp;</p>
+		<div>
+			<label for="month-select" class="text-xs font-semibold uppercase tracking-wide text-slate-500">Joining month</label>
+			<select id="month-select" class="mt-2 block w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 sm:w-48">
+				<option value="all">All months</option>
+			</select>
 		</div>
+		<button id="clear-filters" type="button" class="hidden self-end rounded-full px-3 py-2 text-sm font-medium text-slate-500 hover:text-indigo-700 sm:ml-auto">Clear filters</button>
+	</div>
+
+	<!-- Key numbers -->
+	<div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		<!-- 1. Total -->
 		<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">To appointment</p>
-			<p id="stat-appt" class="mt-2 text-3xl font-extrabold text-slate-900">&hellip;</p>
-			<p id="stat-appt-sub" class="mt-1 text-xs text-slate-500">&nbsp;</p>
+			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Total members</p>
+			<p id="stat-total" class="mt-2 text-5xl font-extrabold text-indigo-700">&hellip;</p>
+			<p id="stat-total-sub" class="mt-2 text-xs text-slate-500">&nbsp;</p>
 		</div>
+
+		<!-- 2. By consulate -->
 		<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">To decision</p>
-			<p id="stat-decision" class="mt-2 text-3xl font-extrabold text-slate-900">&hellip;</p>
-			<p id="stat-decision-sub" class="mt-1 text-xs text-slate-500">&nbsp;</p>
+			<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">By consulate</p>
+			<div id="consulate-chart" class="mt-4 space-y-4"></div>
+		</div>
+
+		<!-- 3. By month -->
+		<div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:col-span-2">
+			<div class="flex items-baseline justify-between gap-2">
+				<p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Members by joining month</p>
+				<p class="text-xs text-slate-400">Tap a bar to filter</p>
+			</div>
+			<div id="month-chart" class="mt-4 overflow-x-auto"></div>
 		</div>
 	</div>
-	<p class="mt-2 text-xs text-slate-500">Typical = median, counted from the day the applicant joined the waiting list.</p>
-
-	<!-- By consulate -->
-	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-		<h2 class="text-xl font-bold text-slate-900">Typical wait by consulate</h2>
-		<div id="consulate-bars" class="mt-6 grid gap-8 sm:grid-cols-2"></div>
-		<div class="mt-6 flex flex-wrap gap-5 text-xs text-slate-500">
-			<span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-sky-500"></span>Until submission</span>
-			<span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-indigo-500"></span>Until appointment</span>
-			<span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-orange-500"></span>Until decision</span>
-		</div>
-	</section>
-
-	<!-- Outcomes -->
-	<section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-		<h2 class="text-xl font-bold text-slate-900">Outcomes so far</h2>
-		<p id="approval-text" class="mt-1 text-sm text-slate-500">&nbsp;</p>
-		<div id="outcome-bar" class="mt-4 flex h-4 overflow-hidden rounded-full bg-slate-100"></div>
-		<div id="outcome-legend" class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-slate-600"></div>
-	</section>
 
 	<!-- Applicants table -->
 	<section class="mt-6 rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -172,8 +164,8 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 	</section>
 
 	<p class="mt-6 text-xs leading-relaxed text-slate-500">
-		Community-reported and unofficial. Real timelines vary from case to case and the sample is still small,
-		so treat these numbers as a rough guide, not a promise. Obviously false entries may be hidden.
+		Community-reported and unofficial. Real timelines vary from case to case, so treat these numbers as a
+		rough guide, not a promise. Obviously false entries may be hidden.
 	</p>
 </Layout>
 
@@ -183,14 +175,15 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 	const TABLE_URL = SUPABASE_URL + "/rest/v1/visa_applicants";
 	const SELECT_COLS =
 		"id,university,consulate,joining_date,got_submission_date,submitted_on,correction_date,appointment_date,decision_date,visa_status,created_at";
-	const MIN_SAMPLE = 3;
 	const PAGE_SIZE = 100;
 	const COOLDOWN_MS = 20000;
 	const LAST_KEY = "pgnx_visa_last_submit";
-	const DAY = 86400000;
+	const MAX_MONTH_BARS = 12;
 	const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	const CONSULATES = ["Islamabad", "Karachi"];
+	const CONS_COLOR: Record<string, string> = { Islamabad: "bg-indigo-600", Karachi: "bg-sky-500" };
 
 	type Row = {
 		id: number;
@@ -205,10 +198,10 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 		visa_status: string;
 		created_at: string;
 	};
-	type DateField = "got_submission_date" | "appointment_date" | "decision_date";
 
 	let allRows: Row[] = [];
 	let consFilter = "all";
+	let monthFilter = "all"; // "all" or "YYYY-MM"
 	let searchText = "";
 	let visibleLimit = PAGE_SIZE;
 
@@ -224,15 +217,6 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 	function toUTC(s: string): number {
 		return Date.parse(s + "T00:00:00Z");
 	}
-	function dayDiff(a: string, b: string): number {
-		return Math.round((toUTC(b) - toUTC(a)) / DAY);
-	}
-	function median(nums: number[]): number | null {
-		if (!nums.length) return null;
-		const s = [...nums].sort((x, y) => x - y);
-		const m = Math.floor(s.length / 2);
-		return s.length % 2 ? s[m] : Math.round((s[m - 1] + s[m]) / 2);
-	}
 	function fmtShort(s: string | null): string {
 		if (!s) return "";
 		const [y, m, d] = s.split("-");
@@ -242,129 +226,121 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 		const dt = new Date(toUTC(s));
 		return WEEKDAYS[dt.getUTCDay()] + ", " + dt.getUTCDate() + " " + MONTHS_LONG[dt.getUTCMonth()] + " " + dt.getUTCFullYear();
 	}
-	function weeksText(d: number): string {
-		return "\u2248 " + Math.round(d / 7) + " weeks";
-	}
 	function plural(n: number, word: string): string {
 		return n + " " + word + (n === 1 ? "" : "s");
 	}
-
-	function metric(rows: Row[], to: DateField) {
-		const vals: number[] = [];
-		for (const r of rows) {
-			const end = r[to];
-			if (end) {
-				const d = dayDiff(r.joining_date, end);
-				if (d >= 0) vals.push(d);
+	// "2026-11" -> "Nov 2026" (or "Nov" when short)
+	function monthLabel(key: string, short = false): string {
+		const [y, m] = key.split("-");
+		return MONTHS[Number(m) - 1] + (short ? "" : " " + y);
+	}
+	function monthKey(r: Row): string {
+		return r.joining_date.slice(0, 7);
+	}
+	// every month from first to last, so the chart has no gaps
+	function monthRange(first: string, last: string): string[] {
+		const out: string[] = [];
+		let [y, m] = first.split("-").map(Number);
+		const [ly, lm] = last.split("-").map(Number);
+		while (y < ly || (y === ly && m <= lm)) {
+			out.push(y + "-" + String(m).padStart(2, "0"));
+			m++;
+			if (m > 12) {
+				m = 1;
+				y++;
 			}
 		}
-		return { n: vals.length, med: vals.length >= MIN_SAMPLE ? median(vals) : null };
+		return out;
 	}
 
-	function consRows(): Row[] {
-		return consFilter === "all" ? allRows : allRows.filter((r) => r.consulate === consFilter);
+	// ----- filtering -----
+	function rowsFor(cons: string, month: string): Row[] {
+		return allRows.filter(
+			(r) => (cons === "all" || r.consulate === cons) && (month === "all" || monthKey(r) === month)
+		);
 	}
 	function tableRows(): Row[] {
 		const q = searchText.trim().toLowerCase();
-		const rows = consRows();
+		const rows = rowsFor(consFilter, monthFilter);
 		return q ? rows.filter((r) => r.university.toLowerCase().includes(q)) : rows;
 	}
 
-	function setCard(id: string, value: string, sub: string) {
-		byId(id).textContent = value;
-		byId(id + "-sub").textContent = sub;
-	}
-	function setMetricCard(id: string, m: { n: number; med: number | null }, unit: string) {
-		if (m.med !== null) setCard(id, m.med + " days", weeksText(m.med) + " \u00b7 " + plural(m.n, unit));
-		else setCard(id, "Not enough data", m.n + " of " + MIN_SAMPLE + " needed");
-	}
-
-	function renderStats(rows: Row[]) {
-		setCard("stat-total", String(rows.length), consFilter === "all" ? "both consulates" : consFilter);
-		setMetricCard("stat-submission", metric(rows, "got_submission_date"), "report");
-		setMetricCard("stat-appt", metric(rows, "appointment_date"), "report");
-		setMetricCard("stat-decision", metric(rows, "decision_date"), "report");
+	// ----- visual 1: total -----
+	function renderTotal() {
+		const rows = rowsFor(consFilter, monthFilter);
+		byId("stat-total").textContent = String(rows.length);
+		const parts: string[] = [];
+		parts.push(consFilter === "all" ? "both consulates" : consFilter);
+		parts.push(monthFilter === "all" ? "all months" : monthLabel(monthFilter));
+		byId("stat-total-sub").textContent = parts.join(" \u00b7 ");
 	}
 
-	function renderConsulates(rows: Row[]) {
-		const container = byId("consulate-bars");
-		container.textContent = "";
-		const names = ["Islamabad", "Karachi"];
-		const data = names.map((name) => {
-			const subset = rows.filter((r) => r.consulate === name);
-			return {
-				name,
-				count: subset.length,
-				sub: metric(subset, "got_submission_date"),
-				appt: metric(subset, "appointment_date"),
-				dec: metric(subset, "decision_date"),
-			};
-		});
-		const meds = data
-			.flatMap((d) => [d.sub.med, d.appt.med, d.dec.med])
-			.filter((v): v is number => v !== null);
-		const max = meds.length ? Math.max(...meds) : 1;
-
-		for (const d of data) {
-			const box = el("div", "");
-			box.append(el("h3", "font-semibold text-slate-900", d.name));
-			box.append(el("p", "text-xs text-slate-500", plural(d.count, "applicant")));
-
-			const lines: Array<[string, { n: number; med: number | null }, string]> = [
-				["Joining \u2192 submission", d.sub, "bg-sky-500"],
-				["Joining \u2192 appointment", d.appt, "bg-indigo-500"],
-				["Joining \u2192 decision", d.dec, "bg-orange-500"],
-			];
-			for (const [label, m, color] of lines) {
-				const row = el("div", "mt-4");
-				const top = el("div", "flex items-baseline justify-between gap-2 text-sm");
-				top.append(el("span", "text-slate-600", label));
-				top.append(
-					el("span", "font-semibold text-slate-900", m.med !== null ? m.med + " days" : "Not enough data")
-				);
-				const track = el("div", "mt-1.5 h-3 overflow-hidden rounded-full bg-slate-100");
-				const fill = el("div", "h-full rounded-full " + color);
-				fill.style.width = m.med !== null ? Math.max(6, Math.round((m.med / max) * 100)) + "%" : "0%";
-				track.append(fill);
-				row.append(top, track);
-				box.append(row);
-			}
-			container.append(box);
+	// ----- visual 2: by consulate (respects the month filter) -----
+	function renderConsulateChart() {
+		const box = byId("consulate-chart");
+		box.textContent = "";
+		const counts = CONSULATES.map((name) => ({ name, n: rowsFor(name, monthFilter).length }));
+		const max = Math.max(1, ...counts.map((c) => c.n));
+		for (const c of counts) {
+			const dim = consFilter !== "all" && consFilter !== c.name;
+			const row = el("button", "block w-full text-left transition-opacity " + (dim ? "opacity-40" : ""));
+			row.setAttribute("type", "button");
+			row.setAttribute("aria-label", "Show " + c.name + " only");
+			const top = el("div", "flex items-baseline justify-between text-sm");
+			top.append(el("span", "font-medium text-slate-700", c.name));
+			top.append(el("span", "text-lg font-extrabold text-slate-900", String(c.n)));
+			const track = el("div", "mt-1.5 h-3 overflow-hidden rounded-full bg-slate-100");
+			const fill = el("div", "h-full rounded-full " + CONS_COLOR[c.name]);
+			fill.style.width = c.n ? Math.max(6, Math.round((c.n / max) * 100)) + "%" : "0%";
+			track.append(fill);
+			row.append(top, track);
+			row.addEventListener("click", () => setConsFilter(consFilter === c.name ? "all" : c.name));
+			box.append(row);
 		}
 	}
 
-	function renderOutcomes(rows: Row[]) {
-		const bar = byId("outcome-bar");
-		const legend = byId("outcome-legend");
-		bar.textContent = "";
-		legend.textContent = "";
-		const counts = {
-			Approved: rows.filter((r) => r.visa_status === "Approved").length,
-			Rejected: rows.filter((r) => r.visa_status === "Rejected").length,
-			Pending: rows.filter((r) => r.visa_status === "Pending").length,
-		};
-		const total = rows.length;
-		const decided = counts.Approved + counts.Rejected;
-		byId("approval-text").textContent =
-			decided >= MIN_SAMPLE
-				? Math.round((counts.Approved / decided) * 100) + "% approved (" + counts.Approved + " of " + plural(decided, "decision") + ")"
-				: "Not enough decisions yet (" + decided + " of " + MIN_SAMPLE + " needed)";
-		const parts: Array<[keyof typeof counts, string]> = [
-			["Approved", "bg-green-500"],
-			["Rejected", "bg-red-500"],
-			["Pending", "bg-slate-300"],
-		];
-		for (const [name, color] of parts) {
-			if (total > 0 && counts[name] > 0) {
-				const seg = el("div", "h-full " + color);
-				seg.style.width = (counts[name] / total) * 100 + "%";
-				bar.append(seg);
-			}
-			const item = el("span", "inline-flex items-center gap-1.5");
-			item.append(el("span", "h-2.5 w-2.5 rounded-full " + color));
-			item.append(el("span", "", name + " " + counts[name]));
-			legend.append(item);
+	// ----- visual 3: by month (respects the consulate filter) -----
+	function renderMonthChart() {
+		const box = byId("month-chart");
+		box.textContent = "";
+		const rows = rowsFor(consFilter, "all");
+		if (!rows.length) {
+			box.append(el("p", "py-8 text-center text-sm text-slate-400", "No data yet."));
+			return;
 		}
+		const keys = rows.map(monthKey).sort();
+		let months = monthRange(keys[0], keys[keys.length - 1]);
+		if (months.length > MAX_MONTH_BARS) months = months.slice(-MAX_MONTH_BARS);
+		const counts: Record<string, number> = {};
+		for (const r of rows) counts[monthKey(r)] = (counts[monthKey(r)] || 0) + 1;
+		const max = Math.max(1, ...months.map((m) => counts[m] || 0));
+
+		const wrap = el("div", "flex h-40 min-w-max items-end gap-2");
+		let lastYear = "";
+		for (const m of months) {
+			const n = counts[m] || 0;
+			const selected = monthFilter === m;
+			const col = el("button", "group flex h-full w-12 flex-col items-center justify-end gap-1");
+			col.setAttribute("type", "button");
+			col.setAttribute("aria-label", monthLabel(m) + ": " + plural(n, "member"));
+			col.append(el("span", "text-xs font-bold " + (selected ? "text-indigo-700" : "text-slate-600"), String(n)));
+			const barArea = el("div", "flex w-full flex-1 items-end");
+			const bar = el(
+				"div",
+				"w-full rounded-t-md transition-colors " +
+					(selected ? "bg-indigo-700" : n ? "bg-indigo-300 group-hover:bg-indigo-400" : "bg-slate-200")
+			);
+			bar.style.height = n ? Math.max(8, Math.round((n / max) * 100)) + "%" : "4px";
+			barArea.append(bar);
+			col.append(barArea);
+			const year = m.slice(0, 4);
+			const label = monthLabel(m, true) + (year !== lastYear ? " \u2019" + year.slice(2) : "");
+			lastYear = year;
+			col.append(el("span", "text-[11px] " + (selected ? "font-bold text-indigo-700" : "text-slate-500"), label));
+			col.addEventListener("click", () => setMonthFilter(monthFilter === m ? "all" : m));
+			wrap.append(col);
+		}
+		box.append(wrap);
 	}
 
 	function renderTable() {
@@ -432,12 +408,54 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 		byId("more-btn").classList.toggle("hidden", rows.length <= shown.length);
 	}
 
+
+	function syncFilterUI() {
+		consButtons.forEach((b) => {
+			const active = (b.dataset.cons || "all") === consFilter;
+			b.classList.toggle("bg-indigo-600", active);
+			b.classList.toggle("text-white", active);
+			b.classList.toggle("border-indigo-600", active);
+			b.classList.toggle("bg-white", !active);
+			b.classList.toggle("text-indigo-700", !active);
+			b.classList.toggle("border-slate-200", !active);
+		});
+		monthSelect.value = monthFilter;
+		byId("clear-filters").classList.toggle("hidden", consFilter === "all" && monthFilter === "all");
+	}
+
 	function render() {
-		const rows = consRows();
-		renderStats(rows);
-		renderConsulates(allRows);
-		renderOutcomes(rows);
+		syncFilterUI();
+		renderTotal();
+		renderConsulateChart();
+		renderMonthChart();
 		renderTable();
+	}
+
+	function setConsFilter(v: string) {
+		consFilter = v;
+		visibleLimit = PAGE_SIZE;
+		render();
+	}
+	function setMonthFilter(v: string) {
+		monthFilter = v;
+		visibleLimit = PAGE_SIZE;
+		render();
+	}
+
+	function fillMonthSelect() {
+		const keys = [...new Set(allRows.map(monthKey))].sort().reverse();
+		monthSelect.textContent = "";
+		const all = document.createElement("option");
+		all.value = "all";
+		all.textContent = "All months";
+		monthSelect.append(all);
+		for (const k of keys) {
+			const o = document.createElement("option");
+			o.value = k;
+			o.textContent = monthLabel(k);
+			monthSelect.append(o);
+		}
+		if (monthFilter !== "all" && !keys.includes(monthFilter)) monthFilter = "all";
 	}
 
 	async function loadData() {
@@ -447,30 +465,25 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 			if (!res.ok) throw new Error("HTTP " + res.status);
 			allRows = (await res.json()) as Row[];
 			byId("load-error").classList.add("hidden");
+			fillMonthSelect();
 			render();
 		} catch (err) {
 			byId("load-error").classList.remove("hidden");
-			for (const id of ["stat-total", "stat-submission", "stat-appt", "stat-decision"]) setCard(id, "\u2014", "");
+			byId("stat-total").textContent = "\u2014";
+			byId("stat-total-sub").textContent = "";
 		}
 	}
 
-	// Consulate filter pills
+	// Filters
 	const consButtons = Array.from(document.querySelectorAll<HTMLButtonElement>(".cons-btn"));
-	consButtons.forEach((btn) => {
-		btn.addEventListener("click", () => {
-			consFilter = btn.dataset.cons || "all";
-			visibleLimit = PAGE_SIZE;
-			consButtons.forEach((b) => {
-				const active = b === btn;
-				b.classList.toggle("bg-indigo-600", active);
-				b.classList.toggle("text-white", active);
-				b.classList.toggle("border-indigo-600", active);
-				b.classList.toggle("bg-white", !active);
-				b.classList.toggle("text-indigo-700", !active);
-				b.classList.toggle("border-slate-200", !active);
-			});
-			render();
-		});
+	const monthSelect = byId("month-select") as HTMLSelectElement;
+	consButtons.forEach((btn) => btn.addEventListener("click", () => setConsFilter(btn.dataset.cons || "all")));
+	monthSelect.addEventListener("change", () => setMonthFilter(monthSelect.value));
+	byId("clear-filters").addEventListener("click", () => {
+		consFilter = "all";
+		monthFilter = "all";
+		visibleLimit = PAGE_SIZE;
+		render();
 	});
 
 	// Search + show more

@@ -37,42 +37,43 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 		<h2 class="text-2xl font-bold text-slate-900">Share your story</h2>
 		<p class="mt-1 text-sm text-slate-600">
 			Tell us about your journey: admission, visa, arriving in Germany, and how PGNX helped. Every
-			story is read by the PGNX team before it appears on this page.
+			story is read by the PGNX team before it appears on this page. All fields marked
+			<span class="text-red-500">*</span> are required.
 		</p>
 
 		<form id="story-form" class="mt-6 space-y-6" novalidate>
 			<input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
 
 			<div>
-				<label for="display_name" class="text-sm font-semibold text-slate-700">Name to show</label>
+				<label for="display_name" class="text-sm font-semibold text-slate-700">Name to show <span class="text-red-500" aria-hidden="true">*</span></label>
 				<p class="mt-0.5 text-xs text-slate-500">First name or a nickname is fine. This is shown publicly with your story.</p>
-				<input id="display_name" name="display_name" type="text" maxlength="60" autocomplete="given-name" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+				<input id="display_name" aria-required="true" name="display_name" type="text" maxlength="60" autocomplete="given-name" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
 			</div>
 
 			<div class="grid gap-6 sm:grid-cols-2">
 				<div>
-					<label for="university" class="text-sm font-semibold text-slate-700">University <span class="font-normal text-slate-400">(optional)</span></label>
-					<input id="university" name="university" type="text" list="university-list" maxlength="120" autocomplete="off" placeholder="e.g. TU Dresden" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+					<label for="university" class="text-sm font-semibold text-slate-700">University <span class="text-red-500" aria-hidden="true">*</span></label>
+					<input id="university" aria-required="true" name="university" type="text" list="university-list" maxlength="120" autocomplete="off" placeholder="e.g. TU Dresden" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
 					<datalist id="university-list">
 						{universities.map((u) => <option value={u} />)}
 					</datalist>
 				</div>
 				<div>
-					<label for="program" class="text-sm font-semibold text-slate-700">Program <span class="font-normal text-slate-400">(optional)</span></label>
-					<input id="program" name="program" type="text" maxlength="120" autocomplete="off" placeholder="e.g. MSc Computer Science" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+					<label for="program" class="text-sm font-semibold text-slate-700">Program <span class="text-red-500" aria-hidden="true">*</span></label>
+					<input id="program" aria-required="true" name="program" type="text" maxlength="120" autocomplete="off" placeholder="e.g. MSc Computer Science" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
 				</div>
 			</div>
 
 			<div>
-				<label for="story" class="text-sm font-semibold text-slate-700">Your story</label>
-				<textarea id="story" name="story" rows="7" maxlength="2000" placeholder="How did your journey go? What would you tell someone just starting?" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-indigo-400"></textarea>
+				<label for="story" class="text-sm font-semibold text-slate-700">Your story <span class="text-red-500" aria-hidden="true">*</span></label>
+				<textarea id="story" aria-required="true" name="story" rows="7" maxlength="2000" placeholder="How did your journey go? What would you tell someone just starting?" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-indigo-400"></textarea>
 				<p id="story-count" class="mt-1 text-right text-xs text-slate-400">0 / 2000</p>
 			</div>
 
 			<div>
-				<label for="contact" class="text-sm font-semibold text-slate-700">Email or WhatsApp <span class="font-normal text-slate-400">(optional)</span></label>
+				<label for="contact" class="text-sm font-semibold text-slate-700">Email or WhatsApp <span class="text-red-500" aria-hidden="true">*</span></label>
 				<p class="mt-0.5 text-xs text-slate-500">Only seen by the PGNX team, in case we need to confirm your story. Never shown on the website.</p>
-				<input id="contact" name="contact" type="text" maxlength="120" autocomplete="off" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+				<input id="contact" aria-required="true" name="contact" type="text" maxlength="120" autocomplete="off" class="mt-2 w-full rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
 			</div>
 
 			<p id="form-msg" role="status" class="hidden"></p>
@@ -233,6 +234,18 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 			showMsg("Please enter a name to show (2 to 60 characters).", "err");
 			return;
 		}
+		if (university.length < 2 || university.length > 120) {
+			showMsg("Please enter your university.", "err");
+			return;
+		}
+		if (program.length < 2 || program.length > 120) {
+			showMsg("Please enter your program.", "err");
+			return;
+		}
+		if (contact.length < 3 || contact.length > 120) {
+			showMsg("Please enter your email or WhatsApp number. It is only seen by the PGNX team.", "err");
+			return;
+		}
 		if (story.length < 30) {
 			showMsg("Your story is a little short. Please write at least 30 characters.", "err");
 			return;
@@ -244,9 +257,9 @@ const universities = [...new Set((programs as { university: string }[]).map((p) 
 
 		const payload = {
 			display_name,
-			university: university || null,
-			program: program || null,
-			contact: contact || null,
+			university,
+			program,
+			contact,
 			story,
 		};
 
